@@ -1,0 +1,454 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include "math.h"
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+// BTN SETUP
+#define BTN_30 2
+#define BTN_45 3
+#define BTN_60 4
+#define BTN_90 5
+#define BTN_120 6
+#define BTN_135 7
+#define BTN_150 8
+#define BTN_180 9
+#define BTN_210 10
+#define BTN_225 11
+#define BTN_240 12
+#define BTN_270 13
+#define BTN_300 14
+#define BTN_315 15
+#define BTN_330 16
+#define BTN_360 17
+#define BTN_SIN 18
+#define BTN_COS 19
+#define BTN_TAN 22
+#define BTN_CSC 23
+#define BTN_SEC 24
+#define BTN_COT 25
+#define BTN_CLEAR 51
+
+//LED SETUP
+#define LED_30 26
+#define LED_45 27
+#define LED_60 28
+#define LED_90 29
+#define LED_120 30
+#define LED_135 31
+#define LED_150 32
+#define LED_180 33
+#define LED_210 34
+#define LED_225 35
+#define LED_240 36
+#define LED_270 37
+#define LED_300 38
+#define LED_315 39
+#define LED_330 40
+#define LED_360 41
+
+
+String SIN(float data);
+String COS(float data);
+String TAN(float data);
+String CSC(float data);
+String SEC(float data);
+String COT(float data);
+void LCD_SETUP();
+void LCD_PRINT(String one, String two);
+void BTN_INIT();
+void LED_INIT();
+void READ_BTN();
+void GLOW_BTN();
+void LED_SETUP(int data);
+void FUNCTION_BTN();
+
+String clear = "                    ";
+float value1 = 0.0;
+String OUTPUTS = "0.0";
+int btn_read_30 = 0, btn_read_45 = 0, btn_read_60 = 0, btn_read_90 = 0;
+int btn_read_120 = 0, btn_read_135 = 0, btn_read_150 = 0, btn_read_180 = 0;
+int btn_read_210 = 0, btn_read_225 = 0, btn_read_240 = 0, btn_read_270 = 0;
+int btn_read_300 = 0, btn_read_315 = 0, btn_read_330 = 0, btn_read_360 = 0;
+int btn_read_sin = 0, btn_read_cos = 0, btn_read_tan = 0, btn_read_csc = 0, btn_read_sec = 0, btn_read_cot = 0, btn_read_clear = 0;
+
+
+void setup() {
+  Serial.begin(9600);
+  BTN_INIT();
+  LED_INIT();
+  LCD_SETUP();
+}
+
+void loop() {
+  READ_BTN();
+  GLOW_BTN();
+  FUNCTION_BTN();
+}
+// Function to calculate the greatest common divisor (GCD)
+int gcd(int a, int b) {
+  while (b != 0) {
+    int temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+
+// Function to convert decimal to fraction
+void decimalToFraction(float decimal, int &numerator, int &denominator) {
+  // Split the decimal into whole and fractional parts
+  int whole = (int)decimal;
+  float fracPart = decimal - whole;
+
+  // Handle whole number case
+  if (fracPart == 0) {
+    numerator = whole;
+    denominator = 1;  // e.g., 5.0 -> 5/1
+    return;
+  }
+
+  // Count the number of decimal places
+  int decimalPlaces = 0;
+  while (fracPart != (int)fracPart) {
+    fracPart *= 10;
+    decimalPlaces++;
+  }
+
+  // Convert to fraction
+  numerator = (int)fracPart + (whole * pow(10, decimalPlaces));
+  denominator = pow(10, decimalPlaces);
+
+  // Simplify the fraction
+  int commonDivisor = gcd(numerator, denominator);
+  numerator /= commonDivisor;
+  denominator /= commonDivisor;
+}
+
+
+void FUNCTION_BTN() {
+    int d = (int)value1; // Convert value1 to an integer angle for the switch
+
+    // Define a function to set OUTPUTS for each trigonometric function based on the angle
+    auto setTrigOutput = [&](String sinVal, String cosVal, String tanVal, String cscVal, String secVal, String cotVal) {
+        if (!btn_read_sin) {
+            OUTPUTS = sinVal;
+            LCD_PRINT(clear, clear);
+            LCD_PRINT("sin(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("sin(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        } else if (!btn_read_cos) {
+            OUTPUTS = cosVal;
+            LCD_PRINT(clear, clear);
+            LCD_PRINT("cos(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("cos(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        } else if (!btn_read_tan) {
+            OUTPUTS = tanVal;
+            LCD_PRINT(clear, clear);
+            LCD_PRINT("tan(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("tan(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        } else if (!btn_read_csc) {
+            OUTPUTS = cscVal;
+            LCD_PRINT(clear, clear);
+            LCD_PRINT("csc(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("csc(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        } else if (!btn_read_sec) {
+            OUTPUTS = secVal;
+            LCD_PRINT(clear, clear);
+            LCD_PRINT("sec(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("sec(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        } else if (!btn_read_cot) {
+       LCD_PRINT(clear, clear);
+            OUTPUTS = cotVal;
+            LCD_PRINT("cot(" + String(value1) + ")", "OUTPUT: " + OUTPUTS);
+            Serial.println("cot(" + String(value1) + ") OUTPUT: " + OUTPUTS);
+        }
+    };
+
+    // LCD_PRINT(clear, clear); // Clear the LCD before displaying new output
+
+    switch (d) {
+        case 0:    setTrigOutput("0", "1", "0", "undef", "1", "undef"); break;
+        case 30:   setTrigOutput("1/2", "sqrt 3/2", "sqrt 3/3", "2", "2sqrt 3/3", "sqrt 3"); break;
+        case 45:   setTrigOutput("sqrt 2/2", "sqrt 2/2", "1", "sqrt 2", "sqrt 2", "1"); break;
+        case 60:   setTrigOutput("sqrt 3/2", "1/2", "sqrt 3", "2sqrt 3/3", "2", "sqrt 3/3"); break;
+        case 90:   setTrigOutput("1", "0", "undef", "1", "undef", "0"); break;
+        case 120:  setTrigOutput("sqrt 3/2", "-1/2", "-sqrt 3", "2sqrt 3/3", "-2", "-sqrt 3/3"); break;
+        case 135:  setTrigOutput("sqrt 2/2", "-sqrt 2/2", "-1", "sqrt 2", "-sqrt 2", "-1"); break;
+        case 150:  setTrigOutput("1/2", "-sqrt 3/2", "-sqrt 3/3", "2", "-2sqrt 3/3", "-sqrt 3"); break;
+        case 180:  setTrigOutput("0", "-1", "0", "undef", "-1", "undef"); break;
+        case 210:  setTrigOutput("-1/2", "-sqrt 3/2", "sqrt 3/3", "-2", "-2sqrt 3/3", "sqrt 3"); break;
+        case 225:  setTrigOutput("-sqrt 2/2", "-sqrt 2/2", "1", "-sqrt 2", "-sqrt 2", "1"); break;
+        case 240:  setTrigOutput("-sqrt 3/2", "-1/2", "sqrt 3", "-2sqrt 3/3", "-2", "sqrt 3/3"); break;
+        case 270:  setTrigOutput("-1", "0", "undef", "-1", "undef", "0"); break;
+        case 300:  setTrigOutput("-sqrt 3/2", "1/2", "-sqrt 3", "-2sqrt 3/3", "2", "-sqrt 3/3"); break;
+        case 315:  setTrigOutput("-sqrt 2/2", "sqrt 2/2", "-1", "-sqrt 2", "sqrt 2", "-1"); break;
+        case 330:  setTrigOutput("-1/2", "sqrt 3/2", "-sqrt 3/3", "-2", "2sqrt 3/3", "-sqrt 3"); break;
+        case 360:  setTrigOutput("0", "1", "0", "undef", "1", "undef"); break;
+        default:
+            OUTPUTS = "Angle not found";
+            LCD_PRINT("Error", "Angle not found");
+            Serial.println("Error: Angle not found");
+            break;
+    }
+}
+
+
+void GLOW_BTN() {
+  if (!btn_read_30) {
+    LED_SETUP(30);
+    value1 = 30.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("30", clear);
+  } else if (!btn_read_45) {
+    LED_SETUP(45);
+    value1 = 45.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("45", clear);
+  } else if (!btn_read_60) {
+    LED_SETUP(60);
+    value1 = 60.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("60", clear);
+  } else if (!btn_read_90) {
+    LED_SETUP(90);
+    value1 = 90.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("90", clear);
+  } else if (!btn_read_120) {
+    LED_SETUP(120);
+    value1 = 120.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("120", clear);
+  } else if (!btn_read_135) {
+    LED_SETUP(135);
+    value1 = 135.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("135", clear);
+  } else if (!btn_read_150) {
+    LED_SETUP(150);
+    value1 = 150.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("150", clear);
+  } else if (!btn_read_180) {
+    LED_SETUP(180);
+    value1 = 180.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("180", clear);
+  } else if (!btn_read_210) {
+    LED_SETUP(210);
+    value1 = 210.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("210", clear);
+  } else if (!btn_read_225) {
+    LED_SETUP(225);
+    value1 = 225.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("225", clear);
+  } else if (!btn_read_240) {
+    LED_SETUP(240);
+    value1 = 240.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("240", clear);
+  } else if (!btn_read_270) {
+    LED_SETUP(270);
+    value1 = 270.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("270", clear);
+  } else if (!btn_read_300) {
+    LED_SETUP(300);
+    value1 = 300.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("300", clear);
+  } else if (!btn_read_315) {
+    LED_SETUP(315);
+    value1 = 315.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("315", clear);
+  } else if (!btn_read_330) {
+    LED_SETUP(330);
+    value1 = 330.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("330", clear);
+  } else if (!btn_read_360) {
+    LED_SETUP(360);
+    value1 = 360.0;
+    LCD_PRINT(clear, clear);
+    LCD_PRINT("360", clear);
+  } else if (!btn_read_clear) {
+    LED_SETUP(0);
+    value1 = 0;
+    LCD_PRINT(clear, clear);
+  }  //ADD CLEAR FUNCTION HERE
+}
+
+void LED_SETUP(int data) {
+  digitalWrite(LED_30, data == 30 ? HIGH : LOW);
+  digitalWrite(LED_45, data == 45 ? HIGH : LOW);
+  digitalWrite(LED_60, data == 60 ? HIGH : LOW);
+  digitalWrite(LED_90, data == 90 ? HIGH : LOW);
+  digitalWrite(LED_120, data == 120 ? HIGH : LOW);
+  digitalWrite(LED_135, data == 135 ? HIGH : LOW);
+  digitalWrite(LED_150, data == 150 ? HIGH : LOW);
+  digitalWrite(LED_180, data == 180 ? HIGH : LOW);
+  digitalWrite(LED_210, data == 210 ? HIGH : LOW);
+  digitalWrite(LED_225, data == 225 ? HIGH : LOW);
+  digitalWrite(LED_240, data == 240 ? HIGH : LOW);
+  digitalWrite(LED_270, data == 270 ? HIGH : LOW);
+  digitalWrite(LED_300, data == 300 ? HIGH : LOW);
+  digitalWrite(LED_315, data == 315 ? HIGH : LOW);
+  digitalWrite(LED_330, data == 330 ? HIGH : LOW);
+  digitalWrite(LED_360, data == 360 ? HIGH : LOW);
+}
+void READ_BTN() {
+  btn_read_30 = digitalRead(2);
+  btn_read_45 = digitalRead(BTN_45);
+  btn_read_60 = digitalRead(BTN_60);
+  btn_read_90 = digitalRead(BTN_90);
+  btn_read_120 = digitalRead(BTN_120);
+  btn_read_135 = digitalRead(BTN_135);
+  btn_read_150 = digitalRead(BTN_150);
+  btn_read_180 = digitalRead(BTN_180);
+  btn_read_210 = digitalRead(BTN_210);
+  btn_read_225 = digitalRead(BTN_225);
+  btn_read_240 = digitalRead(BTN_240);
+  btn_read_270 = digitalRead(BTN_270);
+  btn_read_300 = digitalRead(BTN_300);
+  btn_read_315 = digitalRead(BTN_315);
+  btn_read_330 = digitalRead(BTN_330);
+  btn_read_360 = digitalRead(BTN_360);
+  btn_read_sin = digitalRead(BTN_SIN);
+  btn_read_cos = digitalRead(BTN_COS);
+  btn_read_tan = digitalRead(BTN_TAN);
+  btn_read_csc = digitalRead(BTN_CSC);
+  btn_read_sec = digitalRead(BTN_SEC);
+  btn_read_cot = digitalRead(BTN_COT);
+  btn_read_clear = digitalRead(BTN_CLEAR);
+}
+void LCD_SETUP() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("MATH RESEARCHERS");
+  lcd.setCursor(0, 1);
+  lcd.print("Initializing...");
+  delay(1000);
+  lcd.clear();
+}
+void LCD_PRINT(String one, String two) {
+  lcd.setCursor(0, 0);
+  lcd.print(one);
+  lcd.setCursor(0, 1);
+  lcd.print(two);
+}
+void BTN_INIT() {
+  pinMode(BTN_30, INPUT);
+  pinMode(BTN_45, INPUT);
+  pinMode(BTN_60, INPUT);
+  pinMode(BTN_90, INPUT);
+  pinMode(BTN_120, INPUT);
+  pinMode(BTN_135, INPUT);
+  pinMode(BTN_150, INPUT);
+  pinMode(BTN_180, INPUT);
+  pinMode(BTN_210, INPUT);
+  pinMode(BTN_225, INPUT);
+  pinMode(BTN_240, INPUT);
+  pinMode(BTN_270, INPUT);
+  pinMode(BTN_300, INPUT);
+  pinMode(BTN_315, INPUT);
+  pinMode(BTN_330, INPUT);
+  pinMode(BTN_360, INPUT);
+  pinMode(BTN_SIN, INPUT);
+  pinMode(BTN_COS, INPUT);
+  pinMode(BTN_TAN, INPUT);
+  pinMode(BTN_CSC, INPUT);
+  pinMode(BTN_SEC, INPUT);
+  pinMode(BTN_COT, INPUT);
+  pinMode(BTN_CLEAR, INPUT);
+}
+
+void LED_INIT() {
+  pinMode(LED_30, OUTPUT);
+  pinMode(LED_45, OUTPUT);
+  pinMode(LED_60, OUTPUT);
+  pinMode(LED_90, OUTPUT);
+  pinMode(LED_120, OUTPUT);
+  pinMode(LED_135, OUTPUT);
+  pinMode(LED_150, OUTPUT);
+  pinMode(LED_180, OUTPUT);
+  pinMode(LED_210, OUTPUT);
+  pinMode(LED_225, OUTPUT);
+  pinMode(LED_240, OUTPUT);
+  pinMode(LED_270, OUTPUT);
+  pinMode(LED_300, OUTPUT);
+  pinMode(LED_315, OUTPUT);
+  pinMode(LED_330, OUTPUT);
+  pinMode(LED_360, OUTPUT);
+}
+
+String SIN(float data) {
+  // Calculate sine
+  float sineValue = sin(data * PI / 180);
+
+  // Cosecant is undefined when sine is 0
+  if (sineValue == 0) {
+    return "Undefined";  // Cosecant undefined
+  }
+
+  return String(sineValue);  // Return the sine value
+}
+
+String COS(float data) {
+  // Calculate cosine
+  float cosineValue = cos(data * PI / 180);
+
+  // Secant is undefined when cosine is 0
+  if (cosineValue == 0) {
+    return "Undefined";  // Secant undefined
+  }
+
+  return String(cosineValue);  // Return the cosine value
+}
+
+String TAN(float data) {
+  // Check for angles where tangent is undefined
+  if (data == 90 || data == 270 || data == 90 + 180) {
+    return "Undefined";  // Tangent is undefined at these angles
+  }
+
+  // Compute the tangent
+  float tangentValue = tan(data * PI / 180);
+
+  // Check if the computed value is effectively zero
+  if (abs(tangentValue) < 1e-6) {  // Check for near-zero tangent
+    return "Undefined";            // Cotangent is undefined when tangent is 0
+  }
+
+  return String(tangentValue);  // Return the computed tangent value
+}
+
+
+
+String CSC(float data) {
+  float sineValue = sin(data * PI / 180);
+  if (abs(sineValue) < 1e-6) {
+    return "Undefined";  // or use NAN for a more accurate representation of undefined
+  }
+  return String(1.0 / sineValue);
+}
+
+
+String SEC(float data) {
+  float cosineValue = cos(data * PI / 180);
+  if (abs(cosineValue) < 1e-6) {
+    return "Undefined";  // or use NAN for a more accurate representation of undefined
+  } else {
+    return String(1.0 / cosineValue);
+  }
+}
+
+String COT(float data) {
+  float tangentValue = tan(data * PI / 180);
+  if (abs(tangentValue) < 1e-6) {
+    return "Undefined";  // or use NAN for a more accurate representation of undefined
+  }
+  return String(1.0 / tangentValue);
+}

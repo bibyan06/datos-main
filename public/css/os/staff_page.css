@@ -1,0 +1,594 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #E9ECF4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+    height: 60px;
+    background-color: #009FEA;
+    color: #fff;
+    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 3000;
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-header h1 {
+    color: #1845A2;
+    font-size: 20px;
+    text-shadow: #009FEA;
+}
+
+.left-header span {
+    color: #F47122;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.profile-icon{
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+.profile-icon img {
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* Navbar Styles */
+/* Navbar Styles */
+.navbar{
+    top: 0;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    width: 50px;
+    z-index: 2000;
+    bottom: 0;
+}
+
+.navbar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    padding: 20px 0;
+    height:100vh;
+    background-color: #FFFFFF;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.nav-icons {
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+    width: 100%;
+}
+
+.nav-icons li {
+    margin: 8px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    /* background-color: #e0e0e0; */
+
+}
+
+.icon-container i {
+    font-size: 20px; /* Adjust based on your needs */
+    color: #FE8926;
+}
+
+
+/* Active state for the icon */
+.icon-container i.active {
+    background-color: #103955; /* Background color for active state */
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container:hover {
+    background-color: #FE8926; /* Background color on hover */
+}
+
+.icon-container:hover i {
+    color: #FFFFFF; /* Icon color on hover */
+}
+
+.icon-container.active {
+    background-color: #FE8926; /* Background color when active */
+}
+
+.icon-container.active i {
+    color: #FFFFFF; /* Icon color when active */
+}
+
+
+.profile-settings {
+    margin-top: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+}
+
+.profile-settings .profile-pic {
+    height: 30px;
+    border-radius: 50%;
+
+}
+
+.profile-settings i {
+    font-size: 20px;
+}
+
+.profile-settings .icon-container {
+    margin-bottom: 10px;
+}
+
+.nav-logo {
+    height: 30px;
+    margin: 10px;
+}
+
+.logo-container{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #E9ECF4;
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+    transition: background-color 0.3s ease;
+}
+
+.logo-container:hover {
+    background-color: #e9ecef;
+}
+
+.logo-container i {
+    font-size: 20px;
+}
+
+/* Extra Sidebar Styles */
+.extra-sidebar {
+    position: fixed;
+    left: 50px;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1500;
+    height: 100vh;
+}
+
+.extra-sidebar.active {
+    transform: translateX(0);
+}
+
+/* Ensure the icon hover effect is consistent */
+.icon-container.active {
+    background-color: #FE8926; /* Background color when active */
+}
+
+.icon-container.active i {
+    color: #FFFFFF; /* Icon color when active */
+}
+
+/* Hover effect for corresponding sidebar items */
+.extra-sidebar ul li a.hovered {
+    background-color: #E9ECF4; /* Background color when hovered */
+    color: #FE8926; /* Text color when hovered */
+}
+
+
+.sidebar-content {
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.sidebar-title {
+    display: flex;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    position: relative; /* Ensure positioning context for the button */
+}
+
+.sidebar-title h3 {
+    margin: 0; /* Remove default margin */
+    padding: 5px;
+    font-size: 16px;
+    color: #FE8926;
+    font-weight: bolder;
+}
+
+.sidebar-title i {
+    margin-left: 80px;
+    font-size: 23px; /* Adjust size if needed */
+    color: #FE8926; /* Adjust color if needed */
+    justify-content: center;
+    right: 0;
+    text-align: right;
+}
+
+
+.sidebar-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar-content ul li {
+    font-size: 14px;
+    list-style: none;
+    margin: 8px 0;
+}
+
+.extra-sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top:5px;
+}
+
+.logout:hover{
+    color:red;
+}
+
+
+/* Maintain hover state on sidebar items */
+/* Default Sidebar Link Styling */
+.extra-sidebar ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 6px;
+}
+
+/* Hover Effect */
+.extra-sidebar ul li a:hover,
+.extra-sidebar ul li a.active { /* active class for selected link */
+    background-color: #FE8926;
+    color: #fff;
+}
+
+/* Optional: Change Icon Color on Hover */
+.extra-sidebar ul li a:hover i,
+.extra-sidebar ul li a.active i {
+    color: #fff;
+}
+
+
+
+
+/* Search Container Styles  */
+.search-container {
+    width: 250px; /* Adjust width as needed */
+    display: flex;
+    align-items: center;
+    position: relative;
+    float: right; /* Move to the right */
+    margin-right: 30px; /* Adjust margin as needed */
+}
+
+#sidebar-search {
+    width: 100%;
+    padding: 5px 10px;
+    padding-left: 30px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px; /* Adjust icon positioning */
+    font-size: 16px;
+    color: #888;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%; /* Position below the search input */
+    left: 0;
+    background-color: white;
+    /* border: 1px solid #ddd; */
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 10;
+    margin-top: 5px;
+}
+
+.search-result-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-result-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0;
+}
+
+.no-results {
+    color: black;
+}
+
+
+/* Additional CSS for the dropdown */
+
+
+.dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 20px; /* Adjust padding as needed */
+    color: #333;
+}
+
+.more-dropdown-menu {
+    display: none;
+    width:220px; /* Adjust width as needed */
+    position: absolute;
+    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
+    top: 200px; /* Adjust top as needed */
+    background-color: #FFFFFF; /* Same background as sidebar */
+    z-index: 1600; /* Ensure it appears above other content */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Slide up initially */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
+}
+
+.more-dropdown-active {
+    display: block;
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Slide down */
+}
+
+.more-dropdown-menu li a {
+    font-size: 14px; /* Adjust font size */
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.more-dropdown-menu li a:hover {
+    background-color: #f0f0f0; /* Add hover effect */
+    
+
+}
+
+.bi-chevron-right {
+    transition: transform 0.3s ease;
+}
+
+.more-dropdown-active .bi-chevron-right {
+    transform: rotate(90deg);
+}
+
+
+.profile-content {
+    position: absolute;
+    bottom: 0;
+    width: 85%;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+.profile-content ul {
+    list-style: none;
+    margin: 0;
+    bottom: 0;
+    text-align: left;
+}
+
+.profile-content ul li {
+    font-size: 14px;
+    list-style: none;
+    margin: 6px 0;
+}
+
+.profile-content ul li a {
+    padding-top: 15px;
+    display: block; 
+    text-decoration: none;
+    color: #009FEA; 
+    border-radius: 4px;
+    transition: background-color 0.3s ease; 
+}
+
+.profile-content ul li a:hover {
+    background-color: #E9ECF4;
+    color: #FE8926;
+}
+
+.navbar-divider {
+    width: 100%;
+    height: 2px;
+    background-color: #009FEA;
+    margin: 5px;
+}
+
+.suggestions-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+.suggestions-container .suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.suggestions-container .suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestions-container .suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto; 
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    margin-left: 50px;
+    z-index: 1000;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 1em;
+    color: #666;
+}
+
+.footer-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.status-approved {
+    color: green;
+}
+.status-declined {
+    color: red;
+}
+.status-pending {
+    color: orange;
+}
+
+/* notification */
+
+.custom-swal-width {
+    max-width: 80vw; 
+    width: 80vw;
+    height: 85vh; 
+    overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.custom-title {
+    margin-bottom: 15px; 
+}
+
+.custom-content {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1em;
+    line-height: 1.5;  
+}
+
+.email-item.seen {
+    font-weight: normal;
+}
+
+.icon-container {
+    position: relative; 
+}
+.badge {
+    position: absolute;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#notification-count {
+    background-color: red; 
+    color: white; 
+    border-radius: 50%; 
+    padding: 5px 10px; 
+    position: absolute; 
+    top: 5px; 
+    right: 5px; 
+    font-size: 12px; 
+}

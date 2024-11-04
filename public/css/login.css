@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .bg-blue-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 159 234 / var(--tw-bg-opacity));
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 650px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  
+  .bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 650px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 4rem;
+  }
+
+  .container {
+    /* background-color: #fff; */
+    padding: 30px;
+    border-radius: 1rem;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    /* max-width: 100%;  */
+    height: 800px;
+    display: flex;
+    flex-direction: column; /* added flex direction */
+    justify-content: center;
+    align-items: center;
+}
+  
+  .welcome-header {
+    font-size: 22px;
+    line-height: 42px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .logo {
+    text-align: center;
+    width: 12rem;
+    margin: 0 auto; 
+  }
+  
+  .account-link {
+    text-align: center;
+    margin-top: 10px; /* Add some space above the link */
+    font-size: 13px;
+  }
+  
+  form {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    /* margin: 10px 0; */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .password-input{
+    margin-top:19px;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  button[type="submit"] {
+    background-color: #009FEA;
+    color: #fff;
+    padding: 9px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 10rem;
+    display:flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+ 
+  
+  button[type="submit"]:hover {
+    background-color: #1845A2;
+    opacity: 0.9;
+  }
+  
+  .forgot {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .forgot a {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  .image-container {
+    position: relative;
+    max-width: 350px; /* updated width to be more responsive */
+    height: 350px;
+    margin-left: 30px;
+}
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .w-48 {
+    align-items: center;
+    height: 7rem;
+    width: 12rem;
+   }
+
+   .mb-2 {
+        margin-bottom: 0.2rem;
+   }
+   
+   .password-input {
+    position: relative; /* To position the eye icon */
+  }
+
+  .show-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .show-password:hover {
+    color: #666;
+  }
+  
+  input[type="password"] {
+    padding-right: 30px; /* Make room for the eye icon */
+  }
+
+  #eye-icon {
+    font-size: 18px;
+    margin-top: 27px;
+  }
+
+  .error-modal{
+    background-color:#f4ebebf4;
+    height: 14rem;
+    width: 22rem;
+    z-index: 50;
+  }
+
+  .error-modal-pass{
+    background-color:#f4ebebf4;
+    height: 10rem;
+    width: 22rem;
+    z-index: 50;
+  }
+  
+
+  .okay-button{
+    height: 3rem;
+    width: 6rem;
+    border-radius: 10px;
+  }
+
+  .fixed.inset-0.bg-black.opacity-10 {
+    z-index: 40; /* Lower than modal z-index */
+  }
+
+  /* Responsive design */
+@media (max-width: 1200px) {
+  .container {
+      width: 80%;
+      margin: 0 auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .image-container {
+      width: 50%;
+  }
+}
+  

@@ -1,0 +1,131 @@
+/*Report Section*/
+
+.reports-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px;
+}
+
+.report {
+    text-align: center;
+    background-color: #DDDDDD;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 250px;
+    box-shadow: 0 2px 4px rgba(152,154,160, 0.9);
+}
+
+.report h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #333;
+}
+
+.report h4 {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    color: #666;
+}
+
+
+/*content section*/
+
+.dashboard-container {
+    margin: 30px;
+    padding: 20px;
+    display: block;
+
+}
+.dashboard-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-title h2 {
+    margin: 0;
+}
+
+.dashboard-title .search {
+    display: flex;
+    gap: 10px;
+
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    background-color: #FEFEFF;
+    cursor: pointer;
+}
+
+.search select:focus {
+    outline: none;
+    border-color: #989AA0;
+}
+
+.documents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.document {
+    background-color: #989AA0;
+    box-shadow: 3px 3px 3px  rgba(152,154,160, 0.4);
+    display: block;
+    margin: 10px;
+    width: calc(33% - 40px);
+}
+
+.file-container{
+    display: block;
+    background-color: #DDDDDD;
+    padding: 10px;
+}
+
+.document-description{
+    display: block;                                    
+    background-color: #FEFEFF;   
+    padding: 10px;                                    
+
+}                   
+
+#dashboard-content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+#dashboard-content.shifted {
+    margin-left: 250px;
+}
+
+/* Dropdown Dashboard*/
+
+#dropdown-icon{
+    margin-left: 10px;
+}
+
+.dropdown a{
+    font-size: 12px;
+}
+
+.dropdown {
+    display: none;
+    margin-left: 10px;
+}
+
+.dropdown-toggle:hover + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+

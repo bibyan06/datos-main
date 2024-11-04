@@ -1,0 +1,372 @@
+main {
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+#dashboard-content {
+    flex: 1;
+    margin-left: 50px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+#dashboard-section {
+    height: 100vh;
+    width: auto;
+    margin-top: 40px;
+}
+.dashboard-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.dashboard-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.dashboard-title h2 {
+    font-size: 24px;
+    color: #009FEA;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title-content {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.title-content h3 {
+    font-size: 20px;
+    color: #F47122;
+    margin-left: 50px;
+    margin-right: 10em;
+}
+
+.title-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    margin-left: 200px;
+ 
+}
+
+
+.dean-search-bar{
+    display: flex;
+    width: 50px;
+    padding-left: 40px;
+    margin-right: 15em;
+}
+
+.dean-search-bar .search-text{
+    align-items: center;
+    justify-content: center;
+    background-color: #DDDDDD;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    outline: none;
+    padding: 5px;
+    flex: 1;
+    border-radius: 5px 0 0 5px;
+    height: 30px; /* Set the height to match the icon */
+}
+
+.icon{
+    background-color: #DDDDDD;
+    border-radius: 0 5px 5px 0;
+    padding: 5px;
+    height: 30px; /* Set the height to match the search text */
+    display: flex;
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon horizontally */
+    
+}
+#pending-count,#notification-counts {
+    position: absolute;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.option-text{
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+ 
+    height: 30px;
+    width: 35px;
+}
+
+
+.show-dean{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 50px;
+}
+
+.show-dean h5{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+.dashboard-container{
+    padding: 5px 50px 10px;
+}
+
+/* Button Styles */
+
+.add-account{
+    justify-content: center;
+    margin-left: 16rem;
+}
+
+.account-btn {
+    display: inline-block;
+    background-color: #F47122;
+    border-radius: 5px;
+    padding: 5px;
+    border:none;
+    text-align: center;
+    font-family: 'Poppins';
+}
+
+
+.add-college{
+    justify-content: center;
+    margin-left: 25px ;
+}
+
+.college-btn {
+    display: inline-block;
+    background-color: #F47122;
+    border-radius: 5px;
+    border:none;
+    padding: 5px;
+    text-align: center;
+    font-family: 'Poppins';
+}
+
+
+.add-account .account-btn:hover {
+    background-color: #DDDDDD; 
+}
+
+.add-college .college-btn:hover {
+    background-color: #DDDDDD; 
+}
+
+
+
+/* Overlay */
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+
+/* Popup Form */
+.popup-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+}
+
+.popup-form h2 {
+    margin-bottom: 20px;
+    color: #F47122;
+}
+
+.popup-form .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.popup-form .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.popup-form .form-group:last-child {
+    margin-right: 0;
+}
+
+.popup-form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup-form .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup-form .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.popup-form .form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.popup-form .form-buttons button#cancel-btn {
+    background: #f44336;
+    color: white;
+    font-family: 'Poppins';
+}
+
+.popup-form .form-buttons button#add-account-btn {
+    background: #F47122;
+    color: white;
+    font-family: 'Poppins';
+}
+
+/* Add college */
+
+/* Popup Form */
+.popup-form-1 {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+}
+
+.popup-form-1 h2 {
+    margin-bottom: 20px;
+    color: #F47122;
+}
+
+.popup-form-1 .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.popup-form-1 .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.popup-form-1 .form-group:last-child {
+    margin-right: 0;
+}
+
+.popup-form-1 .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup-form-1 .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup-form-1 .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.popup-form-1 .form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.popup-form-1 .form-buttons button#cancel-btn {
+    background: #f44336;
+    color: white;
+    font-family: 'Poppins';
+}
+
+.popup-form-1 .form-buttons button#add-account-btn {
+    background: #F47122;
+    color: white;
+    font-family: 'Poppins';
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+    color: #fff;
+    margin-top: 10px;
+}

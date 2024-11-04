@@ -1,0 +1,134 @@
+main {
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+#main-content {
+    flex: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+#account-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.card {
+    display: block;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    text-align: center;
+    margin: 40px;
+    padding: 30px;
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.account-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.account-cont {
+    display: block;
+    margin-left: 20px;
+    text-align: left;
+    font-family: 'Poppins';
+    font-weight: 600;
+}
+
+.card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.card .name {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.card .role {
+    color: gray;
+    font-size: 0.9em;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 20px;
+    font-family: 'Poppins';
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensure the label takes up full height of its container */
+    color: #1845A2;
+}
+
+.info-text {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.label h6, .info-text h6 {
+    margin-bottom: 5px;
+}
+
+.info-input {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 8px;
+}
+
+.info-input input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins';
+}
+
+.label.editing {
+    gap: 8px; /* Ensure the labels have the same gap as the inputs */
+}
+
+.edit-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Poppins';
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+#account-content.shifted {
+    margin-left: 250px;
+}

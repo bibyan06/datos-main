@@ -1,0 +1,117 @@
+#view-section {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+main {
+    flex-grow: 1;
+    margin-left: 50px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+
+.documents-content {
+    padding: 20px;
+}
+
+.doc-container {
+    background-color: #FEFEFF;
+    display: block;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.view-documents {
+    padding: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.doc-description {
+    margin: 20px;
+    text-align: left;
+}
+
+.back-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    color: #5B5B5D; /* Change color as needed */
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.back-icon .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: -25px; /* Adjust as needed */
+    right: 0;
+    background: #009FEA;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.back-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.viewing-btn {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 15px; /* Space between buttons */
+    margin: 20px 0; /* Space above and below the button group */
+    padding-left: 30px;
+}
+
+.viewing-btn button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    font-size: 14px; /* Make buttons more prominent */
+    font-family: 'Poppins';
+}
+
+.viewing-btn button:hover {
+    background-color: #0056b3;
+}
+
+.file-title {
+    padding-bottom: 10px;
+}
+
+.description h5 {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.doc-file {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+}
+
+.doc-file iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    overflow: auto; /* Ensure scrolling is enabled */
+}
+
+
