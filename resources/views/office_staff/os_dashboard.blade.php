@@ -31,16 +31,27 @@
         <div id="dashboard-section">
             <div class="dashboard-container">
                 <div class="dashboard-title">
-                    <h2>Document Report</h2>
-                    <div class="search">
-                        <select id="category-filter">
-                            <option value="" disabled selected>Select Document</option>
-                            <option value="" selected>All</option>
-                            <option value="Memorandum">Memorandum</option>
-                            <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
-                            <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
-                            <option value="Claim Monitoring Sheet">Claim Monitoring Sheet</option>
-                        </select>
+                    <h2>Overview</h2>
+                    <div class="filter-container">
+                        <div class="status-filter">
+                            <select id="status-filter">
+                                <option value="" disabled selected>Select Status</option>
+                                <option value="all" selected>All</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="declined">Declined</option>
+                            </select>
+                        </div>
+                        <div class="document-filter">
+                            <select id="category-filter">
+                                <option value="" disabled selected>Select a Document</option>
+                                <option value="all" selected>All</option>
+                                <option value="Memorandum">Memorandum</option>
+                                <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
+                                <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
+                                <option value="Claim Monitoring Sheet">Claim Monitoring Sheet</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <table class="table">

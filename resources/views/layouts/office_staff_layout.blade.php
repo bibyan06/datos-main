@@ -85,7 +85,7 @@
             </div>
             <ul>
                 <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
-                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Digitized Report</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Overview</a></li>
                 <li>
                     <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
                     

@@ -42,6 +42,18 @@ main {
 }
 
 
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* space between filters */
+  }
+  
+  .filter-container select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+
 
 #dashboard-section {
     margin-top: 40px;
