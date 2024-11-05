@@ -30,9 +30,9 @@
                 <input type="text" id="sidebar-search" placeholder="Search">
                 <i class="bi bi-search"></i>
             </div>
-            <div class="profile-icon">
+            <div class="profile-icon" id="profile-icon-container">
                 <img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" id="profile-icon">
-                <div class="dropdown-menu" id="profile-dropdown">
+                <div class="profile-dropdown" id="profile-dropdown">
                     <a href="{{ route('dean.dean_account') }}"><i class="bi bi-person-circle" id="account-icon">
                         </i>Account</a>
                     <a href="#"
