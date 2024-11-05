@@ -83,7 +83,7 @@ class NotificationController extends Controller
             $forwardedDocuments->update();
             return response()->json([
                 'success' => true,
-                'message' => 'Document ' . $status . ' successfully.',
+                'message' => 'Document ' . ($status=='seen'?'Restored':$status) . ' successfully.',
             ]);
         }
     }
@@ -97,7 +97,7 @@ class NotificationController extends Controller
             $forwardedDocuments->update();
             return response()->json([
                 'success' => true,
-                'message' => 'Document ' . $status . ' successfully.',
+                'message' => 'Document ' . ($status=='seen'?'Restored':$status) . ' successfully.',
             ]);
         }
     }

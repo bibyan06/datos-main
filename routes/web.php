@@ -153,9 +153,9 @@ Route::middleware(['auth', 'role:3'])->group(function () {
 
     Route::get('/home/dean', [DeanController::class, 'showDeanHome'])->name('home.dean');
     Route::prefix('dean')->group(function () {
-        Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile']);
+        Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile'])->name('profile.office.update');
         Route::get('/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
-        Route::get('/dean_account', [DeanController::class, 'dean_account'])->name('dean.dean_account');
+        Route::get('/dean_account', [ProfileController::class, 'dean_account'])->name('dean.dean_account');
         Route::get('/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean.dean_upload_document');
         Route::prefix('documents')->group(function () {
 
@@ -214,6 +214,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthLoginController::class, 'logout'])->name('logout');
     Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
     Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+    Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
     Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
     Route::post('/dean_request', [RequestController::class, 'index'])->name('dean.request');
     Route::get('/verification', function (Request $req) {

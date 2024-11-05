@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\College;
 use App\Models\Document;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 
 use App\Models\User;
@@ -13,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Employee;
 use App\Models\ForwardedDocument;
+use App\Models\SendDocument;
 use App\Models\Role; // Include the Role model
 use Illuminate\Support\Facades\Log;
 
@@ -190,13 +190,30 @@ class DeanController extends Controller
         }
     }
     public function archiveDocs(){
-        $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
-        $forward = Document::with(['user','tags'])->where('forwarded_to',$id)->where('status','archive')->get();
-        return view('dean.dean_archive',compact('forward'));
+        $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'archive')->get();
+        
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_by', $id)->where('status', 'archive')->get();
+        return view('dean.dean_archive', compact('forward'));
     }
     public function trash(){
-        $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
-        $forward = ForwardedDocument::with(['forwardedTo','documents', 'forwardedBy'])->where('forwarded_to',$id)->where('status','deleted')->get();
-        return view('dean.dean_trash',compact('forward'));
+        $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'deleted')->get();
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_to', $id)->where('status', 'deleted')->get();
+    
+        return view('dean.dean_trash', compact('forward', 'sent'));
+    }
+    public function restoreDocs($id)
+    {
+        $docs = Document::where('document_id', $id)->first();
+        if ($docs) {
+            $docs->status = NULL;
+            $docs->updated_at = now();
+            $docs->update();
+            return response()->json([
+                'success' => true,
+                'message' => 'Document restored successfully.',
+            ]);
+        }
     }
 }

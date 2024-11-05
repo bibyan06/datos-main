@@ -181,3 +181,21 @@ function fetchNotificationCount() {
             console.error('There was a problem with the fetch operation:', error);
         });
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const profileIcon = document.getElementById("profile-icon");
+    const profileDropdown = document.getElementById("profile-dropdown");
+
+    profileIcon.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent event from bubbling up
+        profileDropdown.style.display = profileDropdown.style.display === "block" ? "none" : "block";
+    });
+
+    // Hide the dropdown if clicking outside of it
+    document.addEventListener("click", function (event) {
+        if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.style.display = "none";
+        }
+    });
+});

@@ -22,7 +22,7 @@
     <div id="dashboard-section">
         <div class="dashboard-container">
             @if ($forward->isEmpty() && $forward->isEmpty())
-                <p class="no-notifications">You have no Archive at this time.</p>
+                <p class="no-notifications">You have no Archive Notification at this time.</p>
             @endif
             <table class="email-list">
                 @if ($forward)
@@ -33,17 +33,16 @@
                             <td class="subject">
 
                                 <span class="snippet">Employee -
-                                    {{ $r->forwardedTo->first_name . ' ' . $r->forwardedTo->last_name }} forwarded a
-                                    document
+                                    {{ $r->forwardedTo->first_name . ' ' . $r->forwardedTo->last_name }} forwarded a document
                                     regarding the {{ $r->documents->category_name }}
                                     - {{ $r->documents->description }}</span>
                             </td>
                             <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }}
                             </td>
                             <td class="email-actions">
-                                <a notif-id={{ $r->forwarded_document_id }} status= 'delivered' class = "notifForward"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-arrow-counterclockwise"
-                                        title="Restore"></i></a>
+                            <a notif-id={{ $r->forwarded_document_id }} status= 'seen'
+                            class = "notifForward" style="text-decoration: none; color:black;"><i
+                                class="bi bi-arrow-counterclockwise" title="Restore"></i></a>
 
                             </td>
                         </tr>
@@ -53,6 +52,7 @@
         </div>
     </div>
 @endsection
+
 
 
 @section('custom-js')

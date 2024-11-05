@@ -185,4 +185,5 @@
 
 @section('custom-js')
     <script src="{{ asset('js/dean/dean_account.js') }}"></script>
+    <script>const profileUpdateUrl = "/dean/update-profile";</script>
 @endsection

@@ -39,7 +39,7 @@
                     <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }}</td>
                     <td class="email-actions">
 
-                        <a notif-id={{ $r->forwarded_document_id }} status= 'delivered'
+                        <a notif-id={{ $r->forwarded_document_id }} status= 'seen'
                             class = "notifForward" style="text-decoration: none; color:black;"><i
                                 class="bi bi-arrow-counterclockwise" title="Restore"></i></a>
 

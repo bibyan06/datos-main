@@ -43,7 +43,8 @@
                                 <a notif-id={{ $r->forwarded_document_id }} status= 'seen'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $r->forwarded_document_id }}  class = "deleteForward"
+                                <a delete-id={{ $r->forwarded_document_id }} status= 'delete'
+                                    class = "deleteForward"
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>
                             </td>

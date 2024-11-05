@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .snippet`).style.fontWeight = 'normal';
                                     });
                             } else {
                                 Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
@@ -93,4 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+   
 });

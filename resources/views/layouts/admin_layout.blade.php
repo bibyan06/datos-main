@@ -31,9 +31,9 @@
                 <input type="text" id="sidebar-search" placeholder="Search">
                 <i class="bi bi-search"></i>
             </div>
-            <div class="profile-icon">
-                <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
-                <div class="dropdown-menu" id="profile-dropdown">
+            <div class="profile-icon" id="profile-icon-container">
+                <img src="{{ asset('images/girl-1.png') }}" alt="Profile Icon" id="profile-icon">
+                <div class="profile-dropdown" id="profile-dropdown">
                     <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon">
                         </i>Account</a>
                     <a href="#"

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -44,7 +45,7 @@ class ProfileController extends Controller
             return redirect()->route('home')->with('error', 'User not found.');
         }
         
-        return view('office_staff.dean_account', compact('user'));
+        return view('dean.dean_account', compact('user'));
     }
 
 
