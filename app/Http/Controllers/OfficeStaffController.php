@@ -112,7 +112,7 @@ class OfficeStaffController extends Controller
 
     public function showHomePage()
     {
-       $documents = Document::where('document_status', 'Approved')->where('status',NULL)->get();
+        $documents = Document::where('document_status', '=', 'Approved')->get();
         return view('home.office_staff', compact('documents'));
     }
 
@@ -260,9 +260,6 @@ class OfficeStaffController extends Controller
         $documentId = $request->input('document_id');
         $employeeId = $request->input('employee_id');
         
-        // Your logic for forwarding the document (e.g., saving the forwarding record to the database)
-        // Example: DocumentForwarding::create([...]);
-
         return response()->json(['message' => 'Document forwarded successfully!']);
     }
 

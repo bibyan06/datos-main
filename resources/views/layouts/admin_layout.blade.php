@@ -84,7 +84,7 @@
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">
-                        <i class="bi bi-bell-fill" id="notification-icon"></i>
+                        <i class="bi bi-bell-fill" id="notification-count"></i>
                         {{-- @if (isset($notificationCount) && $notificationCount > 0) --}}
                             <span class="badge badge-pill badge-danger"
                                 id="notification-counts"></span>
@@ -105,7 +105,7 @@
             <div class="profile-settings">
                 <div class="profile-settings">
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#sidebar"><img src="{{ asset('images/boy-1.png') }}"
+                    <div class="icon-container" data-target="#sidebar"><img src="{{ asset('images/girl-1.png') }}"
                             alt="Profile Icon" class="profile-pic"></div>
                 </div>
 
@@ -154,12 +154,12 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i
+                    <a href="#" class="pending-dropdown-toggle" id="digitized">Review <i
                             class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
                         <li><a href="{{ route('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
                         <li><a href="{{ route('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
-                        <li><a href="{{ route('admin.documents.review_docs') }}" id="request">Review</a></li>
+                        <li><a href="{{ route('admin.documents.review_docs') }}" id="request">Pendings</a></li>
                         <li><a href="{{ route('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
                 </li>

@@ -12,7 +12,7 @@
 @section('content')
     <section class="title">
         <div class="title-content">
-            <h3>Archive Document</h3>
+            <h3>Archive</h3>
             <div class="date-time">
                 <i class="bi bi-calendar2-week-fill"></i>
                 <p id="current-date-time"></p>
@@ -36,7 +36,7 @@
                         <span class="snippet">Employee - {{$r->forwardedTo->first_name." ".$r->forwardedTo->last_name}} forwarded a document regarding the {{$r->documents->category_name}}
                             - {{$r->documents->description}}</span>
                     </td>
-                    <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }}</td>
+                    <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
                     <td class="email-actions">
 
                         <a notif-id={{ $r->forwarded_document_id }} status= 'seen'

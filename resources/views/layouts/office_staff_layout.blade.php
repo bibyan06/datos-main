@@ -70,7 +70,7 @@
             <div class="profile-settings">
                 <div class="profile-settings">
                     <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
+                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-2.png') }}" alt="Profile Icon" class="profile-pic"></div>
                 </div>
                 
             </div>

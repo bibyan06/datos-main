@@ -336,9 +336,6 @@ header {
     color: #fff;
 }
 
-
-
-
 /* Search Container Styles  */
 .search-container {
     width: 250px; /* Adjust width as needed */
@@ -559,13 +556,25 @@ footer {
 }
 
 .status-approved {
-    color: green;
+    color: whitesmoke;
+    background: #87ab69;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 4px
 }
 .status-declined {
-    color: red;
+    color: whitesmoke;
+    background: #f94449;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 4px
 }
 .status-pending {
-    color: orange;
+    color: whitesmoke;
+    background: orange;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 4px
 }
 
 /* notification */
@@ -615,4 +624,46 @@ footer {
     top: 5px; 
     right: 5px; 
     font-size: 12px; 
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+tbody td {
+    border: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size:14px;
+}
+
+thead th {
+    border: none;
+    padding-top: 8px;
+    padding-bottom: 6px;
+    font-size:14px;   
+}
+
+thead tr{
+    background-color: #ffa652;
+}
+
+th, td {
+    
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 3px solid #d7d7d7; 
+
+}
+
+tbody tr:last-child {
+    border-bottom: 3px solid #d7d7d7; 
 }

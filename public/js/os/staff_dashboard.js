@@ -18,3 +18,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.getElementById('status-filter').addEventListener('change', filterDocuments);
+        document.getElementById('category-filter').addEventListener('change', filterDocuments);
+
+        function filterDocuments() {
+            const status = document.getElementById('status-filter').value.toLowerCase();
+            const category = document.getElementById('category-filter').value.toLowerCase();
+            
+            document.querySelectorAll('#documents-table tr').forEach(row => {
+                const rowStatus = row.getAttribute('data-status').toLowerCase();
+                const rowCategory = row.getAttribute('data-category').toLowerCase();
+
+                const matchesStatus = status === 'all' || rowStatus === status;
+                const matchesCategory = category === 'all' || rowCategory === category;
+
+                row.style.display = matchesStatus && matchesCategory ? '' : 'none';
+            });
+        }

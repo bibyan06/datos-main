@@ -36,10 +36,10 @@ class AuthLoginController extends Controller
             $this->updateLoginSession(Auth::user()->employee_id);
             return $this->sendLoginResponse($request);
         }else if(!Auth::attempt($credentials)){
-            return redirect()->back()->with('error', 'Wrong Credentials Please Try Again!')
+            return redirect()->back()->with('error', 'Invalid Employee ID or Password. Please try again!')
                 ->with('email', $request->employee_id);
         }else if(!$employee) {
-            return redirect()->back()->with('error', 'Please verify your Account First!')
+            return redirect()->back()->with('error', 'Please verify your account first!')
                 ->with('email', $request->employee_id);
 
            

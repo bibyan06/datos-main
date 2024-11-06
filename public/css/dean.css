@@ -5,7 +5,7 @@ main {
 }
 #dashboard-content {
     flex: 1;
-    margin-left: 50px;
+    margin-left: 18px;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
     height: 100vh;
@@ -36,7 +36,7 @@ main {
 .title {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -134,7 +134,7 @@ main {
 
 
 .dashboard-container{
-    padding: 5px 50px 10px;
+    padding: 10px 50px 10px;
 }
 
 /* Button Styles */
@@ -146,9 +146,9 @@ main {
 
 .account-btn {
     display: inline-block;
-    background-color: #F47122;
+    background-color: #ff8d21;
     border-radius: 5px;
-    padding: 5px;
+    padding: 7px;
     border:none;
     text-align: center;
     font-family: 'Poppins';
@@ -162,10 +162,10 @@ main {
 
 .college-btn {
     display: inline-block;
-    background-color: #F47122;
+    background-color: #ff8d21;
     border-radius: 5px;
     border:none;
-    padding: 5px;
+    padding: 7px;
     text-align: center;
     font-family: 'Poppins';
 }
@@ -179,6 +179,21 @@ main {
     background-color: #DDDDDD; 
 }
 
+#college {
+    width: 102%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+}
 
 
 /* Overlay */
@@ -217,6 +232,7 @@ main {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .popup-form .form-group {

@@ -5,11 +5,21 @@ main {
 }
 #dashboard-content {
     flex: 1;
-    margin-left: 50px;
+    margin-left: 20px;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
     height: 100vh;
 }
+
+#dashboard-contents {
+    flex: 1;
+    margin-left: 55px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+
 
 #dashboard-section {
     height: 100vh;
@@ -92,9 +102,8 @@ main {
     font-size: 19px;
     padding-left: 10px;
     padding-right: 10px;
-    
     border-radius: 5px;
-    background-color: #FFA500;
+    /* background-color: #FFA500; */
     transition: background-color 0.2s ease;
 }
 

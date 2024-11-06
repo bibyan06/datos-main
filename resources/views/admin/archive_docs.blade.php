@@ -11,7 +11,7 @@
 @section('content')
     <section class="title">
         <div class="title-content">
-            <h3>Archives</h3>
+            <h3>Archive</h3>
             <div class="date-time">
                 <i class="bi bi-calendar2-week-fill"></i>
                 <p id="current-date-time"></p>

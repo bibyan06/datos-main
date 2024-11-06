@@ -165,7 +165,7 @@
                 // Explicitly append the file to the FormData object
                 formData.append('file', file);
     
-                fetch("{{ route('admin.admin_upload_document') }}", {
+                fetch("{{ route('office_staff.os_upload_document') }}", {
                     method: "POST",
                     body: formData,
                     headers: {

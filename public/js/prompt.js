@@ -43,11 +43,10 @@ notifButtons.forEach(btn => {
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
-        
         Swal.fire({
             title: 'Are you sure?',
-            text:  `Do you want to ${status=="seen"?"Restored":status} this item?`,
-            icon: status=="archive"||status=="delivered"?'warning':'error',
+            text: `Do you want to ${status === "deleted" ? "delete" : (status === "seen" ? "restore" : status)} this item?`,            
+            icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -60,7 +59,7 @@ notifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${status=="seen"?"Restored":status}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLowerCase()=="seen"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -68,7 +67,6 @@ notifButtons.forEach(btn => {
                     Swal.fire('Error!', data.message, 'error');
                 }
                })
-                // Additional logic for archiving can be added here
             }
         });
     });
@@ -99,7 +97,7 @@ sentnotifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${status=="seen"?"Restored":status}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="seen"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -162,7 +160,7 @@ deletesentButtons.forEach(btn => {
         
         Swal.fire({
             title: 'Are you sure?',
-            text:  `Do you want to ${status=="delivered"?"Restored":status} this item?`,
+            text:  `Do you want to ${status=="delivered"?"restored":status} this item?`,
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -227,3 +225,7 @@ restoredocs.forEach(btn => {
         });
     });
 });
+
+function capital(text){
+    return String(text).charAt(0).toUpperCase()+String(text).slice(1);
+}

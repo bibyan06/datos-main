@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset ('css/approved.css') }}">
 @endsection
 
-@section('main-id','dashboard-content')
+@section('main-id','dashboard-contents')
 
 @section('content') 
             <section class="title">

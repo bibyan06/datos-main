@@ -46,7 +46,7 @@
     <!-- Error Modal -->
     @if (session('error'))
         <div id="errorModal" class="fixed inset-0 flex items-center justify-center z-50">
-            <div class="{{session('error')=='Please verify your Account First!'?'error-modal':'error-modal-pass'}} bg-white p-4 rounded shadow-md text-center relative z-50">
+            <div class="{{session('error')=='Please verify your account first!'?'error-modal':'error-modal-pass'}} bg-white p-4 rounded shadow-md text-center relative z-50">
                 <h2 class="text-red-500 text-lg font-bold mb-4">Error</h2>
                 <p class="text-gray-700 mb-4">{{ session('error') }}</p>
 

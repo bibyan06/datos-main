@@ -37,7 +37,7 @@
                                     regarding the {{ $r->documents->category_name }}
                                     - {{ $r->documents->description }}</span>
                             </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }}
+                            <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}
                             </td>
                             <td class="email-actions">
                                 <a notif-id={{ $r->forwarded_document_id }} status= 'seen'

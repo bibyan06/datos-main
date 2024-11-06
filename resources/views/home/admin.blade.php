@@ -76,7 +76,7 @@
                 @foreach($documents as $document)
                 <div class="documents-content">
                     <div class="document-card">
-                        <!-- Use iframe to display the PDF -->
+                        <!-- Display PDF in iframe -->
                         <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
                         <div class="content">
                             <div class="row">
@@ -90,7 +90,7 @@
                                         <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" class="view-btn">View</a>
                                         <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
                                         <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
-                                        <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>                           
+                                        <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
                                         <a data-id="{{$document->document_id}}" class="forward-btns archive" style="cursor: pointer">Archive</a>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                 </div>
                 @endforeach
             @endif
-        </section>     
+        </section>
     </main>
 @endsection
 

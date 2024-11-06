@@ -202,9 +202,9 @@ class AdminController extends Controller
 
     public function adminHome()
     {
-        // Fetch the documents from the database
-        $documents = Document::where('document_status', 'Approved')->where('status', NULL)->get();
-
+       
+        $documents = Document::where('document_status', '=', 'Approved')->get();
+    
         return view('home.admin', compact('documents'));
     }
 
