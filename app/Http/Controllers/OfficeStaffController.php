@@ -112,7 +112,7 @@ class OfficeStaffController extends Controller
 
     public function showHomePage()
     {
-       $documents = Document::where('document_status', 'Approved')->where('status',NULL)->get(); // or any other query
+       $documents = Document::where('document_status', 'Approved')->where('status',NULL)->get();
         return view('home.office_staff', compact('documents'));
     }
 

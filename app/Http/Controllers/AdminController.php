@@ -205,7 +205,6 @@ class AdminController extends Controller
         // Fetch the documents from the database
         $documents = Document::where('document_status', 'Approved')->where('status', NULL)->get();
 
-        // Pass the documents to the view
         return view('home.admin', compact('documents'));
     }
 

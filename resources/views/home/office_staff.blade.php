@@ -86,7 +86,8 @@
                                     <p>{{ Str::limit($document->description, 100) }}</p>
                                 </div>
                                 <div class="column right">
-                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                    <a href="#" class="dropdown-toggle">
+                                        <i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
                                     <div class="dropdown-more">
                                         <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}" class="view-btn">View</a>
                                         <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>

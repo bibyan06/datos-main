@@ -55,7 +55,7 @@
                                         </form>
                                         <button type="button" class="btn btn-danger decline-btn" data-document-id="{{ $document->document_id }}">Decline</button>                                        
                                     </td>
-                                    <td>
+                                    <td class="review-icon">
                                         <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
                                             <i class="bi bi-eye"></i>
                                         </a>

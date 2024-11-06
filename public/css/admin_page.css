@@ -768,18 +768,11 @@ footer {
 table {
     width: 100%;
     border-collapse: collapse;
+    
 }
-th, td {
-    /* border: 1px solid #dddddd; */
-    text-align: center;
-    padding: 4px;
-    font-size: 14px;
-    color: black;
-    font-family: 'Poppins';
-}
-th {
-    background-color: #FF731E;
-}
+
+
+
 
 .email-item .subject {
     display: inline-flex;  
@@ -829,6 +822,33 @@ th {
     line-height: 1.5;  
 }
 
+tbody td {
+    border: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size:14px;
+}
+
+thead th {
+    border: none;
+    padding-top: 8px;
+    padding-bottom: 6px;
+    font-size:14px;
+    
+   
+}
+
+thead tr{
+    background-color: #ffa652;
+}
+
+th, td {
+    
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
 
 
 
