@@ -144,7 +144,7 @@
 
     <footer>
         <div class="footer-content">
-            <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
+            <p>&copy; DATOS Bicol University. All Rights Reserved 2025.</p>
         </div>
     </footer>
 

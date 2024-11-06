@@ -810,6 +810,7 @@ table {
     padding: 1px 5px;
     font-size: 12px;
     font-weight: bold;
+    margin-top: -19px;
 }
 
 #notification-counts {
@@ -821,6 +822,7 @@ table {
     padding: 1px 5px;
     font-size: 12px;
     font-weight: bold;
+    margin-top: -19px;
 }
 
 /* sent docs modal */

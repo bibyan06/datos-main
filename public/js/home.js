@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!event.target.matches('.dropdown-toggle, .dropdown-toggle *')) {
             document.querySelectorAll('.dropdown-more').forEach(dropdown => {
                 dropdown.style.display = 'none';
-            });
+            });q
         }
     });
 });
@@ -68,11 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("documents-shortcut").addEventListener("click", function() {
-        window.location.href = "admin_all_documents.html";
+        window.location.href = adminDashboardUrl;
     });
 
     document.getElementById("upload-shortcut").addEventListener("click", function() {
-        window.location.href = "admin_upload.html";
+        window.location.href = adminUploadUrl;
     });
 });
 
@@ -192,3 +192,15 @@ function forwardDocument(documentId, employeeId, forwardMessage) {
 }
 
 
+// For view document 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.document').forEach(function(documentElement) {
+        documentElement.addEventListener('click', function(event) {
+            // Check if the click was inside the dropdown-more or its children
+            if (!event.target.closest('.column-right')) {
+                const documentId = this.getAttribute('data-id');
+                window.location.href = `/admin/documents/view_docs/${documentId}`;
+            }
+        });
+    });
+});

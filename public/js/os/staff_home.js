@@ -66,15 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*Shortcuts js*/
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("documents-shortcut").addEventListener("click", function() {
-        window.location.href = "staff_all_documents.html";
-    });
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("documents-shortcut").addEventListener("click", function() {
+            window.location.href = adminDashboardUrl;
+        });
 
-    document.getElementById("upload-shortcut").addEventListener("click", function() {
-        window.location.href = "staff_upload.html";
+        document.getElementById("upload-shortcut").addEventListener("click", function() {
+            window.location.href = adminUploadUrl;
+        });
     });
-});
 
 // Forward document 
 
@@ -190,3 +190,16 @@ function forwardDocument(documentId, employeeId, forwardMessage) {
         console.error('Error forwarding document:', error);
     });
 }
+
+// View Document
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.document').forEach(function(documentElement) {
+        documentElement.addEventListener('click', function(event) {
+            // Check if the click was inside the dropdown-more or its children
+            if (!event.target.closest('.column-right')) {
+                const documentId = this.getAttribute('data-id');
+                window.location.href = `/office_staff/documents/os_view_docs/${documentId}`;
+            }
+        });
+    });
+});
