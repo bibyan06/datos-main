@@ -18,21 +18,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const statusFilter = document.getElementById('status-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const documentsTable = document.getElementById('documents-table');
 
-document.getElementById('status-filter').addEventListener('change', filterDocuments);
-        document.getElementById('category-filter').addEventListener('change', filterDocuments);
+    function filterDocuments() {
+        const selectedStatus = statusFilter.value.toLowerCase();
+        const selectedCategory = categoryFilter.value.toLowerCase();
 
-        function filterDocuments() {
-            const status = document.getElementById('status-filter').value.toLowerCase();
-            const category = document.getElementById('category-filter').value.toLowerCase();
-            
-            document.querySelectorAll('#documents-table tr').forEach(row => {
-                const rowStatus = row.getAttribute('data-status').toLowerCase();
-                const rowCategory = row.getAttribute('data-category').toLowerCase();
+        Array.from(documentsTable.rows).forEach(row => {
+            const documentStatus = row.getAttribute('data-status').toLowerCase();
+            const documentCategory = row.getAttribute('data-category').toLowerCase();
 
-                const matchesStatus = status === 'all' || rowStatus === status;
-                const matchesCategory = category === 'all' || rowCategory === category;
+            const matchesStatus = selectedStatus === 'all' || documentStatus === selectedStatus;
+            const matchesCategory = selectedCategory === 'all' || documentCategory === selectedCategory;
 
-                row.style.display = matchesStatus && matchesCategory ? '' : 'none';
-            });
-        }
+            row.style.display = matchesStatus && matchesCategory ? '' : 'none';
+        });
+    }
+
+    // Add event listeners to both filters
+    statusFilter.addEventListener('change', filterDocuments);
+    categoryFilter.addEventListener('change', filterDocuments);
+});

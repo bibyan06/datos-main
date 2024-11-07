@@ -70,7 +70,7 @@
                     </thead>
                     <tbody id="documents-table">
                         @foreach($documents as $document)
-                            <tr data-category="{{ $document->category_name }}">
+                            <tr data-status="{{ strtolower($document->document_status) }}" data-category="{{ $document->category_name }}">
                                 <td>{{ $document->document_number }}</td>
                                 <td>{{ $document->document_name }}</td>
                                 <td>{{ $document->description }}</td>
@@ -78,13 +78,13 @@
                                 <td>
                                     <x-status-label :status="$document->document_status" />
                                 </td>
-                                <td>{{ $document->remark}}</td>
+                                <td>{{ $document->remark }}</td>
                                 <td>{{ $document->upload_date }}</td>
                                 <td>{{ $document->uploaded_by }}</td>
                                 <td>
-                                <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}" title="View Document">
-                                    <i class="bi bi-eye"></i>
-                                </a>
+                                    <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}" title="View Document">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -99,7 +99,7 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/os/staff_dashboard.js') }}"></script>
+    <script src="{{ asset('js/os/staff_dashboard.js') }}"></script>
 @endsection
 
 </body>
