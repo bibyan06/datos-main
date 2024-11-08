@@ -27,9 +27,9 @@
                     <h2>Overview</h2>
                     <div class="filter-container">
                         <div class="status-filter">
-                            <select id="status-filter">
+                            <select id="status-filter" class="option-text">
                                 <option value="" disabled selected>Select Status</option>
-                                <option value="all" selected>All</option>
+                                <option value="all">All</option>
                                 <option value="pending">Pending</option>
                                 <option value="approved">Approved</option>
                                 <option value="declined">Declined</option>
@@ -37,8 +37,8 @@
                         </div>
                         <div class="document-filter">
                             <select id="category-filter">
-                                <option value="" disabled selected>Select a Document</option>
-                                <option value="all" selected>All</option>
+                                <option value="" disabled selected>Select a Category</option>
+                                <option value="all">All</option>
                                 <option value="Memorandum">Memorandum</option>
                                 <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
                                 <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
