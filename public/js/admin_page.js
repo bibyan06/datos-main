@@ -199,3 +199,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const profileIcon = document.querySelector('.initials-icon');
+    const userName = "{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}";
+    const initials = userName.split(" ").map(name => name.charAt(0)).join("").toUpperCase();
+    profileIcon.textContent = initials;
+});

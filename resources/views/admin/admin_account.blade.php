@@ -22,13 +22,13 @@
             </div>
             <div class="profile-container">
                 <div class="profile-picture">
-                    <img src="{{ asset('images/boy-1.png') }}" alt="Profile Picture">
+                    <img src="{{ asset('images/girl-1.png') }}" alt="Profile Picture">
                 </div>
                 <div class="profile-details">
                     <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                     <div class="profile-info">
                         <span class="employee-id">{{ Auth::user()->employee_id }}</span>
-                        <span class="position">{{ Auth::user()->user_type }}</span>
+                        <!-- <span class="position">{{ Auth::user()->user_type }}</span> -->
                     </div>
                 </div>
                 <div class="edit-button">

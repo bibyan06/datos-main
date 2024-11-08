@@ -101,8 +101,8 @@
                                     </div>
                                 </div>
                                 <div class="other-details">
-                                    <p> {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>
                                     <p>{{ $document->description }}</p>
+                                    <p> Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>  
                                 </div>
                             </div>
                         </div>

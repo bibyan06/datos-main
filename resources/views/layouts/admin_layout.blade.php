@@ -17,7 +17,7 @@
         /* .archive{
             cursor: pointer;
         } */
-    </style>
+    </style>a
 </head>
 
 <body>
@@ -32,12 +32,11 @@
                 <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon" id="profile-icon-container">
+                <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                 <img src="{{ asset('images/girl-1.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon">
-                        </i>Account</a>
-                    <a href="#"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

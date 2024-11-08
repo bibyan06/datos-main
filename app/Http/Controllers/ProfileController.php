@@ -48,6 +48,13 @@ class ProfileController extends Controller
         return view('dean.dean_account', compact('user'));
     }
 
+    // public function showAdminPfp()
+    // {
+    //     $user = Auth::user();
+    //     $initials = strtoupper(substr($user->first_name, 0, 1)) . strtoupper(substr($user->last_name, 0, 1));
+
+    //     return view('icon.show', compact('initials'));
+    // }
 
     public function update(Request $request)
     {

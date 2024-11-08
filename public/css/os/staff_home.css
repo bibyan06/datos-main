@@ -113,7 +113,7 @@ main {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    padding: 20px;
+   
 }
 
 .container {
@@ -260,10 +260,6 @@ main {
 }
 
 
-
-
-
-
 .title {
     display: flex;
     
@@ -274,7 +270,7 @@ main {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
- 
+    margin-top: 20px;
 }
 
 .title-content {

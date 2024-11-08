@@ -27,6 +27,7 @@
                 <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon" id="profile-icon-container">
+                <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                 <img src="{{ asset('images/boy-2.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"></i>Account</a>
