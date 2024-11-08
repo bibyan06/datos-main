@@ -96,12 +96,12 @@
                                                 download>Download</a>
                                             <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
                                             <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
-                                            <a data-id="{{$document->document_id}}" class="forward-btns archive" style="cursor: pointer">Archive</a>
+                                            <a data-id="{{ $document->document_id }}" class="forward-btns archive" style="cursor: pointer">Archive</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="other-details">
-                                    <p>Date Updated: {{ \Carbon\Carbon::parse($document->updated_at)->format('F d, Y') }}</p>
+                                    <p> {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>
                                     <p>{{ $document->description }}</p>
                                 </div>
                             </div>

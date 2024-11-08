@@ -60,7 +60,11 @@ class DeanController extends Controller
     }
     public function memorandum()
     {
-        return view('dean.documents.memorandum');
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved')
+            ->get();
+
+        return view('home.dean', compact('documents'));
     }
 
     public function admin_order()
@@ -95,10 +99,13 @@ class DeanController extends Controller
     }
     public function showHomePage()
     {
-        $documents = Document::where('document_status', 'Approved')->where('status',NULL)->get();
- 
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved')
+            ->get();
+
         return view('home.dean', compact('documents'));
     }
+
 
     public function showApprovedDocuments()
     {
@@ -109,14 +116,11 @@ class DeanController extends Controller
 
     public function showDeanHome()
     {
-        $documents = DB::table('documents')
-            ->join('category', 'documents.category_name', '=', 'category.category_name') // Join using category_name
-            ->where('category.category_name', 'Memorandum')  // Filter for memorandums
-            ->whereNull('status')
-            ->select('documents.*')  // Select all columns from the documents table
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved')
             ->get();
 
-        return view('home.dean', compact('documents')); // Passing 'documents' to the view
+        return view('home.dean', compact('documents'));
     }
 
 

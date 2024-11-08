@@ -125,7 +125,7 @@
                         const types = this.getAttribute('data-type');
                         let text;
                         if(types==='forward')
-                            text =  `<p><strong>Sender:</strong> ${snippet}</p>`
+                            text =  `<p><strong>Description:</strong> ${snippet}</p>`
                         else
                             text = ""
                         console.log(fileUrl)

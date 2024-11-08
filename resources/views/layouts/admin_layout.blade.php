@@ -199,6 +199,7 @@
 
     <script src="{{ asset('js/admin_page.js') }}"></script>
     <script src="{{ asset('js/prompt.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('custom-js')
 </body>
 

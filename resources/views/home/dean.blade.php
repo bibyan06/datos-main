@@ -68,40 +68,48 @@
             </div>
         </section>
 
-        <section class="dashboard-overview">
-
-            @if($documents->isEmpty())
-                <p>No approved documents available.</p>
-            @else
-                @foreach($documents as $document)
-                    <div class="documents-content">
-                        <div class="document-card">
-                            <!-- Display the document details -->
-                            <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
-                            <div class="content">
+        <section class="dashboard-section">
+            <div class="dashboard-container">
+                <div class="documents" id="documents-list">
+                    @forelse($documents as $document)
+                    <div class="document" data-id="{{ $document->document_id }}" data-name="{{ $document->document_name }}">                            <div class="file-container">
+                                <div class="document-card">
+                                    <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0"
+                                        width="100%" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                            <div class="document-description">
                                 <div class="row">
-                                    <div class="column left">
+                                    <div class="column-left">
                                         <h3>{{ $document->document_name }}</h3>
-                                        <p>{{ Str::limit($document->description, 100) }}</p>
                                     </div>
-                                    <div class="column right">
-                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                    <input type="text" hidden
+                                        value="{{ \Carbon\Carbon::parse($document->upload_date)->format('F') }}">
+
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
                                         <div class="dropdown-more">
-                                            <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}" class="view-btn">View</a>
-                                            <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
-                                            <a href="{{ route('dean.documents.dean_edit_docs', $document->document_id) }}">Edit</a>
+                                            <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}"
+                                                class="view-btn">View</a>
+                                            <a href="{{ route('document.serve', basename($document->file_path)) }}"
+                                                download>Download</a>
+                                            <a href="{{ route('office_staff.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                            <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="upload-date">
-                                    <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
+                                <div class="other-details">
+                                    <p> {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>
+                                    <p>{{ $document->description }}</p>
                                 </div>
                             </div>
-                        </div>  
-                    </div>
-                @endforeach
-            @endif
-        </section> 
+                        </div>
+                    @empty
+                        <p id="hidden">No documents available at the moment.</p>
+                    @endforelse
+                </div>
+            </div>
+        </section>
 @endsection
 
 @section('custom-js')

@@ -16,24 +16,27 @@ archiveButtons.forEach(archive => {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                                           
                fetch(`/admin/archive_document/${attr}`)
-               .then(res=>res.json())
-               .then(data=>{
-                if(data.success){
-                    Swal.fire('Archived!', data.message, 'success').then(() => {
-                        // Optionally refresh or redirect
-                        window.location.reload(); // Refresh the page
-                    });
-                }else{
-                    Swal.fire('Error!', data.message, 'error');
-                }
-               })
-                // Additional logic for archiving can be added here
+               .then(res => res.json())
+               .then(data => {
+                   if (data.success) {
+                       Swal.fire('Archived', data.message, 'success').then(() => {
+                           // Find and remove the document element by its data-id
+                           const documentElement = document.querySelector(`[data-id="${attr}"]`).closest('.document');
+                           if (documentElement) {
+                               documentElement.remove(); // Remove the document item from the page
+                           }
+                       });
+                   } else {
+                       Swal.fire('Error!', data.message, 'error');
+                   }
+               });
             }
         });
     });
 });
+
+
 
 
 const notifButtons = document.querySelectorAll('.notifForward');
@@ -136,7 +139,7 @@ deleteforButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`Deleted!`, data.message, 'success').then(() => {
+                    Swal.fire(`Deleted`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -174,7 +177,7 @@ deletesentButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`Deleted!`, data.message, 'success').then(() => {
+                    Swal.fire(`Deleted`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -212,7 +215,7 @@ restoredocs.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`Restored!`, data.message, 'success').then(() => {
+                    Swal.fire(`Restored`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });

@@ -17,12 +17,10 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $documents = Document::all(); // Fetch documents from the database
+        $documents = Document::all(); 
         $totalDocuments = $documents->count();
-        $totalEmployees = Employee::count(); // Assuming you also want total employees
+        $totalEmployees = Employee::count(); 
         
-
-        // Pass the data to the view
         return view('admin.admin_dashboard', compact('documents', 'totalDocuments', 'totalEmployees'));;
     }
 
@@ -65,14 +63,12 @@ class AdminController extends Controller
 
     public function approved_docs()
     {
-        // Fetch documents with 'approved' status
         $documents = Document::where('document_status', 'Approved')->get();
         return view('admin.documents.approved_docs', compact('documents'));
     }
 
     public function declined_docs()
     {
-        // Fetch documents with 'approved' status
         $documents = Document::where('document_status', 'Declined')->get();
         return view('admin.documents.declined_docs', compact('documents'));
     }
@@ -135,14 +131,12 @@ class AdminController extends Controller
         if (strpos($user->employee_id, '01') !== 0) {
             abort(403, 'Unauthorized action.');
         }
-        // Proceed with the action
     }
 
     public function searchDocuments(Request $request)
     {
         $query = $request->input('query');
 
-        // Perform the search operation only on approved documents
         $documents = Document::where('document_status', 'Approved')
             ->where(function ($queryBuilder) use ($query) {
                 $queryBuilder->where('document_name', 'LIKE', "%{$query}%")
@@ -155,7 +149,6 @@ class AdminController extends Controller
             }])
             ->get();
 
-        // Return the search results
         return view('admin.admin_search', compact('documents'));
     }
 
@@ -171,8 +164,6 @@ class AdminController extends Controller
         }
 
         $document->save();
-
-        // Redirect based on the action
         if ($document->document_status == 'Approved') {
             return redirect()->route('admin.documents.approved_docs')->with('success', 'Document approved successfully.');
         } else {
@@ -182,10 +173,8 @@ class AdminController extends Controller
 
     public function showPendings()
     {
-        // Fetch the pending document count
         $pendingCount = Document::where('document_status', 'Pending')->count();
 
-        // Count pending documents from both 'forward_documents' and 'send_document' tables
         $forwardPendingCount = DB::table('forwarded_documents')
             ->where('status', 'delivered')
             ->count();
@@ -194,9 +183,7 @@ class AdminController extends Controller
             ->where('status', 'delivered')
             ->count();
 
-        // Combine counts from both tables
         $notificationCount = $forwardPendingCount + $sendPendingCount;
-        // Pass the pending count to the correct view (ensure the right view file is used)
         return view('admin.admin_dashboard', compact('pendingCount', 'notificationCount')); // Adjust 'admin.dashboard' to the correct view file
     }
 
@@ -205,22 +192,17 @@ class AdminController extends Controller
     {
        
         $documents = Document::where('document_status', '=', 'Approved')->get();
-    
+
         return view('home.admin', compact('documents'));
     }
 
     public function adminDashboard()
     {
-        // Count the total number of approved documents
+     
         $totalDocuments = Document::where('document_status', '=', 'Approved')->count();
-
-        // Count the total number of employees
         $totalEmployees = Employee::count();
 
-        // Log or Debug the result to check the status
         \Log::info('Total Approved Documents: ' . $totalDocuments);
-
-        // Pass these values to the view
         return view('admin.admin_dashboard', compact('totalDocuments', 'totalEmployees'));
     }
     public function view($document_id)
@@ -259,11 +241,11 @@ class AdminController extends Controller
 
     public function category_count()
     {
-        // Fetch totals for the dashboard
+        
         $totalDocuments = Document::count();
         $totalEmployees = User::count();
 
-        // Fetch counts by document category
+        
         $claimMonitoringSheetCount = Document::where('category_name', 'Claim Monitoring Sheet')->where('document_status', 'Approved')->count();
         $memorandumCount = Document::where('category_name', 'Memorandum')->where('document_status', 'Approved')->count();
         $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->where('document_status', 'Approved')->count();
@@ -281,10 +263,8 @@ class AdminController extends Controller
 
     public function display_uploaded_docs()
     {
-        // Fetch all documents from the documents table
         $documents = Document::all();
 
-        // Additional data for the dashboard (e.g., counts)
         $totalDocuments = Document::where('document_status','Approved')->count();
         $totalEmployees = Employee::count();
 
@@ -318,15 +298,13 @@ class AdminController extends Controller
         $officeStaff = Employee::whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(employee_id, '-', 2), '-', -1) = '002'")
             ->get();
 
-        // Pass the data to the view
         return view('admin.office_staff', ['officeStaff' => $officeStaff]);
     }
 
     public function showMemorandums()
     {
-        // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Memorandum')
-            ->where('document_status', 'Approved') // Show only approved documents
+            ->where('document_status', 'Approved') 
             ->get();
 
         return view('admin.documents.memorandum', compact('documents'));

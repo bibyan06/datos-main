@@ -546,6 +546,7 @@ header {
     padding: 1px 5px;
     font-size: 12px;
     font-weight: bold;
+    margin-top: -19px;
 }
 .profile-content {
     position: absolute;

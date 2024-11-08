@@ -42,183 +42,49 @@
             </div>
 
             <div id="dashboard-section">
-                <div class="dashboard-container">
-                    <div class="documents"  id="documents-list">
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                                </div>                        
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
+        <div class="dashboard-container">
+            <div class="documents" id="documents-list">
+                @forelse($documents as $document)
+                    <div class="document" data-name="{{ $document->document_name }}">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0"
+                                    width="100%" frameborder="0"></iframe>
                             </div>
                         </div>
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                        <div class="document-description">
+                            <div class="row">
+                                <div class="column-left">
+                                    <h3>{{ $document->document_name }}</h3>
+                                </div>
+                                <input type="text" hidden
+                                    value="{{ \Carbon\Carbon::parse($document->updated_date)->format('F') }}">
+
+                                <div class="column-right">
+                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                    <div class="dropdown-more">
+                                        <a href="{{ route('admin.documents.view_docs', $document->document_id) }}"
+                                            class="view-btn">View</a>
+                                        <a href="{{ route('document.serve', basename($document->file_path)) }}"
+                                            download>Download</a>
+                                        <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
+                            <div class="other-details">
+                                <p>Date Updated: {{ \Carbon\Carbon::parse($document->updated_at)->format('F d, Y') }}</p>
+                                <p>{{ $document->description }}</p>
                             </div>
                         </div>
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                                </div>
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                                </div>
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                                </div>
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="document">
-                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                                </div>
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                        <div class="column-left">
-                                            <h3>
-                                            Office Memorandum No. 84
-                                            </h3>
-                                        </div>
-                                        <div class="column-right">
-                                            <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                            <div class="dropdown-more">
-                                                <a href="dean_view.html">View</a>
-                                                <a href="#">Download</a>
-                                                <a href="dean_edit.html">Edit</a>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>Date Updated: April 2, 2024</p>
-                                    <p>Details of the memorandum go here.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Add more documents as needed -->
                     </div>
-                </div>
+                @empty
+                    <p>No approved memorandums available at the moment.</p>
+                @endforelse
+                <p id="hidden">No approved memorandums available at the moment.</p>
             </div>
+        </div>
+    </div>
 @endsection
- 
 
 @section('custom-js')
     <script src="{{ asset ('js/dean/memorandum.js') }}"></script>
