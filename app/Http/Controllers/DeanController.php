@@ -49,8 +49,28 @@ class DeanController extends Controller
         return view('dean.documents.dean_request', compact('collegeName'));
     }
 
-    public function search()
+    public function search($request)
     {
+        $query = $request->input('query');
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved')
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where(function ($statusQuery) {
+                    $statusQuery->whereNull('status')
+                                ->orWhere('status', '!=', 'archive');
+                })
+                ->where(function ($searchQuery) use ($query) {
+                    $searchQuery->where('document_name', 'LIKE', "%{$query}%")
+                                ->orWhereHas('tags', function ($tagQuery) use ($query) {
+                                    $tagQuery->where('tag_name', 'LIKE', "%{$query}%");
+                                });
+                });
+            })
+            ->with(['tags' => function ($tagSelectQuery) {
+                $tagSelectQuery->select('tags.tag_id as tag_id', 'tag_name');
+            }])
+        ->get();
+
         return view('dean.documents.dean_search');
     }
 
@@ -58,6 +78,18 @@ class DeanController extends Controller
     {
         return view('dean.documents.dean_view_docs');
     }
+
+    public function view($document_id)
+    {
+        $document = Document::findOrFail($document_id);
+
+        if (!$document) {
+            abort(404, 'Document not found.');
+        }
+
+        return view('dean.documents.dean_view_docs', compact('document'));
+    }
+
     public function memorandum()
     {
         $documents = Document::where('category_name', 'Memorandum')
@@ -97,28 +129,28 @@ class DeanController extends Controller
 
         // Proceed with the action
     }
-    public function showHomePage()
-    {
-        $documents = Document::where('category_name', 'Memorandum')
-            ->where('document_status', 'Approved')
-            ->get();
-
-        return view('home.dean', compact('documents'));
-    }
-
 
     public function showApprovedDocuments()
     {
-        // Fetch all approved documents
-       $documents = Document::where('document_status', 'Approved')->where('status',NULL)->get();
+        $documents = Document::where('category_name', 'Memorandum')
+                            ->where('document_status', 'Approved')
+                            ->where(function ($query) {
+                                $query->whereNull('status')
+                                    ->orWhere('status', '!=', 'archive');
+                            })
+                            ->get();
         return view('dean.documents.dean_search', compact('documents'));
     }
 
     public function showDeanHome()
     {
         $documents = Document::where('category_name', 'Memorandum')
-            ->where('document_status', 'Approved')
-            ->get();
+        ->where('document_status', 'Approved')
+        ->where(function ($query) {
+            $query->whereNull('status')
+                  ->orWhere('status', '!=', 'archive');
+        })
+        ->get();
 
         return view('home.dean', compact('documents'));
     }

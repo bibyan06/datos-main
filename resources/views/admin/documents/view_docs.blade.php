@@ -40,7 +40,6 @@
                 </div>
             </div>
         </div>
-    </main>
 @endsection
 
 @section('custom-js')

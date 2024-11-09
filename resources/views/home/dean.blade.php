@@ -89,11 +89,10 @@
                                     <div class="column-right">
                                         <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
                                         <div class="dropdown-more">
-                                            <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}"
+                                            <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}"
                                                 class="view-btn">View</a>
                                             <a href="{{ route('document.serve', basename($document->file_path)) }}"
                                                 download>Download</a>
-                                            <a href="{{ route('office_staff.documents.edit_docs', $document->document_id) }}">Edit</a>
                                             <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
                                         </div>
                                     </div>

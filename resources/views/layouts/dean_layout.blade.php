@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/dean/dean_page.css') }}">
 
-
-
-    <!-- Section for blade-specific CSS -->
     @yield('custom-css')
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
@@ -30,6 +27,7 @@
                 <input type="text" id="sidebar-search" placeholder="Search">
                 <i class="bi bi-search"></i>
             </div>
+            
             <div class="profile-icon" id="profile-icon-container">
                 <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                 <img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" id="profile-icon">

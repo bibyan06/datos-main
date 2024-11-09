@@ -816,8 +816,7 @@ tbody td {
 
 thead th {
     border: none;
-    padding-top: 8px;
-    padding-bottom: 6px;
+    padding: 8px;
     font-size:14px;   
 }
 

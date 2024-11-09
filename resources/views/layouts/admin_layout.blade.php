@@ -17,7 +17,7 @@
         /* .archive{
             cursor: pointer;
         } */
-    </style>a
+    </style>
 </head>
 
 <body>

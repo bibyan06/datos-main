@@ -138,16 +138,22 @@ class AdminController extends Controller
         $query = $request->input('query');
 
         $documents = Document::where('document_status', 'Approved')
-            ->where(function ($queryBuilder) use ($query) {
-                $queryBuilder->where('document_name', 'LIKE', "%{$query}%")
-                    ->orWhereHas('tags', function ($q) use ($query) {
-                        $q->where('tag_name', 'LIKE', "%{$query}%");
-                    });
+        ->where(function ($queryBuilder) use ($query) {
+            $queryBuilder->where(function ($statusQuery) {
+                $statusQuery->whereNull('status')
+                            ->orWhere('status', '!=', 'archive');
             })
-            ->with(['tags' => function ($q) {
-                $q->select('tags.tag_id as tag_id', 'tag_name');
-            }])
-            ->get();
+            ->where(function ($searchQuery) use ($query) {
+                $searchQuery->where('document_name', 'LIKE', "%{$query}%")
+                            ->orWhereHas('tags', function ($tagQuery) use ($query) {
+                                $tagQuery->where('tag_name', 'LIKE', "%{$query}%");
+                            });
+            });
+        })
+        ->with(['tags' => function ($tagSelectQuery) {
+            $tagSelectQuery->select('tags.tag_id as tag_id', 'tag_name');
+        }])
+        ->get();
 
         return view('admin.admin_search', compact('documents'));
     }
@@ -210,6 +216,7 @@ class AdminController extends Controller
         \Log::info('Total Approved Documents: ' . $totalDocuments);
         return view('admin.admin_dashboard', compact('totalDocuments', 'totalEmployees'));
     }
+
     public function view($document_id)
     {
         $document = Document::findOrFail($document_id);

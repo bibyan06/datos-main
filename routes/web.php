@@ -158,13 +158,14 @@ Route::middleware(['auth', 'role:3'])->group(function () {
         Route::get('/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
         Route::get('/dean_account', [ProfileController::class, 'dean_account'])->name('dean.dean_account');
         Route::get('/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean.dean_upload_document');
+       
         Route::prefix('documents')->group(function () {
-
             Route::get('/dean_edit_docs', [DeanController::class, 'edit_docs'])->name('dean.documents.dean_edit_docs');
             Route::get('/dean_notification', [DeanController::class, 'notification'])->name('dean.documents.dean_notification');
             Route::get('/dean_request', [DeanController::class, 'request'])->name('dean.documents.dean_request');
             Route::get('/dean_search', [DeanController::class, 'search'])->name('dean.documents.dean_search');
             Route::get('/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
+            Route::get('/view_docs/{document_id}', [DeanController::class, 'view'])->name('dean.documents.dean_view_docs');
             Route::get('/memorandum', [DeanController::class, 'memorandum'])->name('dean.documents.memorandum');
             Route::get('/admin_order', [DeanController::class, 'admin_order'])->name('dean.documents.admin_order');
             Route::get('/mrsp', [DeanController::class, 'mrsp'])->name('dean.documents.mrsp');

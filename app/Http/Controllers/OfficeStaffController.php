@@ -65,19 +65,24 @@ class OfficeStaffController extends Controller
     public function searchDocuments(Request $request)
     {
         $query = $request->input('query');
-    
-        // Perform the search operation only on approved documents
+
         $documents = Document::where('document_status', 'Approved')
-            ->where(function ($queryBuilder) use ($query) {
-                $queryBuilder->where('document_name', 'LIKE', "%{$query}%")
-                             ->orWhereHas('tags', function ($q) use ($query) {
-                                 $q->where('tag_name', 'LIKE', "%{$query}%");
-                             });
+        ->where(function ($queryBuilder) use ($query) {
+            $queryBuilder->where(function ($statusQuery) {
+                $statusQuery->whereNull('status')
+                            ->orWhere('status', '!=', 'archive');
             })
-            ->with(['tags' => function ($q) {
-                $q->select('tags.tag_id as tag_id', 'tag_name');
-            }])
-            ->get();
+            ->where(function ($searchQuery) use ($query) {
+                $searchQuery->where('document_name', 'LIKE', "%{$query}%")
+                            ->orWhereHas('tags', function ($tagQuery) use ($query) {
+                                $tagQuery->where('tag_name', 'LIKE', "%{$query}%");
+                            });
+            });
+        })
+        ->with(['tags' => function ($tagSelectQuery) {
+            $tagSelectQuery->select('tags.tag_id as tag_id', 'tag_name');
+        }])
+        ->get();
     
         // Return the search results
         return view('office_staff.documents.os_search', compact('documents'));
