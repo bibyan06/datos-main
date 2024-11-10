@@ -136,25 +136,32 @@ class AdminController extends Controller
     public function searchDocuments(Request $request)
     {
         $query = $request->input('query');
-
+    
         $documents = Document::where('document_status', 'Approved')
-        ->where(function ($queryBuilder) use ($query) {
-            $queryBuilder->where(function ($statusQuery) {
-                $statusQuery->whereNull('status')
-                            ->orWhere('status', '!=', 'archive');
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where(function ($statusQuery) {
+                    $statusQuery->whereNull('status')
+                                ->orWhere('status', '!=', 'archive');
+                })
+                ->where(function ($searchQuery) use ($query) {
+                    $searchQuery->where('document_name', 'LIKE', "%{$query}%")
+                                ->orWhereHas('tags', function ($tagQuery) use ($query) {
+                                    $tagQuery->where('tag_name', 'LIKE', "%{$query}%");
+                                });
+                });
             })
-            ->where(function ($searchQuery) use ($query) {
-                $searchQuery->where('document_name', 'LIKE', "%{$query}%")
-                            ->orWhereHas('tags', function ($tagQuery) use ($query) {
-                                $tagQuery->where('tag_name', 'LIKE', "%{$query}%");
-                            });
-            });
-        })
-        ->with(['tags' => function ($tagSelectQuery) {
-            $tagSelectQuery->select('tags.tag_id as tag_id', 'tag_name');
-        }])
-        ->get();
-
+            ->with(['tags' => function ($tagSelectQuery) {
+                $tagSelectQuery->select('tags.tag_id as tag_id', 'tag_name');
+            }])
+            ->get();
+    
+        // Check if the request is an AJAX request
+        if ($request->ajax()) {
+            // Return the documents as JSON for AJAX requests
+            return response()->json($documents);
+        }
+    
+        // Return the view for non-AJAX requests
         return view('admin.admin_search', compact('documents'));
     }
 

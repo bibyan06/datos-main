@@ -104,7 +104,7 @@ main {
 .documents {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 19px;
 }
 
 /* Document Styles */
