@@ -1,12 +1,12 @@
 @extends('layouts.dean_layout')
 
-@section('title', 'Memorandum' )
+@section('title', 'Memorandum')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset ('css/dean/memorandum.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/documents.css') }}">
 @endsection
 
-@section('main-id','memorandum-content')
+@section('main-id', 'memorandum-content')
 
 @section('content')
     <div class="documents-container">
@@ -34,7 +34,6 @@
                         <option value="October">October</option>
                         <option value="November">November</option>
                         <option value="December">December</option>
-
                     </select>
                 </div>
             </div>
@@ -59,20 +58,20 @@
                                 </div>
                                 <input type="text" hidden
                                     value="{{ \Carbon\Carbon::parse($document->updated_date)->format('F') }}">
+
                                 <div class="column-right">
                                     <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
                                     <div class="dropdown-more">
-                                        <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}"
+                                        <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}"
                                             class="view-btn">View</a>
                                         <a href="{{ route('document.serve', basename($document->file_path)) }}"
                                             download>Download</a>
-                                        <a
-                                            href="{{ route('office_staff.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                        <a href="{{ route('dean.documents.dean_edit_docs', $document->document_id) }}">Edit</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="other-details">
-                                <p>Date Updated: {{ \Carbon\Carbon::parse($document->updated_at)->format('F d, Y') }}</p>
+                                <p>Date Updated: {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>
                                 <p>{{ $document->description }}</p>
                             </div>
                         </div>
@@ -81,7 +80,6 @@
                     <p>No approved memorandums available at the moment.</p>
                 @endforelse
                 <p id="hidden">No approved memorandums available at the moment.</p>
-
             </div>
         </div>
     </div>
@@ -100,13 +98,11 @@
             function filterDocuments() {
                 const query = searchText.value.toLowerCase();
                 const selectedMonth = month.value.toLowerCase();
-
                 documents.forEach(doc => {
                     const name = doc.getAttribute('data-name').toLowerCase();
                     const docMonth = doc.querySelector('input[type="text"]').value.toLowerCase();
                     const matchesSearch = name.includes(query);
                     const matchesMonth = docMonth === selectedMonth;
-
                     // Show document only if it matches both the search text and selected month
                     if (query && !month.value) {
                         hidden.style.display = matchesSearch ? 'none' : 'block';
@@ -121,8 +117,8 @@
                         doc.style.display = ''; // Show all if no filter is applied
                     }
                 });
+                   hidden.style.display = "none"
             }
-
             searchText.addEventListener('input', filterDocuments);
             month.addEventListener('change', filterDocuments);
         });

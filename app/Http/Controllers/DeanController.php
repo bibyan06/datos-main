@@ -129,6 +129,14 @@ class DeanController extends Controller
 
         // Proceed with the action
     }
+    public function showMemorandums()
+    {
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved') 
+            ->get();
+
+        return view('dean.documents.memorandum', compact('documents'));
+    }
 
     public function showApprovedDocuments()
     {

@@ -131,7 +131,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
             Route::get('/edit_docs/{document_id}', [OfficeStaffController::class, 'edit'])->name('office_staff.documents.edit_docs');
             Route::put('/update/{document_id}', [OfficeStaffController::class, 'update'])->name('office_staff.documents.update');
             Route::get('/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
-            Route::get('/memorandum', [OfficeStaffController::class, 'showMemorandums'])->name('office_staff.documents.memorandum');
+            Route::get('/memorandum', [OfficeStaffController::class, 'showMemorandums'])->name('dean.documents.memorandum');
             Route::get('/mrsp', [OfficeStaffController::class, 'showMrsp'])->name('office_staff.documents.mrsp');
             Route::get('/cms', [OfficeStaffController::class, 'showCms'])->name('office_staff.documents.cms');
             Route::get('/audtied_dv', [OfficeStaffController::class, 'showAuditedDV'])->name('office_staff.documents.audited_dv');
@@ -167,6 +167,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
             Route::get('/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
             Route::get('/view_docs/{document_id}', [DeanController::class, 'view'])->name('dean.documents.dean_view_docs');
             Route::get('/memorandum', [DeanController::class, 'memorandum'])->name('dean.documents.memorandum');
+            Route::get('/memorandum', [DeanController::class, 'showMemorandums'])->name('admin.documents.memorandum');
             Route::get('/admin_order', [DeanController::class, 'admin_order'])->name('dean.documents.admin_order');
             Route::get('/mrsp', [DeanController::class, 'mrsp'])->name('dean.documents.mrsp');
             Route::get('/cms', [DeanController::class, 'cms'])->name('dean.documents.cms');
