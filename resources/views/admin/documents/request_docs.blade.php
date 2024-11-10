@@ -38,7 +38,7 @@
                             <td>{{ $item->document_subject }}</td>
                             <td>{{ $item->request_purpose }}</td>
                             <td>{{ $item->request_date }}</td>
-                            <td>{{ $item->requestedBy->first_name . ' ' . $item->requestedBy->last_name }}</td>
+                            <td>{{ $item->requestedBy ? $item->requestedBy->first_name . ' ' . $item->requestedBy->last_name : 'N/A' }}</td>
                             <td class="{{ $item->approval_status }}">{{ $item->approval_status }}</td>
                             <td class="action-buttons">
                                 <i class="bi bi-pencil-square" title="Send Document"

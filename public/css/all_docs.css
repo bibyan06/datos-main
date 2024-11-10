@@ -80,6 +80,16 @@ main {
     flex-shrink: 0; /* Prevent shrinking */
 }
 
+.option-text {
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    padding: 5px;
+    height: 30px;
+}
+
+
 #category-filter {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
@@ -87,6 +97,8 @@ main {
     border-radius: 5px;
     padding: 5px;
     height: 30px;
+    width: 319px;
+    margin-right: 12px;
 }
 
 /* Dashboard Section */

@@ -368,8 +368,9 @@ h2 {
 /* Hover Effect */
 .extra-sidebar ul li a:hover,
 .extra-sidebar ul li a.active { /* active class for selected link */
-    background-color: #FE8926;
-    color: #fff;
+    background-color: #ededed;
+    color: #FE8926;
+    font-weight: bold;
 }
 
 /* Optional: Change Icon Color on Hover */
@@ -825,27 +826,26 @@ thead tr{
 }
 
 th, td {
-    
+    border: 1px solid #dddddd;
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    font-family: 'Poppins';
 }
 
 tbody tr {
     border-bottom: 3px solid #d7d7d7; 
-
 }
 
 tbody tr:last-child {
     border-bottom: 3px solid #d7d7d7; 
 }
 
-
-
-
-
-
-
+th {
+    background-color: #d3d3d3;
+}
 
 
 

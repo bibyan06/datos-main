@@ -196,3 +196,57 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("CSRF token not found");
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-dean');
+    const tableRows = document.querySelectorAll('#dean-table tbody tr');
+    const noResultsMessage = document.getElementById('no-results');
+
+    searchInput.addEventListener('keyup', function() {
+        let searchQuery = this.value.toLowerCase();
+        let hasVisibleRow = false;
+
+        tableRows.forEach(row => {
+            // Skip the "no-results" row during the search
+            if (row.id === 'no-results') return;
+
+            // Get text content for each column in the row
+            const employeeId = row.cells[0].textContent.toLowerCase();
+            const name = row.cells[1].textContent.toLowerCase();
+            const college = row.cells[2].textContent.toLowerCase();
+
+            // Check if any content matches the search query
+            if (employeeId.includes(searchQuery) || name.includes(searchQuery) || college.includes(searchQuery)) {
+                row.style.display = '';
+                hasVisibleRow = true;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Show or hide the "no results" message based on visible rows
+        noResultsMessage.style.display = hasVisibleRow ? 'none' : 'table-row';
+    });
+});
+
+// Pagination 
+document.addEventListener('DOMContentLoaded', function() {
+    const entryNumberInput = document.getElementById('entry-number');
+    const tableRows = document.querySelectorAll('#dean-table tbody tr');
+
+    // Function to control the number of visible rows
+    function updateTableDisplay() {
+        const entriesToShow = parseInt(entryNumberInput.value, 10) || 10;
+        
+        // Show/hide rows based on the specified entries limit
+        tableRows.forEach((row, index) => {
+            row.style.display = index < entriesToShow ? '' : 'none';
+        });
+    }
+
+    // Initial display setup
+    updateTableDisplay();
+
+    // Update display when entry number changes
+    entryNumberInput.addEventListener('input', updateTableDisplay);
+});

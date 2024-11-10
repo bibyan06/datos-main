@@ -166,7 +166,7 @@ class DeanController extends Controller
                 'first_name' => 'required|string|max:255',
                 'middle_name' => 'nullable|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'college_id' => 'required|integer|exists:college,college_id', // Validate the college_id
+                'college_id' => 'required|integer|exists:college,college_id', 
                 'password' => 'required|string|min:6',
                 'employee_id' => 'required|string|unique:users',
             ]);

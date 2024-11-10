@@ -622,7 +622,6 @@ footer {
 }
 
 
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -643,7 +642,7 @@ thead th {
 }
 
 thead tr{
-    background-color: #ffa652;
+    background-color: #ededed;
 }
 
 th, td {

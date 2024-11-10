@@ -22,11 +22,11 @@
                 <div class="title-container">
                     <div class="show-dean">
                         <h5>Show</h5>
-                        <input type="number" id="entry-number" class="option-text" min="1" value="1">
+                        <input type="number" id="entry-number" class="option-text" min="1" value="10">
                         <h5>Entries</h5>
                     </div>
                     <div class="dean-search-bar">
-                        <input type="text" class="search-text" placeholder="Search College Dean">
+                        <input type="text" id="search-dean" class="search-text" placeholder="Search College Dean">
                         <div class="icon"><i class="bi bi-search"></i></div>
                     </div>
                     <div class="add-account">
@@ -38,12 +38,13 @@
                 </div>
             </div>
         </section>
-        <div id="dashboard-section">
+
+           <div id="dashboard-section">
             <div class="dashboard-container">
                 @if ($users->isEmpty())
                     <p>No deans found.</p>
                 @else
-                    <table>
+                    <table id="dean-table">
                         <thead>
                             <tr>
                                 <th>Employee ID</th>
@@ -59,12 +60,15 @@
                                     <td>{{ $user->colleges->college_name }}</td>
                                 </tr>
                             @endforeach
-
+                            <tr id="no-results" style="display: none;">
+                                <td colspan="3" style="text-align: center; color:red;">College Dean does not exist</td>
+                            </tr>
                         </tbody>
                     </table>
                 @endif
             </div>
         </div>
+
         <div id="overlay" class="overlay"></div>
         <div id="popup-form" class="popup-form">
             <h2>Add College Dean</h2>
