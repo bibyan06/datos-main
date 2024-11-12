@@ -273,19 +273,19 @@ h2 {
     transform: translateX(0);
 }
 
-/* Ensure the icon hover effect is consistent */
+
 .icon-container.active {
-    background-color: #FE8926; /* Background color when active */
+    background-color: #FE8926; 
 }
 
 .icon-container.active i {
-    color: #FFFFFF; /* Icon color when active */
+    color: #FFFFFF; /
 }
 
 /* Hover effect for corresponding sidebar items */
 .extra-sidebar ul li a.hovered {
-    background-color: #E9ECF4; /* Background color when hovered */
-    color: #FE8926; /* Text color when hovered */
+    background-color: #E9ECF4; 
+    color: #FE8926; 
 }
 
 
@@ -299,11 +299,11 @@ h2 {
     text-align: center;
     border-radius: 5px;
     margin-bottom: 15px;
-    position: relative; /* Ensure positioning context for the button */
+    position: relative; 
 }
 
 .sidebar-title h3 {
-    margin: 0; /* Remove default margin */
+    margin: 0; 
     padding: 5px;
     font-size: 16px;
     color: #FE8926;
@@ -312,8 +312,8 @@ h2 {
 
 .sidebar-title i {
     margin-left: 80px;
-    font-size: 23px; /* Adjust size if needed */
-    color: #FE8926; /* Adjust color if needed */
+    font-size: 23px; 
+    color: #FE8926; 
     justify-content: center;
     right: 0;
     text-align: right;
@@ -356,9 +356,10 @@ h2 {
 
 /* Hover Effect */
 .extra-sidebar ul li a:hover,
-.extra-sidebar ul li a.active { /* active class for selected link */
-    background-color: #FE8926;
-    color: #fff;
+.extra-sidebar ul li a.active { 
+    background-color: #ededed;
+    color: #FE8926;
+    font-weight: bold;
 }
 
 /* Optional: Change Icon Color on Hover */

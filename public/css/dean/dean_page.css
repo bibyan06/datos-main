@@ -298,11 +298,11 @@ h2 {
     text-align: center;
     border-radius: 5px;
     margin-bottom: 15px;
-    position: relative; /* Ensure positioning context for the button */
+    position: relative; 
 }
 
 .sidebar-title h3 {
-    margin: 0; /* Remove default margin */
+    margin: 0; 
     padding: 5px;
     font-size: 16px;
     color: #FE8926;
@@ -311,8 +311,8 @@ h2 {
 
 .sidebar-title i {
     margin-left: 80px;
-    font-size: 23px; /* Adjust size if needed */
-    color: #FE8926; /* Adjust color if needed */
+    font-size: 23px; 
+    color: #FE8926;
     justify-content: center;
     right: 0;
     text-align: right;
@@ -350,9 +350,10 @@ h2 {
 
 /* Hover Effect */
 .extra-sidebar ul li a:hover,
-.extra-sidebar ul li a.active { /* active class for selected link */
-    background-color: #FE8926;
-    color: #fff;
+.extra-sidebar ul li a.active { 
+    background-color: #ededed;
+    color: #FE8926;
+    font-weight: bold;
 }
 
 /* Optional: Change Icon Color on Hover */
@@ -362,16 +363,13 @@ h2 {
 }
 
 
-
-
 /* Search Container Styles*/
 .search-container {
-    width: 250px; /* Adjust width as needed */
-    display: flex;
+    width: 250px; 
     align-items: center;
     position: relative;
-    float: right; /* Move to the right */
-    margin-right: 30px; /* Adjust margin as needed */
+    float: right; 
+    margin-right: 30px; 
 }
 
 #sidebar-search {
@@ -387,14 +385,14 @@ h2 {
 
 .search-container i {
     position: absolute;
-    left: 10px; /* Adjust icon positioning */
+    left: 10px; 
     font-size: 16px;
     color: #888;
 }
 
 .search-results {
     position: absolute;
-    top: 100%; /* Position below the search input */
+    top: 100%; 
     left: 0;
     background-color: white;
     /* border: 1px solid #ddd; */
@@ -427,7 +425,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px; 
     color: #333;
 }
 
@@ -447,12 +445,12 @@ h2 {
 
 .more-dropdown-active {
     display: block;
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide down */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 .more-dropdown-menu li a {
-    font-size: 14px; /* Adjust font size */
+    font-size: 14px;
     padding: 10px 20px;
     color: #333;
     text-decoration: none;
@@ -460,7 +458,7 @@ h2 {
 }
 
 .more-dropdown-menu li a:hover {
-    background-color: #f0f0f0; /* Add hover effect */
+    background-color: #f0f0f0; 
     
 
 }
@@ -478,32 +476,32 @@ h2 {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px; 
     color: #333;
 }
 
 .emp-dropdown-menu {
     display: none;
-    width:220px; /* Adjust width as needed */
+    width:220px; 
     position: absolute;
-    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
-    top: 260px; /* Adjust top as needed */
-    background-color: #FFFFFF; /* Same background as sidebar */
-    z-index: 1600; /* Ensure it appears above other content */
-    opacity: 0; /* Start hidden */
-    transform: translateY(-10px); /* Slide up initially */
+    left: 250px; 
+    top: 260px; 
+    background-color: #FFFFFF; 
+    z-index: 1600; 
+    opacity: 0; 
+    transform: translateY(-10px);  
     transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
 }
 
 .emp-dropdown-active {
     display: block;
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide down */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 .emp-dropdown-menu li a {
-    font-size: 14px; /* Adjust font size */
+    font-size: 14px;
     padding: 10px 20px;
     color: #333;
     text-decoration: none;
@@ -511,7 +509,7 @@ h2 {
 }
 
 .emp-dropdown-menu li a:hover {
-    background-color: #f0f0f0; /* Add hover effect */
+    background-color: #f0f0f0; 
     
 
 }

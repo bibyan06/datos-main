@@ -367,7 +367,7 @@ h2 {
 
 /* Hover Effect */
 .extra-sidebar ul li a:hover,
-.extra-sidebar ul li a.active { /* active class for selected link */
+.extra-sidebar ul li a.active { 
     background-color: #ededed;
     color: #FE8926;
     font-weight: bold;
@@ -378,9 +378,6 @@ h2 {
 .extra-sidebar ul li a.active i {
     color: #fff;
 }
-
-
-
 
 /* Search Container Styles  */
 .search-container {
