@@ -44,12 +44,13 @@
                                 <td>{{ $staff->employee_id }}</td>
                             </tr>
                         @endforeach
-                        <tr id="no-results" style="display: none;">
-                            <td colspan="3" style="text-align: center; color:red;">Office staff does not exist</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             @endif
+            <div id="no-results" style="display: none; text-align: center; color:red;">
+                Office Staff does not exist
+            </div>
         </div>
     </div>
 @endsection

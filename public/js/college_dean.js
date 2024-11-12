@@ -199,35 +199,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-dean');
-    const tableRows = document.querySelectorAll('#dean-table tbody tr');
+    const tableRows = document.querySelectorAll('#dean-table tbody tr.college-dean-row');
     const noResultsMessage = document.getElementById('no-results');
+    
+    // Initially hide the no-results message
+    noResultsMessage.style.display = 'none';
 
     searchInput.addEventListener('keyup', function() {
         let searchQuery = this.value.toLowerCase();
         let hasVisibleRow = false;
 
         tableRows.forEach(row => {
-            // Skip the "no-results" row during the search
-            if (row.id === 'no-results') return;
-
-            // Get text content for each column in the row
-            const employeeId = row.cells[0].textContent.toLowerCase();
-            const name = row.cells[1].textContent.toLowerCase();
-            const college = row.cells[2].textContent.toLowerCase();
-
-            // Check if any content matches the search query
-            if (employeeId.includes(searchQuery) || name.includes(searchQuery) || college.includes(searchQuery)) {
-                row.style.display = '';
+            let name = row.cells[0].textContent.toLowerCase();
+            let employeeId = row.cells[1].textContent.toLowerCase();
+            let college = row.cells[2].textContent.toLowerCase();
+            
+            if (name.includes(searchQuery) || employeeId.includes(searchQuery) || college.includes(searchQuery)) {
+                row.style.display = '';  
                 hasVisibleRow = true;
             } else {
-                row.style.display = 'none';
+                row.style.display = 'none';  
             }
         });
 
-        // Show or hide the "no results" message based on visible rows
-        noResultsMessage.style.display = hasVisibleRow ? 'none' : 'table-row';
+        // Show or hide the "no results" message based on the rows visibility
+        if (!hasVisibleRow && searchQuery.trim() !== '') {
+            noResultsMessage.style.display = '';  
+        } else {
+            noResultsMessage.style.display = 'none';  
+        }
     });
 });
+
+
 
 // Pagination 
 document.addEventListener('DOMContentLoaded', function() {

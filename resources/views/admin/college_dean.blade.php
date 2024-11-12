@@ -54,18 +54,18 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                                <tr>
+                                <tr class="college-dean-row" >
                                     <td>{{ $user->employee_id }}</td>
                                     <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                     <td>{{ $user->colleges->college_name }}</td>
                                 </tr>
                             @endforeach
-                            <tr id="no-results" style="display: none;">
-                                <td colspan="3" style="text-align: center; color:red;">College Dean does not exist</td>
-                            </tr>
                         </tbody>
                     </table>
                 @endif
+                <div id="no-results" style="display: none; text-align: center; color:red;">
+                    College Dean does not exist
+                </div>
             </div>
         </div>
 
