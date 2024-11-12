@@ -33,4 +33,8 @@ class SendDocument extends Model
     {
         return $this->belongsTo(Employee::class, 'issued_by', 'id');
     }
+
+    public function requestedDocument (){
+        return $this ->belongsTo(RequestDocument::class,'requested_by','request_id');
+    }
 }

@@ -52,7 +52,7 @@
             <ul class="nav-icons">
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-files"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill" id="sent"></i></div></li>
                 <li>
                     <div class="icon-container" data-target="#notifications">

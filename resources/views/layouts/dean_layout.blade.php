@@ -56,15 +56,14 @@
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i>
                     </div>
                 </li>
-
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill"
-                            id="digitized-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-files" id="digitized-icon"></i></div>
                 </li>
-
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-hourglass-split"
-                            id="pendings"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-fill" id="pendings"></i></div>
+                </li>
+                <li>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-symlink-fill" id=""></i></div>
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">
@@ -120,6 +119,8 @@
             </ul>
             <ul>
                 <li><a href="{{ route('dean.documents.dean_request') }}" id="request">Request a Document</a></li>
+                <li><a href="{{route ('dean.documents.dean_requested_docs')}}" id="requested">Requested Document</a></li>
+
                 <li><a href="{{ route('dean.documents.dean_notification') }}"
                         id="announcements-icon">Notifications</a></li>
 

@@ -164,6 +164,9 @@ Route::middleware(['auth', 'role:3'])->group(function () {
             Route::get('/dean_edit_docs', [DeanController::class, 'edit_docs'])->name('dean.documents.dean_edit_docs');
             Route::get('/dean_notification', [DeanController::class, 'notification'])->name('dean.documents.dean_notification');
             Route::get('/dean_request', [DeanController::class, 'request'])->name('dean.documents.dean_request');
+            Route::get('/dean_requested_docs', [DeanController::class, 'requestedDocument'])
+                ->name('dean.documents.dean_requested_docs')
+                ->defaults('viewName', 'dean.documents.dean_requested_docs');
             Route::get('/dean_search', [DeanController::class, 'search'])->name('dean.documents.dean_search');
             Route::get('/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
             Route::get('/view_docs/{document_id}', [DeanController::class, 'view'])->name('dean.documents.dean_view_docs');

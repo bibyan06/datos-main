@@ -58,16 +58,13 @@
                     </div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"
-                            id="dashboard-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"  id="dashboard-icon"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill"
-                            id="digitized-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-files" id="digitized-icon"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"
-                            id="employees-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"  id="employees-icon"></i></div>
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">
