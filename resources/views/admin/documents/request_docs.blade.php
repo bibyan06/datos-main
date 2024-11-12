@@ -29,6 +29,7 @@
                         <th>Requested Date</th>
                         <th>Requested By</th>
                         <th>Status</th>
+                        <th>Remark</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -40,9 +41,14 @@
                             <td>{{ $item->request_date }}</td>
                             <td>{{ $item->requestedBy ? $item->requestedBy->first_name . ' ' . $item->requestedBy->last_name : 'N/A' }}</td>
                             <td class="{{ $item->approval_status }}">{{ $item->approval_status }}</td>
+                            <td>{{ $item->remarks }}</td>
                             <td class="action-buttons">
-                                <i class="bi bi-pencil-square" title="Send Document"
-                                    onclick="showPopupForm({{$item->request_id}},{{$item->requested_by}},'{{ $item->document_subject }}','{{ $item->request_purpose }}')"></i>
+                                <i class="bi bi-pencil-square approve" title="Send Document"
+                                    onclick="showPopupForm({{$item->request_id}},{{$item->requested_by}},'{{ $item->document_subject }}','{{ $item->request_purpose }}')">
+                                </i>
+                                <i class="bi bi-x-square decline" data-document-id="{{ $item->request_id }}"
+                                    data-decline-url="{{ route('admin.documents.request_docs') }}" onclick="declineDocument({{ $item->request_id }})">
+                                </i>   
                             </td>
                         </tr>
                     @endforeach

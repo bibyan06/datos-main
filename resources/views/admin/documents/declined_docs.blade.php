@@ -32,6 +32,7 @@
                         <th>Remark</th>
                         <th>Date Uploaded</th>
                         <th>Uploaded by</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,11 @@
                             <td>{{ $document->remark}}</td>
                             <td>{{ $document->upload_date }}</td>
                             <td>{{ $document->uploaded_by }}</td>
+                            <td class="review-icon">
+                                <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

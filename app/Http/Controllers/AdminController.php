@@ -109,6 +109,21 @@ class AdminController extends Controller
         return view('admin.documents.request_docs', compact('documents'));
     }
 
+    public function declineDocument(Request $request)
+    {
+        $document = RequestDocument::find($request->request_id);
+        if ($document) {
+            $document->approval_status = 'declined';
+            $document->remarks= $request->remarks;
+            $document->save();
+    
+            return response()->json(['success' => true, 'message' => 'Document declined successfully.']);
+        }
+        
+        return response()->json(['success' => false, 'message' => 'Document not found.'], 404);
+    }
+
+
     public function sent_docs()
     {
         return view('admin.documents.sent_docs');

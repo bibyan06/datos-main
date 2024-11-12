@@ -188,7 +188,6 @@ class OfficeStaffController extends Controller
         $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->count();
         $auditedDVCount = Document::where('category_name', 'Audited Disbursement Voucher')->count();
 
-        // Pass the data to the view
         return view('office_staff.os_dashboard', compact('documents', 'memorandumCount', 'claimMonitoringSheetCount', 'mrspCount', 'auditedDVCount'));
     }
     
@@ -196,7 +195,7 @@ class OfficeStaffController extends Controller
 
     public function showMemorandums()
     {
-        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        
         $documents = Document::where('category_name', 'Memorandum')
                             ->where('document_status', 'Approved') // Show only approved documents
                             ->get();

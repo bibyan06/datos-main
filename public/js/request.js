@@ -61,3 +61,69 @@ function sendDocument() {
 
     hidePopupForm();
 }
+
+function declineDocument(requestId) {
+    Swal.fire({
+        title: 'Decline Document',
+        input: 'text',
+        inputLabel: 'Reason for Decline',
+        inputPlaceholder: 'Enter your remark here...',
+        showCancelButton: true,
+        confirmButtonText: 'Decline',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Please enter a remark for declining!';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const remarks = result.value || '';
+            const declineUrl = document.querySelector(`[data-document-id="${requestId}"]`).getAttribute('data-decline-url');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Retrieve CSRF token
+
+            fetch(declineUrl, {
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,  // Use CSRF token
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    request_id: requestId,
+                    approval_status: 'declined',
+                    remarks: remarks
+                })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not OK');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Declined',
+                        text: 'The document has been declined successfully.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload(); // Refresh page after action
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message || 'An error occurred while declining the document.',
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong. Please try again.',
+                });
+            });
+        }
+    });
+}
