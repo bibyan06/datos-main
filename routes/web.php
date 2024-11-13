@@ -63,7 +63,7 @@ Route::middleware('role:1')->group(function () {
             Route::get('/cms', [AdminController::class, 'cms'])->name('admin.documents.cms');
             Route::get('/audited_dv', [AdminController::class, 'audited_dv'])->name('admin.documents.audited_dv');
             Route::get('/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
-            Route::post('/decline', [AdminController::class, 'declineDocument'])->name('admin.documents.request_docs');
+            Route::post('/request_docs', [AdminController::class, 'declineRequest'])->name('admin.documents.request_docs');
             Route::get('/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
             Route::get('/all_docs', [AdminController::class, 'all_docs'])->name('admin.documents.all_docs');
             Route::post('/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');

@@ -109,7 +109,7 @@ class AdminController extends Controller
         return view('admin.documents.request_docs', compact('documents'));
     }
 
-    public function declineDocument(Request $request)
+    public function declineRequest(Request $request)
     {
         $document = RequestDocument::find($request->request_id);
         if ($document) {

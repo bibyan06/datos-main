@@ -59,7 +59,7 @@ class DeanController extends Controller
             // Use the employee's id for filtering the forwarded and sent documents
             $employeeId = $employee->id;
             // Fetch forwarded documents where the current user is the one who forwarded the document
-            $requestedDocuments = RequestDocument::with(['requestedDocument'])
+            $requestedDocuments = RequestDocument::with(['requestedBy'])
                 ->where('requested_by', $employeeId) // Correct filter for employee id
                 ->whereIn('approval_status', ['pending', 'approved'])
                 ->get();

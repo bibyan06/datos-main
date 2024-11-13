@@ -32,15 +32,6 @@
                             
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="star">★</td>
-                            <!-- <td class="sender">DATOS</td> -->
-                            <!-- <td class="subject">
-                                <span class="subject-text"></span>
-                                To: 
-                                <span class="receiver">
-                                    {{ $r->reques->first_name ?? 'Unknown' }} 
-                                    {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
-                                </span>
-                            </td> -->
                             <td class="document-name">{{ $r->document_subject ?? 'Unknown Document' }}</td>
                             <td class="request-purpose">{{ $r->request_purpose ?? 'Unknown Purpose' }}</td>
                             <td class="date">{{ \Carbon\Carbon::parse($r->request_date)->format('M d H:i') }}</td>
