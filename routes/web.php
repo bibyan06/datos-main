@@ -213,7 +213,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', [OfficeStaffController::class, 'showProfile'])->middleware('auth')->name('office_staff.os_account');
     Route::get('/profile', [AdminController::class, 'showProfile'])->middleware('auth')->name('admin.admin_account');
-    Route::get('/layouts/admin_layout', [AdminController::class, 'showPendings'])->name('layouts.admin_layouts');
+    Route::get('/layouts/admin_layout', [AdminController::class, 'showPendings'])->name('layouts.admin_layout');
     Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->name('dean.store');
     Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

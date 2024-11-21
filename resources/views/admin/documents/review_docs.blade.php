@@ -108,13 +108,13 @@
                     Swal.fire({
                         title: 'Decline Document',
                         input: 'textarea',
-                        inputLabel: 'Remark',
+                        // inputLabel: 'Remark',
                         inputPlaceholder: 'Enter your remark here...',
                         inputAttributes: {
                             'aria-label': 'Enter your remark here'
                         },
                         showCancelButton: true,
-                        confirmButtonText: 'Submit Decline',
+                        confirmButtonText: 'Decline',
                         cancelButtonText: 'Cancel',
                         preConfirm: (remark) => {
                             if (!remark) {

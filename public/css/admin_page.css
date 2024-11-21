@@ -688,6 +688,42 @@ footer {
 }
 
 
+.profile-content {
+    position: absolute;
+    bottom: 0;
+    width: 85%;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+.profile-content ul {
+    list-style: none;
+    margin: 0;
+    bottom: 0;
+    text-align: left;
+}
+
+.profile-content ul li {
+    font-size: 14px;
+    list-style: none;
+    margin: 6px 0;
+}
+
+.profile-content ul li a {
+    padding-top: 15px;
+    display: block; 
+    text-decoration: none;
+    color: #009FEA; 
+    border-radius: 4px;
+    transition: background-color 0.3s ease; 
+}
+
+.profile-content ul li a:hover {
+    background-color: #E9ECF4;
+    color: #FE8926;
+}
+
+
 footer {
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
@@ -783,6 +819,17 @@ table {
     font-size: 12px;
     font-weight: bold;
     margin-top: -19px;
+}
+#pending-counts{
+    position: absolute;
+    right: 110px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: bold;
+    /* margin-top: -22px; */
 }
 
 

@@ -23,12 +23,12 @@
                 <div class="memorandum-option">
                     <div class="search">
                         <select id="category-filter">
-                            <option value="" disabled>Select Document</option>
-                            <option value="" {{ request('category') === '' ? 'selected' : '' }}>All</option>
-                            <option value="Memorandum" {{ request('category') === 'Memorandum' ? 'selected' : '' }}>Memorandum</option>
-                            <option value="Audited Disbursement Voucher" {{ request('category') === 'Audited Disbursement Voucher' ? 'selected' : '' }}>Audited Disbursement Voucher</option>
-                            <option value="Monthly Report Service of Personnel" {{ request('category') === 'Monthly Report Service of Personnel' ? 'selected' : '' }}>Monthly Report Service of Personnel</option>
-                            <option value="Claim Monitoring Sheet" {{ request('category') === 'Claim Monitoring Sheet' ? 'selected' : '' }}>Claim Monitoring Sheet</option>
+                            <option value="" disabled selected>Select a Category</option>
+                            <option value="all">All</option>
+                            <option value="Memorandum">Memorandum</option>
+                            <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
+                            <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
+                            <option value="Claim Monitoring Sheet">Claim Monitoring Sheet</option>
                         </select>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div class="dashboard-container">
                 <div class="documents" id="documents-list">
                     @forelse($documents as $document)
-                        <div class="document" data-name="{{ $document->document_name }}">
+                        <div class="document" data-name="{{ $document->document_name }}" data-category="{{ $document->category }}">
                             <div class="file-container">
                                 <div class="document-card">
                                 <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <div class="other-details">
-                                    <p>Date Updated: {{ \Carbon\Carbon::parse($document->updated_at)->format('F d, Y') }}</p>
+                                    <p>Date Upload: {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>
                                     <p>{{ $document->description }}</p>
                                 </div>
                             </div>
@@ -100,48 +100,51 @@
 @section('custom-js')
     <script src="{{ asset('js/all_docs.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const hidden = document.querySelector('#hidden');
-        const searchText = document.querySelector('#search-document'); // Updated selector
-        const documents = document.querySelectorAll('#documents-list .document');
-        const month = document.querySelector('#option-text'); // Correct ID for month select element
-        
-        hidden.style.display = "none";
+      document.addEventListener('DOMContentLoaded', function() {
+    const hidden = document.querySelector('#hidden');
+    const searchText = document.querySelector('#search-document'); 
+    const documents = document.querySelectorAll('#documents-list .document');
+    const month = document.querySelector('#option-text'); // Month filter
+    const categoryFilter = document.querySelector('#category-filter'); // Category filter
+    
+    hidden.style.display = "none";
 
-        function filterDocuments() {
-            const query = searchText.value.toLowerCase();
-            const selectedMonth = month.value.toLowerCase();
+    function filterDocuments() {
+    const query = searchText?.value.toLowerCase() || '';
+    const selectedMonth = month?.value.toLowerCase() || '';
+    const selectedCategory = categoryFilter?.value.toLowerCase().trim() || '';
 
-            documents.forEach(doc => {
-                const name = doc.getAttribute('data-name').toLowerCase();
-                const docMonth = doc.querySelector('input[type="text"]').value.toLowerCase();
-                const matchesSearch = name.includes(query);
-                const matchesMonth = docMonth === selectedMonth;
+    console.log('Selected Category:', selectedCategory);  // Debugging: log the selected category
+    let anyDocumentVisible = false; // Track if any document matches the filters
 
-                // Show document only if it matches both the search text and selected month
-                if (query && !month.value) {
-                    hidden.style.display = matchesSearch ? 'none' : 'block';
-                    doc.style.display = matchesSearch ? '' : 'none';
-                } else if (!query && month.value) {
-                    hidden.style.display = matchesMonth ? 'none' : 'block';
-                    doc.style.display = matchesMonth ? '' : 'none';
-                } else if (query && month.value) {
-                    doc.style.display = matchesSearch && matchesMonth ? '' : 'none';
-                } else {
-                    hidden.style.display = "block";
-                    doc.style.display = ''; // Show all if no filter is applied
-                }
-            });
+    documents.forEach(doc => {
+        const name = doc.getAttribute('data-name')?.toLowerCase() || '';
+        const docMonth = doc.querySelector('input[type="text"]')?.value.toLowerCase() || '';
+        const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
 
-            hidden.style.display = documents.length && Array.from(documents).every(doc => doc.style.display === 'none') ? 'block' : 'none';
-            }
+        console.log('Document Category:', docCategory);  // Debugging: log the document category
 
-            searchText.addEventListener('input', filterDocuments);
-            month.addEventListener('change', filterDocuments);
-        });
+        const matchesSearch = !query || name.includes(query);
+        const matchesMonth = !selectedMonth || docMonth === selectedMonth;
+        const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
+
+        // Display document if it matches all active filters
+        const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
+        doc.style.display = shouldDisplay ? '' : 'none';
+
+        if (shouldDisplay) anyDocumentVisible = true; // At least one document is visible
+    });
+
+    // Show the "No document available" message if no document matches
+    hidden.style.display = anyDocumentVisible ? 'none' : 'block';
+}
+
+
+    searchText?.addEventListener('input', filterDocuments);
+    month?.addEventListener('change', filterDocuments);
+    categoryFilter?.addEventListener('change', filterDocuments);
+});
+
     </script>
-
 @endsection
 
-</body>
-</html>

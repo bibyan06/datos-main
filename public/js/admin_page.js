@@ -159,7 +159,7 @@ function fetchNotificationCount() {
         .then(data => {
             console.log(data)
             
-            console.log('Notification Count Element:', notificationCountElement);
+            console.log('Notification a Element:', notificationCountElement);
 
             if (notificationCountElement) {
                 const notificationCount = data.notificationCount;

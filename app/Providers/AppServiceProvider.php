@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
+use App\Models\RequestDocument;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,16 +25,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Validator::extend('employee_id', function($attribute, $value, $parameters, $validator) {
-            // Custom validation logic for employee_id
-            return true; // or false if validation fails
-        });
+        Validator::extend('employee_id', function ($attribute, $value, $parameters, $validator) {
+        return true;
+    });
 
-        View::composer('layouts.admin_layout', function ($view) {
-            $pendingCount = Document::pending()->count(); // Retrieve the count of pending documents
-            $view->with('pendingCount', $pendingCount);
-        });
+    View::composer('layouts.admin_layout', function ($view) {
+        // Logic for pendingCount
+        $documentPendingCount = Document::where('document_status', 'Pending')->count();
+        $requestPendingCount = RequestDocument::where('approval_status', 'pending')->count();
+        $pendingCount = $documentPendingCount + $requestPendingCount;
 
+        // Logic for notificationCount
+        $forwardPendingCount = DB::table('forwarded_documents')->where('status', 'delivered')->count();
+        $sendPendingCount = DB::table('send_document')->where('status', 'delivered')->count();
+        $notificationCount = $forwardPendingCount + $sendPendingCount;
+
+        $view->with([
+            'documentPendingCount'=>$documentPendingCount,
+            'requestPendingCount'=> $requestPendingCount,
+            'pendingCount' => $pendingCount,
+            'notificationCount' => $notificationCount,
+        ]);
+    });
         // View::composer('layouts.admin_layout', function ($view) {
         //     $user = Auth::user();
         //     $firstInitial = strtoupper(preg_replace('/[^A-Za-z]/', '', substr($user->first_name, 0, 2)));

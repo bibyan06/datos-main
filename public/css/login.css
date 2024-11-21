@@ -202,9 +202,78 @@ body {
   }
 }
 
-@media (max-width: 992px) {
-  .image-container {
-      width: 50%;
+
+  
+
+/* Responsive design for tablets and smaller */
+@media (min-width: 768px) and (max-width: 991px){
+  .container {
+      width: 85%;
+      padding: 20px;
+  }
+
+  .welcome-header {
+      font-size: 20px;
+  }
+
+  .bg-blue-500,
+  .bg-white {
+      height: auto;
+      border-radius: 15px;
   }
 }
-  
+
+/* Responsive design for small tablets and large phones */
+@media (min-width: 577px) and (max-width: 767px){
+  .container {
+      max-width: 90%;
+      padding: 15px;
+  }
+
+  .welcome-header {
+      font-size: 18px;
+  }
+
+  button[type="submit"] {
+      width: 100%;
+  }
+}
+
+/* Responsive design for small screens (phones) */
+@media (max-width: 576px) {
+  .container {
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+  .bg-blue-500,
+  .bg-white {
+      border-radius: 10px;
+      border-top-right-radius: 15px;
+      border-top-left-radius: 15px;
+  }
+
+  .welcome-header {
+      font-size: 16px;
+  }
+
+  .logo {
+      width: 8rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+      padding: 10px;
+      font-size: 14px;
+  }
+
+  button[type="submit"] {
+      padding: 10px;
+      font-size: 14px;
+  }
+}

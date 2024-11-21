@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
+use App\Models\RequestDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
@@ -199,23 +200,27 @@ class DocumentController extends Controller
     }
 
 
-    public function getPendingDocumentsCount()
-    {
-        // Fetch the count of pending documents
-        $pendingCount = Document::where('document_status', 'Pending')->count();
+    // public function getPendingDocumentsCount()
+    // {
+        
+    //     $documentPendingCount = Document::where('document_status', 'Pending')->count();
 
-        // Return the count
-        return $pendingCount;
-    }
+    //     $requestPendingCount = RequestDocument::where('approval_status' ,'pending')->count();
 
-    public function showAdminPage()
-    {
-        // Get the pending document count
-        $pendingCount = $this->getPendingDocumentsCount();
+    //     $pendingCount = $documentPendingCount + $requestPendingCount;
 
-        // Pass the count to the view
-        return view('admin.admin_dashboard', ['pendingCount' => $pendingCount]);
-    }
+    //     // Return the count
+    //     return $pendingCount;
+    // }
+
+    // public function showAdminPage()
+    // {
+    //     // Get the pending document count
+    //     $pendingCount = $this->getPendingDocumentsCount();
+
+    //     // Pass the count to the view
+    //     return view('admin.admin_dashboard', ['pendingCount' => $pendingCount]);
+    // }
 
 
     public function serve($filename)

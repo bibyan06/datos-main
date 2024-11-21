@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const statusFilter = document.getElementById('status-filter');
     const categoryFilter = document.getElementById('category-filter');

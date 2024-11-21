@@ -12,6 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
         rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css')}}"> 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* .archive{
@@ -74,6 +75,7 @@
                         @endif
                     </div>
                 </li>
+
                 <li>
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill"
                             id="sent"></i></div>
@@ -155,8 +157,22 @@
                     <ul class="pending-dropdown">
                         <li><a href="{{ route('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
                         <li><a href="{{ route('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
-                        <li><a href="{{ route('admin.documents.review_docs') }}" id="request">Pendings</a></li>
-                        <li><a href="{{ route('admin.documents.request_docs') }}" id="request">Request</a></li>
+                        <li>
+                            <a href="{{ route('admin.documents.review_docs') }}" id="request">
+                                Pendings
+                                @if(isset($documentPendingCount) && $documentPendingCount > 0)
+                                    <span class="badge badge-pill badge-danger" id="pending-counts">{{ $documentPendingCount }}</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.documents.request_docs') }}" id="request">
+                                Request
+                                @if(isset($requestPendingCount) && $requestPendingCount > 0)
+                                    <span class="badge badge-pill badge-danger" id="pending-counts">{{ $requestPendingCount }}</span>
+                                @endif
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

@@ -66,7 +66,7 @@ function declineDocument(requestId) {
     Swal.fire({
         title: 'Decline Document',
         input: 'text',
-        inputLabel: 'Reason for Decline',
+        // inputLabel: 'Reason for Decline',
         inputPlaceholder: 'Enter your remark here...',
         showCancelButton: true,
         confirmButtonText: 'Decline',

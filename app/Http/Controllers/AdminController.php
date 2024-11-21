@@ -199,22 +199,18 @@ class AdminController extends Controller
         }
     }
 
-    public function showPendings()
-    {
-        $pendingCount = Document::where('document_status', 'Pending')->count();
-
-        $forwardPendingCount = DB::table('forwarded_documents')
-            ->where('status', 'delivered')
-            ->count();
-
-        $sendPendingCount = DB::table('send_document')
-            ->where('status', 'delivered')
-            ->count();
-
-        $notificationCount = $forwardPendingCount + $sendPendingCount;
-        return view('admin.admin_dashboard', compact('pendingCount', 'notificationCount')); // Adjust 'admin.dashboard' to the correct view file
-    }
-
+    // public function showPendings()
+    // {
+    //     $documentPendingCount = Document::where('document_status', 'Pending')->count();
+    //     $requestPendingCount = RequestDocument::where('approval_status', 'pending')->count();
+    //     $forwardPendingCount = DB::table('forwarded_documents')->where('status', 'delivered')->count();
+    //     $sendPendingCount = DB::table('send_document')->where('status', 'delivered')->count();
+        
+    //     $pendingCount = $documentPendingCount + $requestPendingCount;
+    //     $notificationCount = $forwardPendingCount + $sendPendingCount;
+    
+    //     return view('layouts.admin_layout', compact('pendingCount', 'notificationCount')); 
+    // }
 
     public function adminHome()
     {
