@@ -300,13 +300,13 @@ class DocumentController extends Controller
             return response()->json(['success' => false, 'message' => 'Document not found'], 404);
         }
 
-        // Update the status to 'seen'
-        $forwardedDocument->status = 'seen';
+        // Update the status to 'viewed'
+        $forwardedDocument->status = 'viewed';
         $forwardedDocument->save();
 
-        Log::info("Document status updated to 'seen' for ID: " . $forwardedDocumentId);
+        Log::info("Document status updated to 'viewed' for ID: " . $forwardedDocumentId);
 
-        return response()->json(['success' => true, 'message' => 'Document status updated to "seen".']);
+        return response()->json(['success' => true, 'message' => 'Document status updated to "viewed".']);
     }
 
     public function updateStatusSent(Request $request, $forwardedDocumentId)
@@ -321,13 +321,13 @@ class DocumentController extends Controller
             return response()->json(['success' => false, 'message' => 'Document not found'], 404);
         }
 
-        // Update the status to 'seen'
-        $forwardedDocument->status = 'seen';
+        // Update the status to 'viewed'
+        $forwardedDocument->status = 'viewed';
         $forwardedDocument->save();
 
-        Log::info("Document status updated to 'seen' for ID: " . $forwardedDocumentId);
+        Log::info("Document status updated to 'viewed' for ID: " . $forwardedDocumentId);
 
-        return response()->json(['success' => true, 'message' => 'Document status updated to "seen".']);
+        return response()->json(['success' => true, 'message' => 'Document status updated to "viewed".']);
     }
     public function viewRequest(){
         return view('admin.documents.requested_docs');

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                     `,
                     showCloseButton: true,
-                    confirmButtonText: 'Mark as Seen',
+                    confirmButtonText: 'Mark as viewed',
                     showCancelButton: true,
                     cancelButtonText: 'Close',
                     customClass: {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(data => {
                             console.log("Response data:", data);
                             if (data.success) {
-                                Swal.fire('Success', 'Document status updated to "seen".', 'success')
+                                Swal.fire('Success', 'Document status updated to "viewed".', 'success')
                                     .then(() => {
                                         document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';

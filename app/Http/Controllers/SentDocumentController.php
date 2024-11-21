@@ -23,13 +23,13 @@ class SentDocumentController extends Controller
             // Fetch forwarded documents where the current user is the one who forwarded the document
             $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
                 ->where('forwarded_by', $employeeId) // Correct filter for employee id
-                ->whereIn('status', ['seen', 'delivered'])
+                ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
             
             // Fetch sent documents where the current user issued the document
             $sentDocuments = SendDocument::with(['sender', 'document'])
                 ->where('issued_by', $employeeId) // Correct filter for employee id
-                ->whereIn('status', ['seen', 'delivered'])
+                ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
             // Log the results to verify data
             \Log::info('Forwarded Documents:', $forwardedDocuments->toArray());

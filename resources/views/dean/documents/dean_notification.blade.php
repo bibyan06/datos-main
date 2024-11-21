@@ -9,7 +9,7 @@
         font-weight: bold;
     }
 
-    .seen {
+    .viewed {
         font-weight: normal;
     }
 </style>
@@ -36,7 +36,7 @@
             <table class="email-list">
                 {{-- Display Forwarded Documents --}}
                 @foreach ($forwardedDocuments as $forwarded)
-                    <tr class="email-item {{ $forwarded->status !== 'seen' ? 'delivered' : '' }}"
+                    <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}"
                         data-id="{{ $forwarded->forwarded_document_id }}"
                         data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
                         data-document="{{ $forwarded->document->document_name ?? 'No Title' }}"
@@ -45,11 +45,11 @@
 
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="star">★</td>
-                        <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'seen' }}">
+                        <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             {{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                             {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                         </td>
-                        <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'seen' }}">
+                        <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
 
                             <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                             <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
@@ -69,18 +69,18 @@
 
                 {{-- Display Sent Documents --}}
                 @foreach ($sentDocuments as $sentDocument)
-                    <tr class="email-items {{ $sentDocument->status === 'delivered' ? 'delivered' : 'seen' }}"
+                    <tr class="email-items {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}"
                         data-id="{{ $sentDocument->send_id }}"
                         data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}"
                         data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" data-type="request"
                         data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="star">★</td>
-                        <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'seen' }}">
+                        <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             {{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                             {{ $sentDocument->sender->last_name ?? '' }}
                         </td>
-                        <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'seen' }}">
+                        <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
                         </td>
 
@@ -134,7 +134,7 @@
                         <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                     `,
                         showCloseButton: true,
-                        confirmButtonText: 'Mark as Seen',
+                        confirmButtonText: 'Mark as viewed',
                         showCancelButton: true,
                         cancelButtonText: 'Close',
                         customClass: {
@@ -169,7 +169,7 @@
                                     console.log("Response data:", data);
                                     if (data.success) {
                                         Swal.fire('Success',
-                                            'Document status updated to "seen".',
+                                            'Document status updated to "viewed".',
                                             'success')
                                             .then(() => {
                                                 document.querySelector(
@@ -228,7 +228,7 @@ emailSentItem.forEach(item => {
                     <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                 `,
                 showCloseButton: true,
-                confirmButtonText: 'Mark as Seen',
+                confirmButtonText: 'Mark as viewed',
                 showCancelButton: true,
                 cancelButtonText: 'Close',
                 customClass: {
@@ -257,7 +257,7 @@ emailSentItem.forEach(item => {
                     .then(data => {
                         console.log("Response data:", data);
                         if (data.success) {
-                            Swal.fire('Success', 'Document status updated to "seen".', 'success')
+                            Swal.fire('Success', 'Document status updated to "viewed".', 'success')
                                 .then(() => {
                                     document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
                                     document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';

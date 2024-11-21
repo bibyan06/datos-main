@@ -27,13 +27,13 @@ class NotificationController extends Controller
             // Fetch forwarded documents for the current user
             $forwardedDocuments = ForwardedDocument::with(['forwardedByEmployee', 'document'])
                 ->where('forwarded_to', $employeeId) // Use employee.id for filtering
-                ->whereIn('status', ['seen', 'delivered'])
+                ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
 
             // Fetch sent documents for the current user
             $sentDocuments = SendDocument::with(['sender', 'document'])
                 ->where('issued_to', $employeeId) // Use employee.id for filtering
-                ->whereIn('status', ['seen', 'delivered'])
+                ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
             // Return the appropriate view with the documents
             return view($viewName, compact('forwardedDocuments', 'sentDocuments'));
@@ -83,7 +83,7 @@ class NotificationController extends Controller
             $forwardedDocuments->update();
             return response()->json([
                 'success' => true,
-                'message' => 'Document ' . ($status=='seen'?'Restored':$status) . ' successfully.',
+                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
             ]);
         }
     }
@@ -97,7 +97,7 @@ class NotificationController extends Controller
             $forwardedDocuments->update();
             return response()->json([
                 'success' => true,
-                'message' => 'Document ' . ($status=='seen'?'Restored':$status) . ' successfully.',
+                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
             ]);
         }
     }

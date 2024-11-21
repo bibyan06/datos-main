@@ -40,7 +40,7 @@
                                 </td>
                                 <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }} </td>
                                 <td class="email-actions">
-                                    <a notif-id={{ $r->forwarded_document_id }} status= 'seen'
+                                    <a notif-id={{ $r->forwarded_document_id }} status= 'viewed'
                                         class = "notifForward" style="text-decoration: none; color:black;"><i
                                             class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
                                     <a delete-id={{ $r->forwarded_document_id }}  class = "deleteForward"
@@ -64,7 +64,7 @@
                                 </td>
                                 <td class="date">{{ \Carbon\Carbon::parse($sentDocs->issued_date)->format('F j, Y') }} </td>
                                 <td class="email-actions">
-                                    <a notif-id={{ $sentDocs->send_id }} status= 'seen'
+                                    <a notif-id={{ $sentDocs->send_id }} status= 'viewed'
                                         class = "notifSent" style="text-decoration: none; color:black;"><i
                                             class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
                                     <a delete-id={{ $sentDocs->send_id }}  class = "notifSent"
