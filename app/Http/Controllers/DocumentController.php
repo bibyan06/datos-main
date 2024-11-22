@@ -19,17 +19,29 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $categories = DB::table('category')->get(); // Fetch all categories from the 'category' table
+        $categories = DB::table('category')->get(); 
         $documentsCount = Document::count() + 1;
         return view('office_staff.os_upload_document', compact('categories', 'documentsCount'));
     }
 
     public function create_admin()
     {
-        $categories = DB::table('category')->get(); // Fetch all categories from the 'category' table
+        $categories = DB::table('category')->get(); 
         $documentsCount = Document::count() + 1;
         return view('admin.admin_upload_document', compact('categories', 'documentsCount'));
     }
+
+    public function checkDocumentNumber(Request $request)
+    {
+        $request->validate([
+            'document_number' => 'required|string'
+        ]);
+
+        $exists = Document::where('document_number', $request->document_number)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
 
     public function store(Request $request)
     {

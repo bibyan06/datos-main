@@ -55,8 +55,14 @@
                     <form id="uploadDocumentForm" action="{{route('admin.admin_upload_document')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="document-number">Document Number</label>
-                            <input type="text" id="document-number" name="document_number" class="form-control" value="{{$documentsCount}}">
+                            <label for="document-number" id="dNumber">Document Number</label>
+                            <div style="display: flex; align-items: center; width: 100%;">
+                                <input type="text" id="document-number" name="document_number" class="form-control" value="{{$documentsCount}}" disabled>
+                                <span id="edit-document-number-btn" style="margin-left: 10px; cursor: pointer;">
+                                    <i class="bi bi-pencil-square icon-size"></i>
+                                </span>
+                            </div>
+                            <small style="color: red; font-weight: bold" id="documentNumberError"></small>
                         </div>
                         <div class="form-group">
                             <label for="document-name" id="dName">Document Name</label>
@@ -284,6 +290,62 @@
 
     document.getElementById('file-input').addEventListener('change', (event) => {
         handleFiles(event.target.files);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const documentNumberField = document.getElementById('document-number');
+        const editButton = document.getElementById('edit-document-number-btn');
+        const errorText = document.getElementById('documentNumberError');
+
+        // Toggle the disabled state of the input field when the edit button is clicked
+        editButton.addEventListener('click', () => {
+            if (documentNumberField.disabled) {
+                // Enable the field for editing
+                documentNumberField.disabled = false;
+                documentNumberField.focus(); 
+                documentNumberField.style.borderColor = "#007BFF"; 
+                editButton.innerHTML = '<i class="bi bi-check2-square icon-size"></i>'; 
+            } else {
+                // Disable the field again after editing
+                documentNumberField.disabled = true;
+                documentNumberField.style.borderColor = "#CCCCCC"; 
+                editButton.innerHTML = '<i class="bi bi-pencil-square icon-size"></i>'; 
+            }
+        });
+
+        // Validate document number on blur (when the input field loses focus)
+        documentNumberField.addEventListener('blur', () => {
+            const documentNumber = documentNumberField.value.trim();
+
+            if (!documentNumber) {
+                errorText.textContent = "";
+                documentNumberField.style.borderColor = "#CCCCCC"; 
+                return;
+            }
+
+            // Check if the document number already exists via AJAX (example route)
+            fetch("{{ route('office_staff.check_document_number') }}", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ document_number: documentNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    errorText.textContent = "Document number already exists!";
+                    documentNumberField.style.borderColor = "#DC3545"; 
+                } else {
+                    errorText.textContent = "";
+                    documentNumberField.style.borderColor = "#CCCCCC"; 
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+            });
+        });
     });
 </script>
 

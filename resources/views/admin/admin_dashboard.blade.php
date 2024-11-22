@@ -26,6 +26,10 @@
                 <div class="dashboard-title">
                     <h2>Overview</h2>
                     <div class="filter-container">
+                        <div class="documents-search-bar">
+                            <input type="text" id="search-text" class="search-text" placeholder="Search Document">
+                            <i class="bi bi-search"></i>
+                        </div>
                         <div class="status-filter">
                             <select id="status-filter" class="option-text">
                                 <option value="" disabled selected>Select Status</option>

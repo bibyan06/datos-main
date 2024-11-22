@@ -105,7 +105,7 @@ Route::middleware('role:1')->group(function () {
         Route::get('/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
         Route::get('/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
         Route::get('/trash', [AdminController::class, 'trash'])->name('admin.trash');
-        
+        Route::post('/check-document-number', [DocumentController::class, 'checkDocumentNumber']) ->name('admin.check_document_number');   
     });
 });
 
@@ -147,6 +147,8 @@ Route::middleware(['auth', 'role:2'])->group(function () {
         });
         Route::get('/os_archive', [OfficeStaffController::class, 'archiveDocs'])->name('office_staff.os_archive');
         Route::get('/os_trash', [OfficeStaffController::class, 'trash'])->name('office_staff.os_trash');
+        Route::post('/check-document-number', [DocumentController::class, 'checkDocumentNumber']) ->name('office_staff.check_document_number');   
+
     });
 });
 

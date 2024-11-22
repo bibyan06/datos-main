@@ -46,15 +46,62 @@ main {
 
 .filter-container {
   display: flex;
+  justify-content: flex-end; 
   align-items: center;
   gap: 15px; 
 }
 
-.filter-container select {
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
+/* Search Bar Styles */
+.documents-search-bar {
+  position: relative;
+  width: 300px; 
 }
+
+.documents-search-bar .search-text {
+  width: 100%;
+  padding: 10px 35px 10px 10px; 
+  font-size: 15px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc; 
+}
+
+.documents-search-bar .bi-search {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Dropdown Styles */
+.filter-container select {
+  padding: 10px 35px 10px 10px; 
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc; 
+  color: black; 
+}
+
+/* select option:disabled {
+  color: grey;
+}
+
+select {
+  color: grey; 
+} */
+
+/* .icon {
+  border-radius: 0 5px 5px 0;
+  padding: 5px;
+  height: 37px; 
+  border: 1px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+} */
 
 .dashboard-container {
   background-color: #fff;
