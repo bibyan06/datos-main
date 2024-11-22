@@ -58,7 +58,7 @@
                             <label for="document-number" id="dNumber">Document Number</label>
                             <div style="display: flex; align-items: center; width: 100%;">
                                 <input type="text" id="document-number" name="document_number" class="form-control" value="{{$documentsCount}}" disabled>
-                                <span id="edit-document-number-btn" style="margin-left: 10px; cursor: pointer;">
+                                <span id="edit-document-number-btn" style="margin-left: 10px; cursor: pointer;" data-bs-toggle="tooltip" title="Edit">
                                     <i class="bi bi-pencil-square icon-size"></i>
                                 </span>
                             </div>
@@ -346,6 +346,10 @@
                 console.error('Error:', err);
             });
         });
+    });
+
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+        new bootstrap.Tooltip(tooltipTriggerEl);
     });
 </script>
 
