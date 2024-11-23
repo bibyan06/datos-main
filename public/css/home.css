@@ -117,34 +117,35 @@ main {
 }
 
 .container {
-    background-color: #fefffe;
+    background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
 .square {
-    flex: 0 0 20%; /* Adjust the width to be smaller */
-    height: 100px; /* Adjust the height as needed */
+    flex: 0 0 20%; 
+    height: 100px;
     display: flex;
-    align-items: center; /* Center items vertically */
+    align-items: center; 
     padding: 10px;
-    justify-content: flex-start; /* Align items to the start */
+    justify-content: flex-start; 
+    border-radius: 10px;
 
 }
 
 .square img {
-    width: 30%; /* Adjust width to make it smaller */
+    width: 30%; 
     height: auto;
-    margin-right: 10px; /* Space between the logo and text */
+    margin-right: 10px; 
     cursor: pointer;
     padding-left: 20px;
     
 }
 
 .square p {
-    margin: 0; /* Remove default margin */
+    margin: 0;
     font-size: 13px;
     color: #333;
     font-weight: 600;
@@ -152,8 +153,8 @@ main {
 
 /* Keep the rectangle container size */
 .rectangle {
-    flex: 1; /* This will take up the remaining space */
-    height: 100px; /* Adjust the height as needed */
+    flex: 1; 
+    height: 100px; 
     padding: 10px;
 }
 
@@ -188,7 +189,7 @@ main {
 
 #notifications {
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-radius: 10px;
     height: 100px; /* Adjust the height as needed */
 }
@@ -402,7 +403,7 @@ main {
 
 /* Document Styles */
 .document {
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;

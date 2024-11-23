@@ -41,3 +41,70 @@ document.querySelectorAll('.decline-btn').forEach(button => {
         $('#remarkModal').modal('show');
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.return-to-pending').forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            const documentId = this.getAttribute('data-id');
+
+            // Show SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will return the document to pending status.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Use the URL and CSRF token defined in the Blade template
+                    fetch(returnToPendingUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
+                        body: JSON.stringify({ document_id: documentId }),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire(
+                                    'Returned',
+                                    data.message,
+                                    'success'
+                                ).then(() => {
+                                    location.reload(); // Reload the page to reflect changes
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Could not update document status.',
+                                    'error'
+                                );
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while updating the document status.',
+                                'error'
+                            );
+                        });
+                }
+            });
+        });
+    });
+});
+
+
+

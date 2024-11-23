@@ -256,3 +256,17 @@ th {
 .view-icon:hover {
   color: #0056b3; /* Darker shade on hover */
 }
+/* 
+.editable-field {
+  border: 1px solid #ccc;  
+  padding: 5px;
+} */
+
+.editing {
+  outline: 1px solid #009FEA ; 
+  /* border-radius: 4px;  */
+}
+
+.editable-field.editing {
+  border: 2px solid #009FEA; /* Blue border when editable */
+}

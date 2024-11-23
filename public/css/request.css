@@ -97,6 +97,32 @@ main {
     color:green;
 }
 
+.swal-decline-btn {
+    background-color: #f94449 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.swal-decline-btn:hover {
+    background-color: #c82333 !important;
+}
+
+.swal-cancel-btn {
+    background-color: gray !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.swal-cancel-btn:hover {
+    background-color: darkgray !important;
+}
+
 .action-buttons {
     display: flex;
     gap: 10px;

@@ -48,7 +48,8 @@
                             <td>{{ $document->upload_date }}</td>
                             <td>{{ $document->uploaded_by }}</td>
                             <td class="review-icon">
-                                <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
+                                <i class="bi bi-arrow-clockwise return-to-pending" title="Return" data-id="{{ $document->document_id }}"></i></i>
+                                <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>
@@ -65,6 +66,10 @@
 @endsection
 
 @section('custom-js')
+    <script>
+        const returnToPendingUrl = "{{ route('admin.documents.review_docs') }}";
+        const csrfToken = "{{ csrf_token() }}";
+    </script>
     <script src="{{ asset('js/approved.js') }}"></script>
 @endsection
 

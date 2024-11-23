@@ -46,7 +46,7 @@
                                 <i class="bi bi-pencil-square approve" title="Send Document"
                                     onclick="showPopupForm({{$item->request_id}},{{$item->requested_by}},'{{ $item->document_subject }}','{{ $item->request_purpose }}')">
                                 </i>
-                                <i class="bi bi-x-square decline" data-document-id="{{ $item->request_id }}"
+                                <i class="bi bi-x-square decline" title="Decline" data-document-id="{{ $item->request_id }}"
                                     data-decline-url="{{ route('admin.documents.request_docs') }}" onclick="declineDocument({{ $item->request_id }})">
                                 </i>   
                             </td>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" id="cancel-btn" onclick="hidePopupForm()">Cancel</button>
+                    <button type="button" id="cancel-btn" onclick="hidePopupForm()" >Cancel</button>
                     <button type="button" id="send-document-btn" onclick="submitFormData()">Send Document</button>
                 </div>
             </div>

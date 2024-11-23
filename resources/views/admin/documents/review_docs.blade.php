@@ -49,17 +49,17 @@
                                         <td>{{ $document->upload_date }}</td>
                                         <td>{{ $document->uploaded_by }}</td>
                                         <td>
-                                        <form action="{{ route('admin.documents.approve', $document->document_id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success approve-btn">Approve</button>
-                                        </form>
+                                            <form action="{{ route('admin.documents.approve', $document->document_id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success approve-btn">Approve</button>
+                                            </form>
                                         <button type="button" class="btn btn-danger decline-btn" data-document-id="{{ $document->document_id }}">Decline</button>                                        
-                                    </td>
-                                    <td class="review-icon">
-                                        <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </td>
+                                        </td>
+                                        <td class="review-icon">
+                                            <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -116,6 +116,10 @@
                         showCancelButton: true,
                         confirmButtonText: 'Decline',
                         cancelButtonText: 'Cancel',
+                        customClass: {
+                            confirmButton: 'swal-decline-btn',
+                            cancelButton: 'swal-cancel-btn'
+                        },
                         preConfirm: (remark) => {
                             if (!remark) {
                                 Swal.showValidationMessage('Remark is required');

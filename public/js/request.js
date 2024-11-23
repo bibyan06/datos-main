@@ -71,6 +71,10 @@ function declineDocument(requestId) {
         showCancelButton: true,
         confirmButtonText: 'Decline',
         cancelButtonText: 'Cancel',
+        customClass: {
+            confirmButton: 'swal-decline-btn',
+            cancelButton: 'swal-cancel-btn'
+        },
         inputValidator: (value) => {
             if (!value) {
                 return 'Please enter a remark for declining!';

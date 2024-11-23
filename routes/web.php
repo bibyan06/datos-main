@@ -79,8 +79,11 @@ Route::middleware('role:1')->group(function () {
             Route::get('/sent_docs', [SentDocumentController::class, 'index'])
                 ->name('admin.documents.sent_docs')
                 ->defaults('viewName', 'admin.documents.sent_docs');
+            Route::post('/review_docs', [DocumentController::class, 'returnToPending'])->name('admin.documents.review_docs');
+
         });
         Route::get('/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
+        Route::post('/admin_dashboard', [DocumentController::class, 'updateDocument'])->name('admin.admin_dashboard');
         Route::get('/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
         Route::get('/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin.admin_upload_document');
         Route::get('/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');

@@ -70,16 +70,23 @@
                         @foreach($documents as $document)
                             <tr data-category="{{ $document->category_name }}" data-status="{{ $document->document_status }}">
                                 <td>{{ $document->document_number }}</td>
-                                <td>{{ $document->document_name }}</td>
-                                <td>{{ $document->description }}</td>
+                                <td contenteditable="false" class="editable-field" data-id="{{ $document->document_id }}"  data-field="document_name">
+                                    {{ $document->document_name }}
+                                </td>
+                                <td contenteditable="false" class="editable-field" data-id="{{ $document->document_id }}" data-field="description">
+                                    {{ $document->description }}
+                                </td>
                                 <td>{{ $document->category_name }}</td>
                                 <td>
                                     <x-status-label :status="$document->document_status" />
                                 </td>
-                                <td>{{ $document->remark }}</td>
+                                <td contenteditable="false" class="editable-field" data-id="{{ $document->document_id }}" data-field="remark">
+                                    {{ $document->remark }}
+                                </td>
                                 <td>{{ $document->upload_date }}</td>
                                 <td>{{ $document->uploaded_by }}</td>
                                 <td>
+                                <i class="bi bi-pencil-square approve edit-icon" title="Edit" data-id="{{ $document->document_id }}"></i>
                                     <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
                                         <i class="bi bi-eye"></i>
                                     </a>
@@ -98,5 +105,10 @@
 @endsection
 
 @section('custom-js')
+    <script>
+        // Pass the route URL to JavaScript
+        const adminDashboardUrl = @json(route('admin.admin_dashboard'));
+        const csrfToken = "{{ csrf_token() }}";
+    </script>
     <script src="{{ asset('js/admin_dashboard.js') }}"></script>
 @endsection

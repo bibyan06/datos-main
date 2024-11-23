@@ -293,7 +293,7 @@ class AdminController extends Controller
 
     public function display_uploaded_docs()
     {
-        $documents = Document::all();
+        $documents = Document::orderByRaw('CAST(document_number AS UNSIGNED) ASC')->get();
 
         $totalDocuments = Document::where('document_status','Approved')->count();
         $totalEmployees = Employee::count();

@@ -344,4 +344,61 @@ class DocumentController extends Controller
     public function viewRequest(){
         return view('admin.documents.requested_docs');
     }
+
+    public function returnToPending(Request $request)
+    {
+        // Validate the document ID
+        $request->validate([
+            'document_id' => 'required|exists:documents,document_id',
+        ]);
+
+        // Find the document and update its status
+        $document = Document::find($request->document_id);
+        $document->document_status = 'Pending';
+        $document->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Document status updated to pending.',
+        ]);
+    }
+
+    public function updateDocument(Request $request)
+{
+    // Validate the incoming data
+    $validatedData = $request->validate([
+        'document_name' => 'required|string|max:255',
+        'description' => 'required|string|max:255',
+        'remark' => 'nullable|string|max:255',
+        'document_id' => 'required|exists:documents,document_id', 
+    ]);
+
+    try {
+        // Find the document by its ID
+        $document = Document::findOrFail($validatedData['document_id']);
+
+        // Update the document's fields
+        $document->document_name = $validatedData['document_name'];
+        $document->description = $validatedData['description'];
+        $document->remark = $validatedData['remark'];
+
+        // Save the changes
+        $document->save();
+
+        // Return a success response
+        return response()->json(['success' => true]);
+
+    } catch (\Exception $e) {
+        // If there's an error, return a failure response
+        return response()->json(['success' => false, 'message' => 'Failed to update document. Please try again later.']);
+    }
 }
+
+
+    
+    
+
+
+}
+
+
