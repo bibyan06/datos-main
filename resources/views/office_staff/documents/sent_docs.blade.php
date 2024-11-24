@@ -32,11 +32,9 @@
                             data-status="{{ $forwarded->status }}">
                             
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="star">★</td>
-                            <td class="sender">DATOS</td>
+                            <!-- <td class="star">★</td> -->
                             <td class="subject">
-                                <span class="subject-text">Forwarded Document</span>
-                                To: 
+                                <span class="subject-text">Forwarded Document to:</span>
                                 <span class="receiver">
                                     {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
                                     {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}

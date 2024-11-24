@@ -49,8 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     showCancelButton: true,
                     cancelButtonText: 'Close',
                     customClass: {
+                        confirmButton: 'custom-confirm-button',
+                        cancelButton: 'custom-cancel-button',
                         popup: 'custom-swal-width',
-                        title: 'custom-title'
+                        title: 'custom-title',
+                        actions: 'custom-actions-position'
                     }
                 }).then((result) => {
                   
@@ -93,7 +96,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-    });
-
-   
+    }); 
 });

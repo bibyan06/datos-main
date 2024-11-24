@@ -100,51 +100,50 @@
 @section('custom-js')
     <script src="{{ asset('js/all_docs.js') }}"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-    const hidden = document.querySelector('#hidden');
-    const searchText = document.querySelector('#search-document'); 
-    const documents = document.querySelectorAll('#documents-list .document');
-    const month = document.querySelector('#option-text'); // Month filter
-    const categoryFilter = document.querySelector('#category-filter'); // Category filter
-    
-    hidden.style.display = "none";
+        document.addEventListener('DOMContentLoaded', function() {
+            const hidden = document.querySelector('#hidden');
+            const searchText = document.querySelector('#search-document'); 
+            const documents = document.querySelectorAll('#documents-list .document');
+            const month = document.querySelector('#option-text'); // Month filter
+            const categoryFilter = document.querySelector('#category-filter'); // Category filter
+            
+            hidden.style.display = "none";
 
-    function filterDocuments() {
-    const query = searchText?.value.toLowerCase() || '';
-    const selectedMonth = month?.value.toLowerCase() || '';
-    const selectedCategory = categoryFilter?.value.toLowerCase().trim() || '';
+            function filterDocuments() {
+            const query = searchText?.value.toLowerCase() || '';
+            const selectedMonth = month?.value.toLowerCase() || '';
+            const selectedCategory = categoryFilter?.value.toLowerCase().trim() || '';
 
-    console.log('Selected Category:', selectedCategory);  // Debugging: log the selected category
-    let anyDocumentVisible = false; // Track if any document matches the filters
+            console.log('Selected Category:', selectedCategory);  // Debugging: log the selected category
+            let anyDocumentVisible = false; // Track if any document matches the filters
 
-    documents.forEach(doc => {
-        const name = doc.getAttribute('data-name')?.toLowerCase() || '';
-        const docMonth = doc.querySelector('input[type="text"]')?.value.toLowerCase() || '';
-        const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
+            documents.forEach(doc => {
+                const name = doc.getAttribute('data-name')?.toLowerCase() || '';
+                const docMonth = doc.querySelector('input[type="text"]')?.value.toLowerCase() || '';
+                const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
 
-        console.log('Document Category:', docCategory);  // Debugging: log the document category
+                console.log('Document Category:', docCategory);  // Debugging: log the document category
 
-        const matchesSearch = !query || name.includes(query);
-        const matchesMonth = !selectedMonth || docMonth === selectedMonth;
-        const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
+                const matchesSearch = !query || name.includes(query);
+                const matchesMonth = !selectedMonth || docMonth === selectedMonth;
+                const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
 
-        // Display document if it matches all active filters
-        const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
-        doc.style.display = shouldDisplay ? '' : 'none';
+                // Display document if it matches all active filters
+                const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
+                doc.style.display = shouldDisplay ? '' : 'none';
 
-        if (shouldDisplay) anyDocumentVisible = true; // At least one document is visible
-    });
+                if (shouldDisplay) anyDocumentVisible = true; // At least one document is visible
+            });
 
-    // Show the "No document available" message if no document matches
-    hidden.style.display = anyDocumentVisible ? 'none' : 'block';
-}
+            // Show the "No document available" message if no document matches
+            hidden.style.display = anyDocumentVisible ? 'none' : 'block';
+        }
 
 
-    searchText?.addEventListener('input', filterDocuments);
-    month?.addEventListener('change', filterDocuments);
-    categoryFilter?.addEventListener('change', filterDocuments);
-});
-
+            searchText?.addEventListener('input', filterDocuments);
+            month?.addEventListener('change', filterDocuments);
+            categoryFilter?.addEventListener('change', filterDocuments);
+        });
     </script>
 @endsection
 

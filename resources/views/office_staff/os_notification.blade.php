@@ -3,15 +3,15 @@
 @section('title', 'Notification')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/os/staff_notification.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
     <style>
-        .delivered {
+    .delivered {
     font-weight: bold;
-}
+    }
 
-.viewed {
-    font-weight: normal;
-}
+    .viewed {
+        font-weight: normal;
+    }
 
     </style>
 @endsection
@@ -47,7 +47,7 @@
                     data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
 
                     <td class="checkbox"><input type="checkbox"></td>
-                    <td class="star">★</td>
+                    <!-- <td class="star">★</td> -->
                     <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                         {{ $forwarded->forwardedByEmployee->last_name ?? '' }}</td>
                     <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
@@ -81,7 +81,7 @@
                     
                     data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
                     <td class="checkbox"><input type="checkbox"></td>
-                    <td class="star">★</td>
+                    <!-- <td class="star">★</td> -->
                     <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                         {{ $sentDocument->sender->last_name ?? '' }}</td>
                     <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">

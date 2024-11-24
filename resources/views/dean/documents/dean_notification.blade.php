@@ -3,16 +3,16 @@
 @section('title', 'Notification')
 
 @section('custom-css')
-<link rel="stylesheet" href="{{ asset('css/dean/notification.css') }}">
-<style>
-    .delivered {
-        font-weight: bold;
-    }
+    <link rel="stylesheet" href="{{ asset('css/dean/notification.css') }}">
+    <style>
+        .delivered {
+            font-weight: bold;
+        }
 
-    .viewed {
-        font-weight: normal;
-    }
-</style>
+        .viewed {
+            font-weight: normal;
+        }
+    </style>
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -44,25 +44,26 @@
                         data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
 
                         <td class="checkbox"><input type="checkbox"></td>
-                        <td class="star">★</td>
+                        <!-- <td class="star">★</td> -->
                         <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             {{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                             {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                         </td>
+                        <td>Forwarded Document</td>
                         <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
-
                             <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                             <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                         </td>
-                        <td>Forwarded Document</td>
+                        
                         <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}
                         </td>
                         <td class="email-actions">
                             <a notif-id={{ $forwarded->forwarded_document_id }} status='archive' class="notifForward"
-                                style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
+                                style="text-decoration: none; color:black;"><i class="bi bi-archive"></i>
+                            </a>
                             <a notif-id={{ $forwarded->forwarded_document_id }} status='deleted' class="notifForward"
-                                style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
-
+                                style="text-decoration: none; color:black;"><i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
@@ -75,7 +76,7 @@
                         data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" data-type="request"
                         data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
                         <td class="checkbox"><input type="checkbox"></td>
-                        <td class="star">★</td>
+                        <!-- <td class="star">★</td> -->
                         <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             {{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                             {{ $sentDocument->sender->last_name ?? '' }}
@@ -83,7 +84,6 @@
                         <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
                         </td>
-
                         <td>Requested Document</td>
                         <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d') }}</td>
                         <td class="email-actions">
@@ -91,7 +91,6 @@
                                 style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
                             <a notif-id={{ $sentDocument->send_id }} status='deleted' class="notifSent"
                                 style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
-
                         </td>
                     </tr>
                 @endforeach

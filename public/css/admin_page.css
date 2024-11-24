@@ -792,23 +792,6 @@ table {
 }
 
 
-.email-item .subject {
-    display: inline-flex;  
-    align-items: center;   
-}
-
-.email-item .receiver {
-    margin-left: 20px;
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-.email-item .document-name {
-    margin-left: 10px;
-    font-style: italic; 
-}
-
-
 #pending-count , #notification-counts {
     position: absolute;
     right: 3px;

@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         data.forEach(doc => {
                             const resultItem = document.createElement('div');
                             resultItem.classList.add('search-result-item');
-                            resultItem.innerHTML = `<a href="/documents/view/${doc.document_id}">${doc.document_name}</a>`;
+                            resultItem.innerHTML = `<a href="/dean/documents/view_docs/${doc.document_id}">${doc.document_name}</a>`;
                             searchResultsContainer.appendChild(resultItem);
                         });
                     } else {
