@@ -30,6 +30,7 @@ Route::get('/login', [AuthLoginController::class, 'showLoginForm'])->name('login
 Route::post('/login', [AuthLoginController::class, 'login'])->middleware('throttle:3,2');
 Route::post('login-verified', [AuthLoginController::class, 'loginverified'])->name('login.verified');
 Route::get('/logout', [AuthLoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::post('/logout', [AuthLoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Route::get('/test', function(){
 //     return 'SAMPLE';
@@ -223,7 +224,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');
-    Route::get('/logout', [AuthLoginController::class, 'logout'])->name('logout');
+    // Route::get('/logout', [AuthLoginController::class, 'logout'])->name('logout');
     Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
     Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
     Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');

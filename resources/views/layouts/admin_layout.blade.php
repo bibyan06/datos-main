@@ -38,7 +38,7 @@
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                        <i class="bi bi-box-arrow-left logout" id="logout-icon"></i> Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

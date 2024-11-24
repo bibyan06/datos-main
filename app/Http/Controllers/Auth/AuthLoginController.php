@@ -44,11 +44,6 @@ class AuthLoginController extends Controller
 
            
         }
-        
-
-       
-        
-
 
         // Authentication failed
         return redirect()->back()->with('error', 'Invalid employee ID or password.');
@@ -194,29 +189,28 @@ class AuthLoginController extends Controller
 
 
     public function logout(Request $request)
-    {
-        // Get the current user ID
-        $user = Auth::user();
-        $employeeId = $user->employee_id;
+{
+    // Get the current user
+    $user = Auth::user();
+    $employeeId = $user->employee_id;
 
-        // Log the values for debugging
-        \Log::info("Attempting to update login_session for employee_id: $employeeId");
-        \Log::info("Logout Date: " . Carbon::now()->format('Y-m-d H:i:s'));
+    // Update the login_session table before invalidating the session
+    $updatedRows = DB::table('login_session')
+        ->where('employee_id', $employeeId)
+        ->where('status', 'active')
+        ->update([
+            'logout_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status' => 'inactive'
+        ]);
 
-        // Update the login_session table
-        DB::table('login_session')
-            ->where('employee_id', $employeeId)
-            ->where('status', 'active')
-            ->update([
-                'logout_date' => Carbon::now()->format('Y-m-d H:i:s'),
-                'status' => 'inactive'
-            ]);
+    \Log::info("Rows updated: $updatedRows");
 
-        // Log out the user
-        $this->guard()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+    // Log out the user
+    $this->guard()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-        return redirect('/login');
-    }
+    return redirect('/login');
+}
+
 }
