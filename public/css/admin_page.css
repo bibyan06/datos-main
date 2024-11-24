@@ -381,12 +381,12 @@ h2 {
 
 /* Search Container Styles  */
 .search-container {
-    width: 250px; /* Adjust width as needed */
+    width: 250px; 
     display: flex;
     align-items: center;
     position: relative;
-    float: right; /* Move to the right */
-    margin-right: 30px; /* Adjust margin as needed */
+    float: right; 
+    margin-right: 30px; 
 }
 
 #sidebar-search {

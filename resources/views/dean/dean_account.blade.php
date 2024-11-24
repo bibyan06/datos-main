@@ -109,10 +109,9 @@
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <select id="gender" name="gender" class="form-control">
-                        <option value="">Select Gender</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
+                    <select id="gender" name="gender" required>
+                        <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
                     </select>
                 </div>
                 
@@ -142,28 +141,28 @@
                 </div>
             </div>
             <div class="form-row">
-            <div class="form-group">
-                <label for="current_password">Current Password</label>
-                <div class="password-container">
-                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
-                    <i class="bi bi-eye-slash" id="toggleCurrentPassword"></i>
+                <div class="form-group">
+                    <label for="current_password">Current Password</label>
+                    <div class="password-container">
+                        <input type="password" id="current_password" name="current_password" placeholder="Enter current password" required>
+                        <i class="bi bi-eye-slash toggle-password" id="toggleCurrentPassword"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="New Password" required>
+                        <i class="bi bi-eye-slash toggle-password" id="toggleNewPassword"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password_confirmation">Confirm New Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password" required>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="password">New Password</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" placeholder="New Password" required>
-                    <i class="bi bi-eye-slash" id="toggleNewPassword"></i>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password_confirmation">Confirm New Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm New Password" required>
-            </div>
-        </div>
-        <span class="error-message" id="error-password" style="color: red;"></span>
+            <span class="error-message" id="error-password" style="color: red;"></span>
             <div class="form-buttons">
                 <button type="button" id="closeModalBtn">Cancel</button>
                 <button type="button" id="saveChangesBtn">Save Changes</button>

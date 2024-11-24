@@ -256,7 +256,7 @@ main {
   top: 20px;
   font-size: 20px;
   font-weight: bold;
-  border: #009FEA 1px solid;
+  /* border: #009FEA 1px solid; */
   border-radius: 50%;
   justify-content: center;
   align-items: center;
@@ -319,6 +319,19 @@ main {
   background-color: #009FEA;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
+}
+
+
+#saveChangesBtn:hover{
+  background-color:#0056b3; 
+}
+
+#closeModalBtn{
+  background-color:#888;
+}
+
+#closeModalBtn:hover{
+  background-color:#cc0000 ;
 }
 
 input:invalid::before {

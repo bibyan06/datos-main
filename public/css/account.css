@@ -256,7 +256,6 @@ main {
     top: 20px;
     font-size: 20px;
     font-weight: bold;
-    border: #009FEA 1px solid;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
@@ -320,6 +319,19 @@ main {
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
   }
+
+  
+  #saveChangesBtn:hover{
+    background-color:#0056b3; 
+  }
+
+  #closeModalBtn{
+    background-color:#888;
+  }
+
+  #closeModalBtn:hover{
+    background-color:#cc0000 ;
+  }
   
   input:invalid::before {
     content: "⚠️";
@@ -375,3 +387,16 @@ main {
   }
   
   
+  #gender {
+    width: 102%;
+      padding: 10px;
+      font-size: 16px;
+      color: #333;
+      border: -1px solid #333;
+      appearance: none; 
+      -webkit-appearance: none; 
+      -moz-appearance: none; 
+      background-image: url("data:image/svg+xml;utf8,<svg fill='%23333' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px top 50%;
+  }

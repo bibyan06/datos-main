@@ -105,7 +105,7 @@
                         <input type="number" id="age" name="age" min="18" max="120" value="{{ Auth::user()->age }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="gender">Sex</label>
+                        <label for="gender">Gender</label>
                         <select id="gender" name="gender" required>
                             <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
                             <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>

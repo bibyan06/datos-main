@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 });
 
-// dean account save changes
 
+// dean account save changes
 document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("myModal");
     const passwordInput = document.getElementById('password');
@@ -183,13 +183,15 @@ document.addEventListener("DOMContentLoaded", function () {
             errorPassword.style.display = 'block';
         } else {
             errorPassword.style.display = 'none';
+            passwordField.classList.remove('is-invalid');
+            confirmPasswordField.classList.remove('is-invalid');
         }
     }
 
     function togglePasswordValidation() {
         if (passwordField.value === "") {
             // If password is empty, remove error classes and validation requirements
-            passwordField.classList.remove("is-invalid"); // assuming this class adds the red border
+            passwordField.classList.remove("is-invalid"); // this class adds the red border
             confirmPasswordField.classList.remove("is-invalid");
             currentPasswordField.removeAttribute("required");
             passwordField.removeAttribute("required");
@@ -223,17 +225,17 @@ document.addEventListener("DOMContentLoaded", function () {
     saveChangesBtn.addEventListener("click", function () {
         const form = document.getElementById("updateProfileForm");
         const formData = new FormData(form);
-
+    
         // Clear previous error messages
         document.querySelectorAll('.error-message').forEach(el => el.textContent = "");
-
+    
         // Check if password fields are filled to validate
         if (passwordInput.value || confirmationField.value) {
             validatePasswords();
             if (errorPassword.textContent !== '') return; // Stop if there are validation errors
         }
-
-        fetch("/update-profile", {
+    
+        fetch(profileUpdateUrl, {
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
@@ -248,18 +250,31 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(data => {
             if (data.success) {
+                // Remove the 'is-invalid' class from password fields if the profile update was successful
+                passwordField.classList.remove('is-invalid');
+                confirmPasswordField.classList.remove('is-invalid');
+        
+                // Optionally, clear the input fields after successful update
+                passwordField.value = '';
+                confirmPasswordField.value = '';
+        
+                // Remove any inline styles that might be applied (e.g., red border)
+                passwordField.style.border = '';
+                confirmPasswordField.style.border = '';
+        
                 Swal.fire({
-                    title: 'Success!',
+                    title: 'Success',
                     text: data.message,
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        modal.style.display = "none";  
+                        modal.style.display = 'none'; // Close the modal
+                        location.reload(); // Reload the page (if required)
                     }
                 });
             } else if (data.errors) {
-                // Display validation errors under each field
+                // Handle validation errors
                 for (const [field, messages] of Object.entries(data.errors)) {
                     const errorField = document.getElementById(`error-${field}`);
                     if (errorField) errorField.textContent = messages[0]; 
@@ -271,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     confirmButtonText: 'OK'
                 });
             }
-        })
+        })        
         .catch(error => {
             Swal.fire({
                 title: 'Error!',
@@ -282,6 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error:', error);
         });
     });
+    
 
     // Close modal when clicking outside
     window.addEventListener("click", function (event) {

@@ -57,7 +57,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-files" id="digitized-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div>
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-fill" id="pendings"></i></div>

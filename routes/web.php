@@ -161,7 +161,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
 
     Route::get('/home/dean', [DeanController::class, 'showDeanHome'])->name('home.dean');
     Route::prefix('dean')->group(function () {
-        Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile'])->name('profile.office.update');
+        Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile']);
         Route::get('/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
         Route::get('/dean_account', [ProfileController::class, 'dean_account'])->name('dean.dean_account');
         Route::get('/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean.dean_upload_document');
