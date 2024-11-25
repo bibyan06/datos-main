@@ -736,10 +736,8 @@ footer {
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    
+    border-collapse: collapse;   
 }
-
 
 #pending-count , #notification-counts {
     position: absolute;

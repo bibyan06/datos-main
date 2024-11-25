@@ -370,12 +370,20 @@ h2 {
 
 /* Search Container Styles  */
 .search-container {
-    width: 250px; /* Adjust width as needed */
+    width: 400px; 
     display: flex;
     align-items: center;
     position: relative;
-    float: right; /* Move to the right */
-    margin-right: 30px; /* Adjust margin as needed */
+    justify-content: right;
+    float: right; 
+    margin-left: 550px;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px;
+    font-size: 16px;
+    color: #888;
 }
 
 #sidebar-search {
@@ -387,13 +395,6 @@ h2 {
     background-color: #f8f9fa;
     font-size: 14px;
     outline: none;
-}
-
-.search-container i {
-    position: absolute;
-    left: 10px; /* Adjust icon positioning */
-    font-size: 16px;
-    color: #888;
 }
 
 .search-results {
