@@ -36,13 +36,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 const fileUrl = this.getAttribute('data-file-url');
 
                 Swal.fire({
-                    title: `<strong>${documentName}</strong>`,
                     html: `
-                        <div style="text-align: left; margin-top: 10px;">
-                            <p><strong>Sender:</strong> ${sender}</p>
-                            <p><strong>Description:</strong> ${snippet}</p>
-                        </div>
-                        <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
+                        <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
+                            
+                            <iframe src="${fileUrl}" style="width: 100%; height: 700px; border: none;"></iframe>
+                            
+                            <div style="width: 50%; height: 220px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="margin-bottom: 20px;">
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">From:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${sender}</p>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Description:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${snippet}</p>
+                                </div>
+                            </div>
+                        </div>     
                     `,
                     showCloseButton: true,
                     confirmButtonText: 'Mark as viewed',
@@ -52,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         confirmButton: 'custom-confirm-button',
                         cancelButton: 'custom-cancel-button',
                         popup: 'custom-swal-width',
-                        title: 'custom-title',
                         actions: 'custom-actions-position'
                     }
                 }).then((result) => {

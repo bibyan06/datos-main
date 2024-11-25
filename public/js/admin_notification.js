@@ -42,25 +42,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Use SweetAlert2 to display the document details
             Swal.fire({
-                title: 'Document Details',
                 html: `
-                    <div style="text-align: left">
-                        <p><strong>Document Name:</strong> ${documentName}</p>
-                        <p><strong>To:</strong> ${receiverName}</p>
-                        <p><strong>Status:</strong> ${status ? status : 'delivered'}</p>
+                    <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
+
+                        <iframe src="${fileUrl}" style="width: 100%; height: 700px; border: none;"></iframe>
+                        
+                        <div style="width: 50%; height: 188px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="margin-bottom: 20px;">
+                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
+                                <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">To:</p>
+                                <p style="margin: 0; font-size: 20px; color: #555;">${receiverName}</p>
+                            </div>
+                            <div>
+                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
+                                <p style="margin: 0; font-size: 20px; color: #555;">${status ? status : 'delivered'}</p>
+                            </div>
+                        </div>
                     </div>
-                    <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                 `,
                 showCloseButton: true,
                 focusConfirm: false,
                 confirmButtonText: 'Close',
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#888',
                 customClass: {
                     popup: 'custom-swal-width',
-                    title: 'custom-title'
+                    actions: 'custom-actions-position',
                 }
             });
         });
     });
 });
+
+
 

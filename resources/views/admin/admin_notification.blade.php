@@ -3,10 +3,10 @@
 @section('title', 'Notification')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dean/notification.css') }}">
     <style>
     .delivered {
-    font-weight: bold;
+        font-weight: bold;
     }
 
     .viewed {
