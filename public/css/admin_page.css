@@ -117,7 +117,7 @@ h2 {
 }
 
 .profile-icon a:hover {
-    color: #007bff; /* Add hover effect color */
+    color: #007bff; 
 }
 
 .initials-icon {
@@ -191,7 +191,7 @@ h2 {
 
 /* Active state for the icon */
 .icon-container i.active {
-    background-color: #103955; /* Background color for active state */
+    background-color: #103955; 
     border-radius: 8px;
     width: 40px;
     height: 40px;
@@ -201,19 +201,19 @@ h2 {
 }
 
 .icon-container:hover {
-    background-color: #FE8926; /* Background color on hover */
+    background-color: #FE8926; 
 }
 
 .icon-container:hover i {
-    color: #FFFFFF; /* Icon color on hover */
+    color: #FFFFFF;
 }
 
 .icon-container.active {
-    background-color: #FE8926; /* Background color when active */
+    background-color: #FE8926;
 }
 
 .icon-container.active i {
-    color: #FFFFFF; /* Icon color when active */
+    color: #FFFFFF; 
 }
 
 
@@ -310,11 +310,11 @@ h2 {
     text-align: center;
     border-radius: 5px;
     margin-bottom: 15px;
-    position: relative; /* Ensure positioning context for the button */
+    position: relative; 
 }
 
 .sidebar-title h3 {
-    margin: 0; /* Remove default margin */
+    margin: 0; 
     padding: 5px;
     font-size: 16px;
     color: #FE8926;
@@ -323,8 +323,8 @@ h2 {
 
 .sidebar-title i {
     margin-left: 80px;
-    font-size: 23px; /* Adjust size if needed */
-    color: #FE8926; /* Adjust color if needed */
+    font-size: 23px; 
+    color: #FE8926; 
     justify-content: center;
     right: 0;
     text-align: right;
@@ -381,12 +381,20 @@ h2 {
 
 /* Search Container Styles  */
 .search-container {
-    width: 250px; 
+    width: 400px; 
     display: flex;
     align-items: center;
     position: relative;
+    justify-content: right;
     float: right; 
-    margin-right: 30px; 
+    margin-left: 550px;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px;
+    font-size: 16px;
+    color: #888;
 }
 
 #sidebar-search {
@@ -400,12 +408,6 @@ h2 {
     outline: none;
 }
 
-.search-container i {
-    position: absolute;
-    left: 10px; /* Adjust icon positioning */
-    font-size: 16px;
-    color: #888;
-}
 
 .search-results {
     position: absolute;
@@ -527,32 +529,6 @@ footer {
     color: #0056b3;
 }
 
-.search-container {
-    width: 300px;
-    margin-left: 550px;
-    display: flex;
-    align-items: right;
-    justify-content: right;
-    position: relative;
-}
-
-#sidebar-search {
-    width: 100%;
-    padding: 5px 10px;
-    padding-left: 30px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background-color: #f8f9fa;
-    font-size: 14px;
-    outline: none;
-}
-
-.search-container i {
-    position: absolute;
-    left: 10px;
-    font-size: 16px;
-    color: #888;
-}
 
 .status-approved {
     color: whitesmoke;
@@ -758,33 +734,6 @@ footer {
     color: #0056b3;
 }
 
-.search-container {
-    width: 300px;
-    margin-left: 550px;
-    display: flex;
-    align-items: right;
-    justify-content: right;
-    position: relative;
-}
-
-#sidebar-search {
-    width: 100%;
-    padding: 5px 10px;
-    padding-left: 30px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background-color: #f8f9fa;
-    font-size: 14px;
-    outline: none;
-}
-
-.search-container i {
-    position: absolute;
-    left: 10px;
-    font-size: 16px;
-    color: #888;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -821,18 +770,41 @@ table {
     max-width: 80vw; 
     width: 80vw;
     height: 85vh; 
-    overflow: auto; /* Enable scrolling if content overflows */
+    overflow: auto; 
 }
 
 .custom-title {
-    margin-bottom: 15px; 
+    margin-bottom: 10px; 
 }
 
 .custom-content {
     text-align: left;
-    margin-top: 10px;
+    margin-top: px;
     font-size: 1em;
     line-height: 1.5;  
+}
+
+
+.custom-actions-position {
+    justify-content: flex-end; 
+    margin-right: 10px; 
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px; 
+    width: calc(100% - 20px); 
+}
+
+.custom-confirm-button {
+    background-color: #007bff; 
+    color: white;
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    transition: background-color 0.3s ease; 
+}
+
+.custom-confirm-button:hover {
+    background-color: #0056b3; 
 }
 
 tbody td {
