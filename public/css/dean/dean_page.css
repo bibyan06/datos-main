@@ -172,14 +172,14 @@ h2 {
 }
 
 .icon-container i {
-    font-size: 20px; /* Adjust based on your needs */
+    font-size: 20px;
     color: #FE8926;
 }
 
 
 /* Active state for the icon */
 .icon-container i.active {
-    background-color: #103955; /* Background color for active state */
+    background-color: #103955; 
     border-radius: 8px;
     width: 40px;
     height: 40px;
@@ -189,19 +189,19 @@ h2 {
 }
 
 .icon-container:hover {
-    background-color: #FE8926; /* Background color on hover */
+    background-color: #FE8926; 
 }
 
 .icon-container:hover i {
-    color: #FFFFFF; /* Icon color on hover */
+    color: #FFFFFF; 
 }
 
 .icon-container.active {
-    background-color: #FE8926; /* Background color when active */
+    background-color: #FE8926; 
 }
 
 .icon-container.active i {
-    color: #FFFFFF; /* Icon color when active */
+    color: #FFFFFF; 
 }
 
 
@@ -272,19 +272,18 @@ h2 {
     transform: translateX(0);
 }
 
-/* Ensure the icon hover effect is consistent */
 .icon-container.active {
-    background-color: #FE8926; /* Background color when active */
+    background-color: #FE8926; 
 }
 
 .icon-container.active i {
-    color: #FFFFFF; /* Icon color when active */
+    color: #FFFFFF;
 }
 
 /* Hover effect for corresponding sidebar items */
 .extra-sidebar ul li a.hovered {
-    background-color: #E9ECF4; /* Background color when hovered */
-    color: #FE8926; /* Text color when hovered */
+    background-color: #E9ECF4; 
+    color: #FE8926; 
 }
 
 
@@ -393,7 +392,6 @@ h2 {
 }
 
 
-
 .search-results {
     position: absolute;
     top: 100%; 
@@ -464,7 +462,6 @@ h2 {
 .more-dropdown-menu li a:hover {
     background-color: #f0f0f0; 
     
-
 }
 
 .bi-chevron-right {
@@ -475,86 +472,38 @@ h2 {
     transform: rotate(90deg);
 }
 
-.emp-dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px 20px; 
-    color: #333;
-}
-
-.emp-dropdown-menu {
-    display: none;
-    width:220px; 
-    position: absolute;
-    left: 250px; 
-    top: 260px; 
-    background-color: #FFFFFF; 
-    z-index: 1600; 
-    opacity: 0; 
-    transform: translateY(-10px);  
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
-}
-
-.emp-dropdown-active {
-    display: block;
-    opacity: 1; 
-    transform: translateY(0); 
-}
-
-.emp-dropdown-menu li a {
-    font-size: 14px;
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
-    display: block;
-}
-
-.emp-dropdown-menu li a:hover {
-    background-color: #f0f0f0; 
-    
-
-}
-
-.emp-dropdown-active .bi-chevron-right {
-    transform: rotate(90deg);
-}
-
-
 
 .pending-dropdown-toggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding: 10px 20px; /* Adjust padding as needed */
+    padding: 10px 20px;
     color: #333;
 }
 
 .pending-dropdown {
     display: none;
-    width:220px; /* Adjust width as needed */
+    width:220px; 
     position: absolute;
-    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
-    top: 500px; /* Adjust top as needed */
-    background-color: #FFFFFF; /* Same background as sidebar */
-    z-index: 1600; /* Ensure it appears above other content */
-    opacity: 0; /* Start hidden */
-    transform: translateY(-10px); /* Slide up initially */
+    left: 250px; 
+    top: 500px; 
+    background-color: #FFFFFF; 
+    z-index: 1600; 
+    opacity: 0; 
+    transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
 }
 
 .pending-dropdown-active {
     display: block;
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide down */
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
 .pending-dropdown li a {
-    font-size: 14px; /* Adjust font size */
+    font-size: 14px; 
     padding: 10px 20px;
     color: #333;
     text-decoration: none;
@@ -562,7 +511,7 @@ h2 {
 }
 
 .pending-dropdown li a:hover {
-    background-color: #f0f0f0; /* Add hover effect */
+    background-color: #f0f0f0;
 }
 
 .pending-dropdown-active .bi-chevron-right {
@@ -654,4 +603,87 @@ footer {
 .footer-content a:hover {
     text-decoration: underline;
     color: #0056b3;
+}
+
+/* Modals */
+.custom-swal-width {
+    max-width: 80vw; 
+    width: 80vw;
+    height: 85vh; 
+    overflow: auto; 
+}
+
+.custom-title {
+    margin-bottom: 10px; 
+}
+
+.custom-content {
+    text-align: left;
+    margin-top: px;
+    font-size: 1em;
+    line-height: 1.5;  
+}
+
+
+.custom-actions-position {
+    justify-content: flex-end; 
+    margin-right: 10px; 
+    position: absolute; 
+    bottom: 10px; 
+    right: 10px; 
+    width: calc(100% - 20px); 
+}
+
+.custom-confirm-button {
+    background-color: #007bff; 
+    color: white;
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    transition: background-color 0.3s ease; 
+}
+
+.custom-confirm-button:hover {
+    background-color: #0056b3; 
+}
+
+
+tbody td {
+    border: none;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size:14px;
+}
+
+thead th {
+    border: none;
+    padding: 8px;
+    font-size:14px;   
+}
+
+thead tr{
+    background-color: #ffa652;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    color:#56647f;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    font-family: 'Poppins';
+}
+
+tbody tr {
+    border-bottom: 3px solid #d7d7d7; 
+}
+
+tbody tr:last-child {
+    border-bottom: 3px solid #d7d7d7; 
+}
+
+th {
+    background-color: #d3d3d3;
 }

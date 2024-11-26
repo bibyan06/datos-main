@@ -48,19 +48,10 @@
                 <img src="{{ asset('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
             </div>
             <ul class="nav-icons">
-                <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i>
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"  id="dashboard-icon"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"  id="employees-icon"></i></div>
-                </li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"  id="dashboard-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div> </li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"  id="employees-icon"></i></div></li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">
                         <i class="bi bi-hourglass-split" id="pendings"></i>

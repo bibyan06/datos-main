@@ -3,7 +3,7 @@
 @section('title', 'Notification')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/dean/notification.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
     <style>
         .delivered {
             font-weight: bold;
@@ -55,8 +55,7 @@
                             <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                         </td>
                         
-                        <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}
-                        </td>
+                        <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }} </td>
                         <td class="email-actions">
                             <a notif-id={{ $forwarded->forwarded_document_id }} status='archive' class="notifForward"
                                 style="text-decoration: none; color:black;"><i class="bi bi-archive"></i>
@@ -81,10 +80,11 @@
                             {{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                             {{ $sentDocument->sender->last_name ?? '' }}
                         </td>
+                        <td>Requested Document</td>
                         <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
                         </td>
-                        <td>Requested Document</td>
+                       
                         <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d') }}</td>
                         <td class="email-actions">
                             <a notif-id={{ $sentDocument->send_id }} status='archive' class="notifSent"
@@ -101,184 +101,7 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/dean/notification.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const emailItems = document.querySelectorAll('.email-item');
-
-        emailItems.forEach(item => {
-            item.addEventListener('click', function (e) {
-                if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
-                    const forwardedDocumentId = this.getAttribute('data-id');
-                    const sender = this.getAttribute('data-sender');
-                    const documentName = this.getAttribute('data-document');
-                    const snippet = this.getAttribute('data-snippet');
-                    const fileUrl = this.getAttribute('data-file-url');
-                    const types = this.getAttribute('data-type');
-                    let text;
-                    if (types === 'forward')
-                        text = `<p><strong>Description:</strong> ${snippet}</p>`
-                    else
-                        text = ""
-                    console.log(fileUrl)
-                    Swal.fire({
-                        title: `<strong>${documentName}</strong>`,
-                        html: `
-                        <div style="text-align: left; margin-top: 10px;">
-                            <p><strong>Sender:</strong> ${sender}</p>
-                            ${text}
-                           
-                        </div>
-                        <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
-                    `,
-                        showCloseButton: true,
-                        confirmButtonText: 'Mark as viewed',
-                        showCancelButton: true,
-                        cancelButtonText: 'Close',
-                        customClass: {
-                            popup: 'custom-swal-width',
-                            title: 'custom-title'
-                        }
-                    }).then((result) => {
-
-                        if (result.isConfirmed && forwardedDocumentId) {
-                            console.log(
-                                "Attempting to send request to update status...");
-
-                            fetch(`/forwarded-documents/${forwardedDocumentId}/update-status`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]')
-                                        .getAttribute('content')
-                                }
-                            })
-                                .then(response => {
-                                    console.log("Received response:", response);
-                                    if (!response.ok) {
-                                        throw new Error(
-                                            `HTTP error! Status: ${response.status}`
-                                        );
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    console.log("Response data:", data);
-                                    if (data.success) {
-                                        Swal.fire('Success',
-                                            'Document status updated to "viewed".',
-                                            'success')
-                                            .then(() => {
-                                                document.querySelector(
-                                                    `[data-id="${forwardedDocumentId}"]`
-                                                ).classList.remove(
-                                                    'delivered');
-                                                document.querySelector(
-                                                    `[data-id="${forwardedDocumentId}"] .sender`
-                                                ).style.fontWeight =
-                                                    'normal';
-                                                document.querySelector(
-                                                    `[data-id="${forwardedDocumentId}"] .subject`
-                                                ).style.fontWeight =
-                                                    'normal';
-                                                document.querySelector(
-                                                    `[data-id="${forwardedDocumentId}"] .data-document`
-                                                ).style.fontWeight =
-                                                    'normal';
-                                            });
-                                    } else {
-                                        Swal.fire('Error', data.message ||
-                                            'Failed to update document status.',
-                                            'error');
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error during fetch operation:',
-                                        error);
-                                    Swal.fire('Error',
-                                        'Failed to update document status. Please try again.',
-                                        'error');
-                                });
-                        }
-                    });
-                }
-            });
-        });
-        const emailSentItem = document.querySelectorAll('.email-items');
-
-emailSentItem.forEach(item => {
-    item.addEventListener('click', function(e) {
-        if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
-            const forwardedDocumentId = this.getAttribute('data-id');
-            const sender = this.getAttribute('data-sender');
-            const documentName = this.getAttribute('data-document');
-            const snippet = this.getAttribute('data-snippet');
-            const fileUrl = this.getAttribute('data-file-url');
-            console.log(forwardedDocumentId,sender,documentName,snippet,fileUrl)
-            Swal.fire({
-                title: `<strong>${documentName}</strong>`,
-                html: `
-                    <div style="text-align: left; margin-top: 10px;">
-                        <p><strong>Sender:</strong> ${sender}</p>
-                        <p><strong>Description:</strong> ${snippet}</p>
-                    </div>
-                    <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
-                `,
-                showCloseButton: true,
-                confirmButtonText: 'Mark as viewed',
-                showCancelButton: true,
-                cancelButtonText: 'Close',
-                customClass: {
-                    popup: 'custom-swal-width',
-                    title: 'custom-title'
-                }
-            }).then((result) => {
-              
-                if (result.isConfirmed && forwardedDocumentId) {
-                    console.log("Attempting to send request to update status...");
-                    
-                    fetch(`/sent-documents/${forwardedDocumentId}/update-status`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        }
-                    })
-                    .then(response => {
-                        console.log("Received response:", response);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log("Response data:", data);
-                        if (data.success) {
-                            Swal.fire('Success', 'Document status updated to "viewed".', 'success')
-                                .then(() => {
-                                    document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
-                                    document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
-                                    document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
-                                });
-                        } else {
-                            Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error during fetch operation:', error);
-                        Swal.fire('Error', 'Failed to update document status. Please try again.', 'error');
-                    });
-                }
-            });
-        }
-    });
-});
-    });
-</script>
+    <script src="{{ asset('js/dean/notification.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
-</body>
-
-</html>
