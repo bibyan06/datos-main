@@ -7,11 +7,11 @@ main {
 }
 
 #main-content {
-   flex: 1; 
+    flex: 1; 
+    margin-left: 250px; 
     transition: margin-left 0.3s ease;
     height: 100vh;
     box-sizing: border-box; 
-
 }
 
 .left-content{
@@ -34,7 +34,7 @@ main {
 
 /* Title Styles */
 .documents-title h1 {
-    font-size: 28px;
+    font-size: 20px;
     font-family: 'Poppins', sans-serif;
     color: #009FEA;
     margin: 0;

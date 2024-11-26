@@ -21,6 +21,7 @@
                 </div>
                 <div class="document-filter">
                     <select id="category-filter">
+                        <option value="" disabled selected>Select a Category</option>
                         <option value="">All</option>
                         <option value="Memorandum">Memorandum</option>
                         <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>

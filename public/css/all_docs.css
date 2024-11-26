@@ -7,11 +7,11 @@ main {
 }
 
 #main-content {
-   flex: 1; /* Allows main content to grow and fill available space */
-    margin-left: 250px; /* Adjust based on the sidebar width */
+   flex: 1; 
+    margin-left: 250px; 
     transition: margin-left 0.3s ease;
     height: 100vh;
-    box-sizing: border-box; /* Include padding in width/height calculation */
+    box-sizing: border-box; 
 
 }
 
@@ -45,8 +45,8 @@ main {
 /* Search Bar Styles */
 .memorandum-search-bar {
     display: flex;
-    flex: 1; /* Make search bar flexible */
-    margin-right: 10px; /* Add space between search bar and option */
+    flex: 1; 
+    margin-right: 10px; 
 }
 
 /* Search Text Input */
@@ -59,7 +59,7 @@ main {
     padding: 5px;
     flex: 1;
     border-radius: 5px 0 0 5px;
-    height: 30px; /* Set the height to match the icon */
+    height: 30px; 
 }
 
 /* Icon */
@@ -67,10 +67,10 @@ main {
     background-color: #DDDDDD;
     border-radius: 0 5px 5px 0;
     padding: 5px;
-    height: 30px; /* Set the height to match the search text */
+    height: 30px; 
     display: flex;
-    align-items: center; /* Center the icon vertically */
-    justify-content: center; /* Center the icon horizontally */
+    align-items: center; 
+    justify-content: center;
 }
 
 
@@ -78,7 +78,7 @@ main {
 .memorandum-option {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0; 
 }
 
 .option-text {
@@ -112,10 +112,6 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 20px; 
-    justify-content: center; 
 }
 
 .documents {

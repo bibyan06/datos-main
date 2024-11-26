@@ -20,7 +20,18 @@
                     <input type="text" class="search-text" id="search-document" placeholder="Search Document">
                     <div class="icon"><i class="bi bi-search"></i></div>
                 </div>
-        
+                <div class="memorandum-option">
+                    <div class="search">
+                        <select id="category-filter">
+                            <option value="" disabled selected>Select a Category</option>
+                            <option value="all">All</option>
+                            <option value="Memorandum">Memorandum</option>
+                            <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
+                            <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
+                            <option value="Claim Monitoring Sheet">Claim Monitoring Sheet</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="month-option">
                     <div class="search">
                         <select id="option-text" class="option-text">
