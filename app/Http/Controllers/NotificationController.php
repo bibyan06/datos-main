@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
 use App\Models\Employee;
+use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -14,35 +15,45 @@ class NotificationController extends Controller
     public function index($viewName)
     {
         // Fetch the authenticated user's employee_id
-        $userEmployeeId = Auth::user()->employee_id;
-
+        $userEmployeeId =  Auth::user()->employee_id;
+    
         // Fetch the corresponding employee record from the Employee table
         $employee = Employee::where('employee_id', $userEmployeeId)->first();
-
-        // Ensure that the employee record exists before querying documents
+    
         if ($employee) {
-            // Use the employee's id (primary key) for filtering the forwarded and sent documents
-            $employeeId = $employee->id;
-
+            $employeeId = $employee->employee_id; 
+            $uploadedBy = $employee->first_name . ' ' . $employee->last_name;
+    
             // Fetch forwarded documents for the current user
             $forwardedDocuments = ForwardedDocument::with(['forwardedByEmployee', 'document'])
-                ->where('forwarded_to', $employeeId) // Use employee.id for filtering
+                ->where('forwarded_to', $employee->id)
                 ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
-
+    
             // Fetch sent documents for the current user
             $sentDocuments = SendDocument::with(['sender', 'document'])
-                ->where('issued_to', $employeeId) // Use employee.id for filtering
+                ->where('issued_to', $employee->id)
                 ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
+    
+            // Fetch declined documents uploaded by the current user
+            $declinedDocuments = Document::where('uploaded_by', $uploadedBy)
+            ->where('document_status', 'Declined')
+            ->get();
+
+            \Log::info('Uploaded by: ' . $uploadedBy);
+            \Log::info('Declined documents query result: ', $declinedDocuments->toArray());
+    
             // Return the appropriate view with the documents
-            return view($viewName, compact('forwardedDocuments', 'sentDocuments'));
+            return view($viewName, compact('forwardedDocuments', 'sentDocuments', 'declinedDocuments'));
         } else {
-            // Handle case where the employee record doesn't exist for the user
             \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
             return view($viewName)->withErrors(['Employee record not found.']);
         }
     }
+    
+
+
 
     public function getNotificationCount()
     {

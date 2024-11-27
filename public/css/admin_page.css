@@ -732,8 +732,9 @@ table {
 .custom-swal-width {
     max-width: 80vw; 
     width: 80vw;
-    height: 85vh; 
-    overflow: auto; 
+    height: 90vh; 
+    margin-top: 44px;
+    overflow: auto; /* Enable scrolling if content overflows */
 }
 
 .custom-title {

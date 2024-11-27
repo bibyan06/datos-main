@@ -100,50 +100,66 @@
 @section('custom-js')
     <script src="{{ asset('js/all_docs.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hidden = document.querySelector('#hidden');
-            const searchText = document.querySelector('#search-document'); 
-            const documents = document.querySelectorAll('#documents-list .document');
-            const month = document.querySelector('#option-text'); // Month filter
-            const categoryFilter = document.querySelector('#category-filter'); // Category filter
-            
-            hidden.style.display = "none";
+       document.addEventListener('DOMContentLoaded', function () {
+    const hidden = document.querySelector('#hidden');
+    const searchText = document.querySelector('#search-document');
+    const documents = document.querySelectorAll('#documents-list .document');
+    const month = document.querySelector('#option-text'); // Month filter
+    const categoryFilter = document.querySelector('#category-filter'); // Category filter
 
-            function filterDocuments() {
-            const query = searchText?.value.toLowerCase() || '';
-            const selectedMonth = month?.value.toLowerCase() || '';
-            const selectedCategory = categoryFilter?.value.toLowerCase().trim() || '';
+    hidden.style.display = "none";
 
-            console.log('Selected Category:', selectedCategory);  // Debugging: log the selected category
-            let anyDocumentVisible = false; // Track if any document matches the filters
+    function filterByCategory(category) {
+        let anyDocumentVisible = false;
 
-            documents.forEach(doc => {
-                const name = doc.getAttribute('data-name')?.toLowerCase() || '';
-                const docMonth = doc.querySelector('input[type="text"]')?.value.toLowerCase() || '';
-                const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
+        documents.forEach(doc => {
+            const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
+            const matchesCategory = category === 'all' || docCategory === category;
 
-                console.log('Document Category:', docCategory);  // Debugging: log the document category
+            doc.style.display = matchesCategory ? '' : 'none';
 
-                const matchesSearch = !query || name.includes(query);
-                const matchesMonth = !selectedMonth || docMonth === selectedMonth;
-                const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
-
-                // Display document if it matches all active filters
-                const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
-                doc.style.display = shouldDisplay ? '' : 'none';
-
-                if (shouldDisplay) anyDocumentVisible = true; // At least one document is visible
-            });
-
-            // Show the "No document available" message if no document matches
-            hidden.style.display = anyDocumentVisible ? 'none' : 'block';
-        }
-
-
-            searchText?.addEventListener('input', filterDocuments);
-            month?.addEventListener('change', filterDocuments);
-            categoryFilter?.addEventListener('change', filterDocuments);
+            if (matchesCategory) anyDocumentVisible = true;
         });
+
+        hidden.style.display = anyDocumentVisible ? 'none' : 'block';
+    }
+
+    function filterDocuments() {
+        const query = searchText?.value.toLowerCase() || '';
+        const selectedMonth = month?.value.toLowerCase() || '';
+        const selectedCategory = categoryFilter?.value.toLowerCase().trim() || '';
+
+        let anyDocumentVisible = false;
+
+        documents.forEach(doc => {
+            const name = doc.getAttribute('data-name')?.toLowerCase() || '';
+            const docMonth = doc.querySelector('input[type="text"]')?.value.toLowerCase() || '';
+            const docCategory = doc.getAttribute('data-category')?.toLowerCase().trim() || '';
+
+            const matchesSearch = !query || name.includes(query);
+            const matchesMonth = !selectedMonth || docMonth === selectedMonth;
+            const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
+
+            const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
+            doc.style.display = shouldDisplay ? '' : 'none';
+
+            if (shouldDisplay) anyDocumentVisible = true;
+        });
+
+        hidden.style.display = anyDocumentVisible ? 'none' : 'block';
+    }
+
+    // Add event listeners for filters
+    searchText?.addEventListener('input', filterDocuments);
+    month?.addEventListener('change', filterDocuments);
+
+    // Filter by category specifically when the category dropdown changes
+    categoryFilter?.addEventListener('change', function () {
+        const selectedCategory = categoryFilter.value.toLowerCase().trim() || '';
+        filterByCategory(selectedCategory);
+    });
+});
+
     </script>
 @endsection
 

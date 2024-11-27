@@ -59,22 +59,14 @@
                             data-status="{{ $sent->status }}">
             
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="star">★</td>
+                            <!-- <td class="star">★</td> -->
                             <!-- <td class="sender">DATOS</td> -->
                             <td class="subject">
-                                <span class="subject-text">Sent Document</span>
-                                <span class="snippet">
-                                    To:
-                                    {{ $sent->sender->first_name ?? 'Unknown' }} 
-                                    {{ $sent->sender->last_name ?? 'User' }} 
-                                    sent a document titled {{ $sent->document_subject ?? 'Unknown Document' }}.
-                                </span>
-                            </td>
-                            <td class="subjects">
-                            
-                                <span style="display: none" class="receiver">
-                                    {{ $sent->sender->first_name ?? 'Unknown' }} 
-                                    {{ $sent->sender->last_name ?? 'User' }}
+                                <span class="subject-text">Sent Requested Document to:</span>
+                                <span class="receiver">
+                                    {{ $sent->recipient->first_name ?? 'Unknown' }} 
+                                    {{ $sent->recipient->last_name ?? 'User' }} 
+
                                 </span>
                             </td>
                             <td class="document-name">{{ $sent->document_subject ?? 'Unknown Document' }}</td>

@@ -66,8 +66,8 @@ main {
 }
 .document-name {
     flex-grow: 1;
-    text-align: center;
-    font-style: italic; 
+    text-align: left;
+    /* font-style: italic;  */
 }
 
 .date {

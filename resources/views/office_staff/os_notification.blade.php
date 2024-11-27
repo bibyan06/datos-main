@@ -37,7 +37,6 @@
         <table class="email-list">
             {{-- Display Forwarded Documents --}}
             @foreach ($forwardedDocuments as $forwarded)
-           
                 <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}"
                     data-id="{{ $forwarded->forwarded_document_id }}"
                     data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
@@ -78,7 +77,6 @@
                 <tr class="email-item {{ $sentDocument->status !== 'viewed' ? 'delivered' : '' }}"
                     data-id="{{ $sentDocument->id }}"
                     data-type="request"
-
                     data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}"
                     data-document="{{ $sentDocument->document_subject ?? 'No Title' }}"
                     
@@ -103,6 +101,38 @@
                 </tr>
             @endforeach
 
+            {{-- Display Declined Documents --}}
+            @foreach ($declinedDocuments as $declined)
+                <tr class="declined-docs {{ $declined->document_status === 'Declined' ? 'declined-class' : '' }}"
+                    data-id="{{ $declined->document_id }}"
+                    data-type="Declined"
+                    data-sender="Admin"
+                    data-document="{{ $declined->document_name ?? 'No Title' }}"
+                    data-snippet="Your document was declined. Please review and try again."
+                    data-remark="{{ $declined->remark ?? 'Your document was declined. Please review and re-upload.' }}"
+                    data-status ="{{$declined->document_status}}"
+                    data-file-url="{{ asset('storage/' . $declined->file_path) }}">
+                    <td class="checkbox"><input type="checkbox"></td>
+                    <td class="sender">Admin</td>
+                    <td>Declined Document</td>
+                    <td class="subject {{ $declined->document_status === 'Declined' ? 'declined-class' : '' }}">
+                        <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>
+                        <span class="remark"> - {{ $declined->remark ?? 'No remark' }}</span>
+                        
+                    </td>
+                    <td class="date">{{ \Carbon\Carbon::parse($declined->upload_date)->format('M d H:i') }}</td>
+                    <td class="email-actions">
+                        <a notif-id="{{ $declined->document_id }}" status="archive" class="notifDeclined"
+                            style="text-decoration: none; color: black;">
+                            <i class="bi bi-archive"></i>
+                        </a>
+                        <a notif-id="{{ $declined->document_id }}" status="deleted" class="notifDeclined"
+                            style="text-decoration: none; color: black;">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
         @endif
     </div>

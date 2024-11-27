@@ -33,7 +33,21 @@ main {
     border-bottom: 1px solid #ccc;
 }
 
+.declined-docs{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
 .email-item:hover {
+    background-color: #f5f5f5;
+}
+.email-items:hover {
+    background-color: #f5f5f5;
+}
+.declined-docs:hover {
     background-color: #f5f5f5;
 }
 .checkbox {
@@ -219,7 +233,7 @@ main {
     text-align: left; 
 }
 
-.swal-custom-title {
+.swal-custom-height {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
