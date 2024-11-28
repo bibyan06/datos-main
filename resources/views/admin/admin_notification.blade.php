@@ -40,7 +40,8 @@
                         <tr class="email-item" data-id="{{ $forwarded->forwarded_document_id }}"
                             data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
                             data-document="{{ $forwarded->document->document_name ?? 'No Title' }}"
-                            data-snippet="{{ $forwarded->message ?? 'No message' }}" data-type="forward"
+                            data-snippet="{{ $forwarded->message ?? 'No message' }}" 
+                            data-type="forward"
                             data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
 
                             <td class="checkbox"><input type="checkbox"></td>
@@ -48,13 +49,13 @@
                             <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                                 {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                             </td>
-                            <td>Forwarded Document</td>
+                            <td class="document-type {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">Forwarded Document</td>
                             <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                 <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                                 <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                             </td>
                             
-                            <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                            <td class="date{{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <a notif-id={{ $forwarded->forwarded_document_id }} status= 'archive'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
@@ -105,14 +106,14 @@
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
                             
-                            <td>Declined Document</td>
+                            <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Decline Documents</td>
 
                             <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                 <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>
                                 <span class="remark"> - {{ $declined->remark ?? 'No remark' }}</span>  
                             </td>
 
-                            <td class="date">{{ \Carbon\Carbon::parse($declined->upload_date)->format('M d H:i') }}</td>
+                            <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->upload_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <a notif-id="{{ $declined->document_id }}" status="archive" 
                                     class="notifDeclined" style="text-decoration: none; color: black;">

@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .snippet`).style.fontWeight = 'normal';
+                                        location.reload();
                                     });
                             } else {
                                 Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
@@ -189,6 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 document.querySelector(`[data-id="${documentId}"] .documentname`).style.fontWeight = 'normal';
                                 document.querySelector(`[data-id="${documentId}"] .sender`).style.fontWeight = 'normal';
                                 document.querySelector(`[data-id="${documentId}"] .snippet`).style.fontWeight = 'normal';
+                                document.querySelector('.document-type').style.fontWeight = 'normal';
+                                document.querySelector('.date').style.fontWeight = 'normal';
+                                location.reload();
                             });
                         } else {
                             Swal.fire('Error', data.message || 'Failed to update document status.', 'error');

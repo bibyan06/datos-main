@@ -64,6 +64,7 @@ class NotificationController extends Controller
 
             $userId = $user->employee_id;  // Get the custom user identifier
             $employee = Employee::where('employee_id', $userId)->first();
+            $fullName = $employee->first_name . ' ' . $employee->last_name;
 
             // Count notifications for the current user in both tables
             $forwardedCount = DB::table('forwarded_documents')
@@ -75,15 +76,21 @@ class NotificationController extends Controller
                 ->where('status', 'delivered')
                 ->where('issued_to', $employee->id)
                 ->count();
-
-            $notificationCount = $forwardedCount + $sentCount;
-
+            
+                $declinedCount = DB::table('documents')
+                ->where('status', 'delivered')
+                ->where('uploaded_by', $fullName) 
+                ->count();
+    
+            $notificationCount = $forwardedCount + $sentCount + $declinedCount;
+    
             return response()->json(['notificationCount' => $notificationCount]);
         } catch (\Exception $e) {
             \Log::error("Error in getNotificationCount: " . $e->getMessage());
             return response()->json(['error' => 'Server error'], 500);
         }
     }
+
     public function destroy($id, $status)
     {
         $forwardedDocuments = ForwardedDocument::where('forwarded_document_id', $id)->first();
