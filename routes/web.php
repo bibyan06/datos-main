@@ -228,6 +228,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
     Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
     Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
+    Route::patch('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
+
     Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
     Route::post('/dean_request', [RequestController::class, 'index'])->name('dean.request');
     Route::get('/verification', function (Request $req) {

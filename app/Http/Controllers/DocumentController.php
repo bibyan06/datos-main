@@ -141,22 +141,24 @@ class DocumentController extends Controller
     }
 
     public function decline($documentId, Request $request)
-    {
-        // Validate the remark
-        $request->validate([
-            'remark' => 'required|string|max:255',
-        ]);
+{
+    // Validate the remark
+    $request->validate([
+        'remark' => 'required|string|max:255',
+    ]);
 
-        // Find the document
-        $document = Document::findOrFail($documentId);
+    // Find the document
+    $document = Document::findOrFail($documentId);
 
-        // Update the document status and remark
-        $document->document_status = 'Declined';
-        $document->remark = $request->remark;
-        $document->save();
+    // Update the document status, remark, and declined_by
+    $document->document_status = 'Declined';
+    $document->remark = $request->remark;
+    $document->status = 'delivered';
+    $document->declined_by = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+    $document->save();
 
-        return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
-    }
+    return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
+}
 
     public function showApprovedDocuments()
     {
@@ -341,6 +343,26 @@ class DocumentController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Document status updated to "viewed".']);
     }
+
+    public function updateStatusUploaded($documentId)
+    {
+        try {
+            $document = Document::findOrFail($documentId);
+            $document->status = 'viewed';  // Update the document status to 'viewed'
+            $document->save();
+
+            return response()->json(['success' => true, 'message' => 'Document status updated successfully.']);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Handle the case when the document is not found
+            return response()->json(['success' => false, 'message' => 'Document not found.']);
+        } catch (\Exception $e) {
+            // Handle any other errors
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
     public function viewRequest(){
         return view('admin.documents.requested_docs');
     }

@@ -77,6 +77,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        const currentUserName = @json(auth()->user()->first_name.''. $document->declined_by= auth()->user()->last_name);
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Approve Button
             document.querySelectorAll('.approve-btn').forEach(button => {
@@ -134,6 +137,7 @@
                             declineForm.innerHTML = `
                                 @csrf 
                                 <input type="hidden" name="remark" value="${result.value.remark}">
+                                <input type="hidden" name="declined_by" value="${currentUserName}">
                             `;
                             document.body.appendChild(declineForm);
                             declineForm.submit();

@@ -23,6 +23,8 @@ class Document extends Model
         'file_path',
         'document_status',
         'remark',
+        'status',
+        'declined_by',
         'upload_date',
         'uploaded_by'
     ];
@@ -45,6 +47,11 @@ class Document extends Model
     public function uploadedBy()
     {
         return $this->belongsTo(Employee::class, 'uploaded_by', 'id');
+    }
+
+    public function declinedBy()
+    {
+        return $this->belongsTo(Employee::class, 'declined_by', 'id');
     }
 
     public function scopeDeclined($query)

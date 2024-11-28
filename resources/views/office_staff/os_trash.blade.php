@@ -32,10 +32,7 @@
                             <td class="sender">{{ $r->forwardedBy->first_name . ' ' . $r->forwardedBy->last_name }}</td>
                             <td class="subject">
 
-                                <span class="snippet">Employee -
-                                    {{ $r->forwardedTo->first_name . ' ' . $r->forwardedTo->last_name }} forwarded a document
-                                    regarding the {{ $r->documents->category_name }}
-                                    - {{ $r->documents->description }}</span>
+                                <span class="snippet"> forwarded a document {{ $r->documents->category_name }} - {{ $r->documents->description }}</span>
                             </td>
                             <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}
                             </td>
@@ -44,6 +41,29 @@
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
                                 <a delete-id={{ $r->forwarded_document_id }} status= 'delete'
+                                    class = "deleteForward"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                @if ($uploaded)
+                    @foreach ($uploaded as $u)
+                        <tr class="email-item">
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="sender">{{ $u->declined_by ?? 'Admin'}}</td>
+                            <td class="subject">
+
+                                <span class="snippet"> Declined document {{ $u->documents->document_name }} - {{ $u->documents->description }}</span>
+                            </td>
+                            <td class="date">{{ \Carbon\Carbon::parse($u->forwarded_date)->format('M d H:i') }}
+                            </td>
+                            <td class="email-actions">
+                                <a notif-id={{ $u->document_id }} status= 'viewed'
+                                    class = "notifForward" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
+                                <a delete-id={{ $u->document_id }} status= 'delete'
                                     class = "deleteForward"
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>

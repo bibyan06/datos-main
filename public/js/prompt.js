@@ -75,19 +75,17 @@ notifButtons.forEach(btn => {
     });
 });
 
+const uploadnotifButtons = document.querySelectorAll('.notifDeclined');
 
-const sentnotifButtons = document.querySelectorAll('.notifSent');
-
-sentnotifButtons.forEach(btn => {
+notifButtons.forEach(btn => {
     btn.style.cursor = "pointer";
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
-        
         Swal.fire({
             title: 'Are you sure?',
-            text:  `Do you want to ${status=="viewed"?"Restored":status} this item?`,
-            icon: status=="archive"||status=="viewed"?'warning':'error',
+            text: `Do you want to ${status === "deleted" ? "delete" : (status === "viewed" ? "restore" : status)} this item?`,            
+            icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -96,11 +94,11 @@ sentnotifButtons.forEach(btn => {
         }).then((result) => {
             if (result.isConfirmed) {
                    
-               fetch(`/deleteNotifsent/${id}/${status}`)
+               fetch(`/deleteNotif/${id}/${status}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -108,14 +106,12 @@ sentnotifButtons.forEach(btn => {
                     Swal.fire('Error!', data.message, 'error');
                 }
                })
-                // Additional logic for archiving can be added here
             }
         });
     });
 });
 
-
-const deleteforButtons = document.querySelectorAll('.deleteForward');
+const deleteforButtons = document.querySelectorAll('.deleteForward', '.deleteUploaded');
 
 deleteforButtons.forEach(btn => {
     btn.style.cursor = "pointer";
@@ -152,6 +148,8 @@ deleteforButtons.forEach(btn => {
         });
     });
 });
+
+
 
 const deletesentButtons = document.querySelectorAll('.deletesent');
 

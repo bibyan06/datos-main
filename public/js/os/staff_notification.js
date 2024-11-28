@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         actions: 'custom-actions-position'
                     }
                 }).then((result) => {
-                  
                     if (result.isConfirmed && forwardedDocumentId) {
                         console.log("Attempting to send request to update status...");
                         
@@ -116,55 +115,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
     emailItems.forEach(item => {
         item.addEventListener('click', function (e) {
-            // Check if the click was inside the email-actions or the checkbox
+            // Prevent actions when clicking on email actions or checkboxes
             if (e.target.closest('.email-actions') || e.target.type === 'checkbox') {
-                return;
-            }
+        
+                // Extract relevant data from the row
+                const documentId = this.getAttribute('data-id');
+                const documentName = this.getAttribute('data-document');
+                const sender = this.querySelector('.sender').textContent.trim();
+                const dataRemark = this.getAttribute('data-remark');
+                const dataStatus = this.getAttribute('data-status');
+                const fileUrl = this.getAttribute('data-file-url');
 
-            // Get relevant information from the clicked row
-            const documentName = this.getAttribute('data-document');
-            const sender = this.querySelector('.sender').textContent.trim();
-            const dataRemark = this.getAttribute('data-remark'); 
-            const dataStatus = this.getAttribute('data-status'); 
-            const fileUrl = this.getAttribute('data-file-url');
-
-            // Use SweetAlert2 to display the document details
-            Swal.fire({
-                html: `
-                    <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
-
-                        <iframe src="${fileUrl}" style="width: 100%; height: 700px; border: none;"></iframe>
-                        
-                        <div style="width: 50%; height: 260px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
-                            <div style="margin-bottom: 20px;">
-                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
-                                <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
-                            </div>
-                            <div style="margin-bottom: 20px;">
-                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">From:</p>
-                                <p style="margin: 0; font-size: 20px; color: #555;">${sender}</p>
-                            </div>
-                            <div style="margin-bottom: 20px;">
-                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Remark:</p>
-                                <p style="margin: 0; font-size: 20px; color: #555;">${dataRemark}</p>
-                            </div>
-                            <div>
-                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
-                                <p style="margin: 0; font-size: 20px; color: #555;">${dataStatus}</p>
+                // Use SweetAlert2 to display the document details
+                Swal.fire({
+                    html: ` 
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; width: 100%; height: 100%;">
+                            <iframe src="${fileUrl}" style="flex: 1 1 60%; height: 700px; border: none;"></iframe>
+                            <div style="flex: 1 1 35%; display: flex; flex-direction: column; justify-content: center; gap: 20px;">
+                                <div>
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
+                                </div>
+                                <div>
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">From:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${sender}</p>
+                                </div>
+                                <div>
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Remark:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${dataRemark}</p>
+                                </div>
+                                <div>
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${dataStatus}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `,
-                showCloseButton: true,
-                focusConfirm: false,
-                confirmButtonText: 'Close',
-                confirmButtonColor: '#888',
-                customClass: {
-                    popup: 'custom-swal-height',
-                    popup: 'custom-swal-width',
-                    actions: 'custom-actions-position',
-                }
-            });
+                    `,
+                    showCloseButton: true,
+                    confirmButtonText: 'Mark as viewed',
+                    showCancelButton: true,
+                    cancelButtonText: 'Close',
+                    customClass: {
+                        popup: 'custom-swal-width',
+                        confirmButton: 'custom-confirm-button',
+                        cancelButton: 'custom-cancel-button',
+                        actions: 'custom-actions-position'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log("Attempting to send request to update status...");
+                        
+                        fetch(`/declined-documents/${forwardedDocumentId}/update-status`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Success', 'Document status updated to "viewed".', 'success');
+                            } else {
+                                Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'Failed to update document status. Please try again.', 'error');
+                        });
+                                               
+                    }
+                });
+            }
         });
     });
 });
+
+

@@ -59,8 +59,9 @@
                             <th>Document Name</th>
                             <th>Description</th>
                             <th>Category</th>
-                            <th>Status</th>
+                            <th>Document Status</th>
                             <th>Remark</th>
+                            <th>Declined Status</th>
                             <th>Date Uploaded</th>
                             <th>Uploaded by</th>
                             <th>Action</th>
@@ -83,6 +84,7 @@
                                 <td contenteditable="false" class="editable-field" data-id="{{ $document->document_id }}" data-field="remark">
                                     {{ $document->remark }}
                                 </td>
+                                <td>{{ $document->status }}</td>
                                 <td>{{ $document->upload_date }}</td>
                                 <td>{{ $document->uploaded_by }}</td>
                                 <td>

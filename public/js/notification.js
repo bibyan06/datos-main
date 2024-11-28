@@ -112,30 +112,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const emailItems = document.querySelectorAll('.declined-docs');
-
-    emailItems.forEach(item => {
-        item.addEventListener('click', function (e) {
-            // Check if the click was inside the email-actions or the checkbox
+    document.body.addEventListener('click', function (e) {
+        if (e.target.closest('.declined-docs')) {
+            const item = e.target.closest('.declined-docs');
+            // Prevent actions when clicking on email actions or checkboxes
             if (e.target.closest('.email-actions') || e.target.type === 'checkbox') {
-                return;
+                return; // Prevent processing if it's an email action or checkbox
             }
 
-            // Get relevant information from the clicked row
-            const documentName = this.getAttribute('data-document');
-            const sender = this.querySelector('.sender').textContent.trim();
-            const dataRemark = this.getAttribute('data-remark'); 
-            const dataStatus = this.getAttribute('data-status'); 
-            const fileUrl = this.getAttribute('data-file-url');
+            // Extract relevant data from the row
+            const documentId = item.getAttribute('data-id');
+            const documentName = item.getAttribute('data-document');
+            const sender = item.querySelector('.sender').textContent.trim();
+            const dataRemark = item.getAttribute('data-remark');
+            const dataStatus = item.getAttribute('data-status');
+            const fileUrl = item.getAttribute('data-file-url');
 
             // Use SweetAlert2 to display the document details
             Swal.fire({
-                html: `
-                    <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
+                html: ` 
+                     <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
 
-                        <iframe src="${fileUrl}" style="width: 100%; height: 700px; border: none;"></iframe>
+                        <iframe src="${fileUrl}"style="width: 100%; height: 700px; border: none;"></iframe>
                         
-                        <div style="width: 50%; height: 260px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                          <div style="width: 50%; height: 255px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
                             <div style="margin-bottom: 20px;">
                                 <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
                                 <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
@@ -156,15 +156,49 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `,
                 showCloseButton: true,
-                focusConfirm: false,
-                confirmButtonText: 'Close',
-                confirmButtonColor: '#888',
+                confirmButtonText: 'Mark as viewed',
+                showCancelButton: true,
+                cancelButtonText: 'Close',
                 customClass: {
-                    popup: 'custom-swal-height',
                     popup: 'custom-swal-width',
-                    actions: 'custom-actions-position',
+                    confirmButton: 'custom-confirm-button',
+                    cancelButton: 'custom-cancel-button',
+                    actions: 'custom-actions-position'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("Attempting to send request to update status...");
+                    fetch(`/declined-documents/${documentId}/update-status`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Success', 'Document status updated to "viewed".', 'success')
+                            .then(() => {
+                                document.querySelector(`[data-id="${documentId}"]`).classList.remove('delivered');
+                                document.querySelector(`[data-id="${documentId}"] .documentname`).style.fontWeight = 'normal';
+                                document.querySelector(`[data-id="${documentId}"] .sender`).style.fontWeight = 'normal';
+                                document.querySelector(`[data-id="${documentId}"] .snippet`).style.fontWeight = 'normal';
+                            });
+                        } else {
+                            Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire('Error', 'Failed to update document status. Please try again.', 'error');
+                    });
                 }
             });
-        });
+        }
     });
 });

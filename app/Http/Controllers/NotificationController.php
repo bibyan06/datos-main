@@ -53,8 +53,6 @@ class NotificationController extends Controller
     }
     
 
-
-
     public function getNotificationCount()
     {
         try {

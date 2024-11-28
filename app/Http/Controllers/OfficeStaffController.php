@@ -277,11 +277,13 @@ class OfficeStaffController extends Controller
     public function archiveDocs(){
         $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
         $forward = ForwardedDocument::with(['forwardedTo','documents', 'forwardedBy'])->where('forwarded_to',$id)->where('status','archive')->get();
+        $uploaded = Document::with(['declinedBy','documents','uploadedBy'])->where('declined_by',$id)->where('status','archive')->get();
         return view('office_staff.os_archive',compact('forward'));
     }
     public function trash(){
         $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
         $forward = ForwardedDocument::with(['forwardedTo','documents', 'forwardedBy'])->where('forwarded_to',$id)->where('status','deleted')->get();
+        $uploaded = Document::with(['declinedBy','documents'])->where('declined_by',$id)->where('status','deleted')->get();
         return view('office_staff.os_trash',compact('forward'));
     }
 
