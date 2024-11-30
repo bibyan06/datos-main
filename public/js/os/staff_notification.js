@@ -109,8 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-document.addEventListener("DOMContentLoaded", () => {
+ocument.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener('click', function (e) {
         if (e.target.closest('.declined-docs')) {
             const item = e.target.closest('.declined-docs');
@@ -204,5 +203,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
 
 

@@ -37,7 +37,8 @@
                 <table class="email-list">
                     {{-- Display Forwarded Documents --}}
                     @foreach ($forwardedDocuments as $forwarded)
-                        <tr class="email-item" data-id="{{ $forwarded->forwarded_document_id }}"
+                        <tr class="email-item" 
+                            data-id="{{ $forwarded->forwarded_document_id }}"
                             data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
                             data-document="{{ $forwarded->document->document_name ?? 'No Title' }}"
                             data-snippet="{{ $forwarded->message ?? 'No message' }}" 
@@ -57,7 +58,7 @@
                             
                             <td class="date{{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id={{ $forwarded->forwarded_document_id }} status= 'archive'
+                                <a notif-id= {{ $forwarded->forwarded_document_id }} status= 'archive'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
                                         class="bi bi-archive"></i>
                                 </a>
@@ -83,7 +84,6 @@
                             <td>Sent Document</td>
                             <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-
                                 <a notif-id={{ $sentDocument->send_id }} status= 'archive' class = "notifSent"
                                     style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
                                 <a notif-id={{ $sentDocument->send_id }} status= 'deleted' class = "notifSent"
@@ -103,10 +103,11 @@
                             data-remark="{{ $declined->remark ?? 'Your document was declined. Please review and re-upload.' }}"
                             data-status ="{{$declined->document_status}}"
                             data-file-url="{{ asset('storage/' . $declined->file_path) }}">
+
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
                             
-                            <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Decline Documents</td>
+                            <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
 
                             <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                 <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>
@@ -115,12 +116,12 @@
 
                             <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->upload_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id="{{ $declined->document_id }}" status="archive" 
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                <a notif-id={{ $declined->document_id }} status='archive'
+                                    class="notifForward" style="text-decoration: none; color: black;">
                                     <i class="bi bi-archive"></i>
                                 </a>
-                                <a notif-id="{{ $declined->document_id }}" status="deleted" 
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                <a notif-id={{ $declined->document_id }} status= 'deleted'
+                                    class="notifForward" style="text-decoration: none; color: black;">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>

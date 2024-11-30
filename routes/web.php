@@ -106,6 +106,7 @@ Route::middleware('role:1')->group(function () {
             ->defaults('viewName', 'admin.admin_notification');
         Route::get('/viewRequested', [DocumentController::class, 'viewRequest'])->name('viewRequest');
         Route::get('/archive_document/{id}', [AdminController::class, 'archiveDocument'])->name('admin.archive_docs');
+        Route::post('/admin/archive_document', [AdminController::class, 'archiveDeclinedDocument'])->name('admin.archive_document');
         Route::get('/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
         Route::get('/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
         Route::get('/trash', [AdminController::class, 'trash'])->name('admin.trash');

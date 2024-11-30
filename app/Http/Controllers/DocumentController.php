@@ -348,7 +348,7 @@ class DocumentController extends Controller
     {
         try {
             $document = Document::findOrFail($documentId);
-            $document->status = 'viewed';  // Update the document status to 'viewed'
+            $document->status = 'viewed'; 
             $document->save();
 
             return response()->json(['success' => true, 'message' => 'Document status updated successfully.']);
@@ -360,8 +360,6 @@ class DocumentController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
-
-
 
     public function viewRequest(){
         return view('admin.documents.requested_docs');

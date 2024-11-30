@@ -33,8 +33,7 @@
                     <td class="sender">{{$r->forwardedBy->first_name." ".$r->forwardedBy->last_name}}</td>
                     <td class="subject">
 
-                        <span class="snippet">Employee - {{$r->forwardedTo->first_name." ".$r->forwardedTo->last_name}} forwarded a document regarding the {{$r->documents->category_name}}
-                            - {{$r->documents->description}}</span>
+                        <span class="snippet"> {{$r->documents->category_name}} - {{$r->message}}</span>
                     </td>
                     <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
                     <td class="email-actions">

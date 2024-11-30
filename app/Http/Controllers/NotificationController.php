@@ -117,4 +117,18 @@ class NotificationController extends Controller
             ]);
         }
     }
+
+    public function destroydeclined($id, $status)
+    {
+
+        $forwardedDocuments = Document::where('document_id', $id)->first();
+        if ($forwardedDocuments) {
+            $forwardedDocuments->status = $status;
+            $forwardedDocuments->update();
+            return response()->json([
+                'success' => true,
+                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
+            ]);
+        }
+    }
 }

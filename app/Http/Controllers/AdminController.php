@@ -409,16 +409,34 @@ class AdminController extends Controller
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'archive')->get();
-        return view('admin.archive_notif', compact('forward'));
+        $uploaded = Document::with(['declinedBy', 'uploadedBy']) ->where('uploaded_by', auth()->user()->employee_id)->where('status','archive')->get();
+       
+        return view('admin.archive_notif', compact('forward', 'uploaded'));
     }
+
     public function archiveDocs()
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first();
-
         $forward = Document::with(['user', 'tags'])->where('status', 'archive')->orderBy('updated_at', 'ASC')->get();
 
         return view('admin.archive_docs', compact('forward'));
     }
+    
+    public function archiveDeclinedDocument(Request $request)
+    {
+        $documentId = $request->input('document_id');
+
+        $document = Document::find($documentId);
+        if ($document) {
+            $document->document_status = 'archive'; // Update status to archive
+            $document->save();
+
+            return response()->json(['success' => true, 'message' => 'Document archived successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Document not found.']);
+    }
+        
     public function archiveDocument($id)
     {
         $docs = Document::where('document_id', $id)->first();
