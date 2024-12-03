@@ -156,7 +156,7 @@ class AdminController extends Controller
             ->where(function ($queryBuilder) use ($query) {
                 $queryBuilder->where(function ($statusQuery) {
                     $statusQuery->whereNull('status')
-                                ->orWhere('status', '!=', 'archived');
+                                ->orWhere('status', '!=', 'archive');
                 })
                 ->where(function ($searchQuery) use ($query) {
                     $searchQuery->where('document_name', 'LIKE', "%{$query}%")
@@ -218,7 +218,7 @@ class AdminController extends Controller
         $documents = Document::where('document_status', '=', 'Approved')
                              ->where(function ($query) {
                                  $query->whereNull('status')
-                                       ->orWhere('status', '!=', 'archived');
+                                       ->orWhere('status', '!=', 'archive');
                              })
                              ->get();
     
@@ -406,24 +406,24 @@ class AdminController extends Controller
     }
 
     public function archiveNotif()
-    {
-        $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+{
+    $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
+    $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
-        // Fetch forwarded documents marked as archive
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
-            ->where('forwarded_to', $id)
-            ->where('status', 'archived')
-            ->get();
+    // Fetch forwarded documents marked as archive
+    $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+        ->where('forwarded_to', $id)
+        ->where('status', 'archive')
+        ->get();
 
-        // Fetch declined documents marked as archive
-        $uploaded = Document::where('document_status', 'Declined')
-            ->where('status', 'archived')
-            ->where('uploaded_by', $currentUserName)  
-            ->get();
+    // Fetch declined documents marked as archive, but only for those uploaded by the current user
+    $uploaded = Document::where('document_status', 'Declined')
+        ->where('status', 'archive')
+        ->where('uploaded_by', $currentUserName)  
+        ->get();
 
-        return view('admin.archive_notif', compact('forward', 'uploaded'));
-    }
+    return view('admin.archive_notif', compact('forward', 'uploaded'));
+}
 
 
 
@@ -431,7 +431,7 @@ class AdminController extends Controller
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first();
         $forward = Document::with(['user', 'tags'])
-            ->where('status', 'archived')
+            ->where('status', 'archive')
             ->orderBy('updated_at', 'ASC')
             ->get();
 
@@ -444,7 +444,7 @@ class AdminController extends Controller
 
         $document = Document::find($id);
         if ($document) {
-            $document->document_status = "archived";
+            $document->document_status = "archive";
             $document->updated_at = now();
             $document->update();
 
@@ -459,7 +459,7 @@ class AdminController extends Controller
         $docs = Document::where('document_id', $id)->first();
 
         if ($docs) {
-            $docs->status = "archived";
+            $docs->status = "archive";
             $docs->updated_at = now();
             $docs->update();
 
@@ -478,15 +478,8 @@ class AdminController extends Controller
     public function trash()
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
-            ->where('forwarded_to', $id)
-            ->where('status', 'deleted')
-            ->get();
-
-        $sent = SendDocument::with(['recipient', 'document', 'sender'])
-            ->where('issued_by', $id)
-            ->where('status', 'deleted')
-            ->get();
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'deleted')->get();
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_by', $id)->where('status', 'deleted')->get();
 
         return view('admin.trash', compact('forward', 'sent'));
     }

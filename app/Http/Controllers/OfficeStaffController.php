@@ -70,7 +70,7 @@ class OfficeStaffController extends Controller
         ->where(function ($queryBuilder) use ($query) {
             $queryBuilder->where(function ($statusQuery) {
                 $statusQuery->whereNull('status')
-                            ->orWhere('status', '!=', 'archived');
+                            ->orWhere('status', '!=', 'archive');
             })
             ->where(function ($searchQuery) use ($query) {
                 $searchQuery->where('document_name', 'LIKE', "%{$query}%")
@@ -120,7 +120,7 @@ class OfficeStaffController extends Controller
         $documents = Document::where('document_status', '=', 'Approved')
                              ->where(function ($query) {
                                  $query->whereNull('status')
-                                       ->orWhere('status', '!=', 'archived');
+                                       ->orWhere('status', '!=', 'archive');
                              })
                              ->get();
     
@@ -275,24 +275,26 @@ class OfficeStaffController extends Controller
 
     
     public function archiveDocs(){
-        $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
+       
+        $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
         $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
-
-        $forward = ForwardedDocument::with(['forwardedTo','documents', 'forwardedBy'])
-            ->where('forwarded_to',$id)
-            ->where('status','archived')
+        // Fetch forwarded documents marked as archive
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to', $id)
+            ->where('status', 'archive')
             ->get();
-        
+
+        // Fetch declined documents marked as archive, but only for those uploaded by the current user
         $uploaded = Document::where('document_status', 'Declined')
-            ->where('status', 'archived')
+            ->where('status', 'archive')
             ->where('uploaded_by', $currentUserName)  
             ->get();
-
+        
+        
         return view('office_staff.os_archive',compact('forward', 'uploaded'));
     }
-
-
+    
     public function trash(){
         $id = Employee::where('employee_id',auth()->user()->employee_id)->first()->id;
         $forward = ForwardedDocument::with(['forwardedTo','documents', 'forwardedBy'])->where('forwarded_to',$id)->where('status','deleted')->get();

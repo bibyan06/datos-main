@@ -54,7 +54,7 @@
                                 <td class="sender">{{ $u->declined_by }}</td> <!-- Display the declined_by value -->
                                 <td class="document-type">Declined Document</td>
                                 <td class="subject">
-                                    <span class="snippet">{{ $u->document_name }} - {{ $u->description }}</span>
+                                    <span class="snippet">{{ $u->document_name }} - {{ $u->remark }}</span>
                                 </td>
                                 <td class="date">{{ \Carbon\Carbon::parse($u->upload_date)->format('M d H:i') }}</td>
                                 <td class="email-actions">
