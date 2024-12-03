@@ -35,7 +35,7 @@
                                 <td class="subject">
                                     <span class="snippet">{{ $r->documents->document_name }} - {{ $r->message }}</span>
                                 </td>
-                                <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('M d H:i') }}</td>
+                                <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
                                 <td class="email-actions">
                                     <a notif-id='{{ $r->forwarded_document_id }}' status='viewed' class="notifForward"
                                        style="text-decoration: none; color:black;">
@@ -51,12 +51,12 @@
                         @foreach ($uploaded as $u)
                             <tr class="email-item">
                                 <td class="checkbox"><input type="checkbox"></td>
-                                <td class="sender">{{ $u->declined_by }}</td> <!-- Display the declined_by value -->
+                                <td class="sender">{{ $u->declined_by }}</td>
                                 <td class="document-type">Declined Document</td>
                                 <td class="subject">
                                     <span class="snippet">{{ $u->document_name }} - {{ $u->remark }}</span>
                                 </td>
-                                <td class="date">{{ \Carbon\Carbon::parse($u->upload_date)->format('M d H:i') }}</td>
+                                <td class="date">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
                                 <td class="email-actions">
                                     <a notif-id="{{ $u->document_id }}" status="viewed" class="notifDeclined" 
                                     style="text-decoration: none; color:black;">

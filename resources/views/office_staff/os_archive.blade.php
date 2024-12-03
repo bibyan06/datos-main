@@ -57,7 +57,7 @@
                                 <td class="subject">
                                     <span class="snippet">{{ $u->document_name }} - {{ $u->remark }}</span>
                                 </td>
-                                <td class="date">{{ \Carbon\Carbon::parse($u->upload_date)->format('M d H:i') }}</td>
+                                <td class="date">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
                                 <td class="email-actions">
                                     <a notif-id="{{ $u->document_id }}" status="viewed" class="notifDeclined" 
                                     style="text-decoration: none; color:black;">

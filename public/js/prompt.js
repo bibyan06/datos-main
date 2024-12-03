@@ -95,7 +95,7 @@ sentnotifButtons.forEach(btn => {
             
         Swal.fire({
             title: 'Are you sure?',
-            text:  `Do you want to ${status=="viewed"?"Restored":status} this item?`,
+            text: `Do you want to ${status === "deleted" ? "delete" : (status === "viewed" ? "restore" : status)} this item?`,            
             icon: status=="archive"||status=="viewed"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

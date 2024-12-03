@@ -267,11 +267,26 @@ class DeanController extends Controller
 
         return view('dean.dean_archive', compact('forward','sent'));
     }
-    public function trash(){
+    public function trash()
+    {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'deleted')->get();
-        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_to', $id)->where('status', 'deleted')->get();
-    
+        $currentUser = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to', $id)
+            ->where('status', 'deleted')
+            ->get();
+
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])
+            ->where('issued_by', $id)
+            ->where('status', 'deleted')
+            ->get();
+
+        $uploaded = Document::where('document_status', 'Declined')
+            ->where('status', 'deleted')
+            ->where('uploaded_by', $currentUser)
+            ->get();
+            
         return view('dean.dean_trash', compact('forward', 'sent'));
     }
     public function restoreDocs($id)

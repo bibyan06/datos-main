@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="other-details">
-                                <p>Archived Date: {{ \Carbon\Carbon::parse($r->updated_at)->format('F d, Y') }}
+                                <p>Uploaded Date: {{ \Carbon\Carbon::parse($r->upload_date)->format('F d, Y') }}
 
                                 </p>
                                 <p>{{ $r->description }}</p>

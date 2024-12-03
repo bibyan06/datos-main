@@ -21,60 +21,81 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($forward->isEmpty() && $sent->isEmpty())
+            @if ($sent->isEmpty() && $forward->isEmpty() && $uploaded->isEmpty())
                 <p class="no-notifications">You have no Trash at this time.</p>
             @endif
-                <table class="email-list">
-                    @if ($forward)
-                        @foreach ($forward as $r)
-                            <tr class="email-item">
-                                <td class="checkbox"><input type="checkbox"></td>
-                                <td class="sender">{{ $r->forwardedBy->first_name . ' ' . $r->forwardedBy->last_name }}</td>
-                                <td class="subject">
-
-                                    <span class="snippet">Employee -
-                                        {{ $r->forwardedTo->first_name . ' ' . $r->forwardedTo->last_name }} forwarded a
-                                        document
-                                        regarding the {{ $r->documents->category_name }}
-                                        - {{ $r->documents->description }}</span>
-                                </td>
-                                <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('F j, Y') }} </td>
-                                <td class="email-actions">
-                                    <a notif-id={{ $r->forwarded_document_id }} status= 'viewed'
-                                        class = "notifForward" style="text-decoration: none; color:black;"><i
-                                            class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                    <a delete-id={{ $r->forwarded_document_id }}  class = "deleteForward"
-                                        style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        @foreach ($sent as $sentDocs)
+            <table class="email-list">
+                @if ($forward)
+                    @foreach ($forward as $r)
                         <tr class="email-item">
-                                <td class="checkbox"><input type="checkbox"></td>
-                                <td class="sender">{{ $sentDocs->sender->first_name . ' ' . $sentDocs->sender->last_name }}</td>
-                                <td class="subject">
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="sender">{{ $r->forwardedBy->first_name . ' ' . $r->forwardedBy->last_name }}</td>
+                            <td class="document-type">Forwarded Document</td>
+                            <td class="subject">
+                                <span class="snippet">{{ $r->documents->document_name }} - {{ $r->message }}</span>
+                            </td>
+                            <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}
 
-                                    <span class="snippet">Employee -
-                                        {{ $sentDocs->recipient->first_name . ' ' . $sentDocs->recipient->last_name }} sent a
-                                        document
-                                        regarding the {{ $sentDocs->document_subject }}
-                                    </span>
-                                </td>
-                                <td class="date">{{ \Carbon\Carbon::parse($sentDocs->issued_date)->format('F j, Y') }} </td>
-                                <td class="email-actions">
-                                    <a notif-id={{ $sentDocs->send_id }} status= 'viewed'
-                                        class = "notifSent" style="text-decoration: none; color:black;"><i
-                                            class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                    <a delete-id={{ $sentDocs->send_id }}  class = "notifSent"
-                                        style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
-                                    </a>
-                                </td>
-                            </tr>
+                            </td>
+                            <td class="email-actions">
+                                <a notif-id={{ $r->forwarded_document_id }} status= 'viewed' class = "notifForward"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-arrow-counterclockwise"
+                                        title="Restore"></i></a>
+                                <a delete-id={{ $r->forwarded_document_id }} class = "deleteForward"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill"
+                                        title="Delete Forever"></i></a>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
-                </table>
-            @endif
+                @endif
+                @if ($sent)
+                    @foreach ($sent as $s)
+                        <tr class="email-item">
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="sender">{{ $s->sender->first_name . ' ' . $s->sender->last_name }}</td>
+                            <td class="document-type">Sent Document</td>
+                            <td class="subject">
+                                <span class="snippet">{{ $s->document_subject }}
+                                </span>
+                            </td>
+                            <td class="date">{{ \Carbon\Carbon::parse($s->issued_date)->format('M d H:i') }}
+                            </td>
+                            <td class="email-actions">
+                                <a notif-id={{ $s->send_id }} status= 'viewed'
+                                    class = "notifSent" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
+                                <a delete-id={{ $s->send_id }}  class = "deletesent"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+
+                @if ($uploaded)
+                    @foreach ($uploaded as $u)
+                        <tr class="email-item">
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="sender">{{ $u->declined_by ?? 'Admin'}}</td>
+                            <td class="document-type">Declined Document</td>
+                            <td class="subject">
+                                <span class="snippet">{{ $u->document_name }} - {{ $u->remark }} </span>
+                            </td>
+                            <td class="date">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}
+                            </td>
+                            <td class="email-actions">
+                                <a notif-id={{ $u->document_id }} status= 'viewed'
+                                    class = "notifSent" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
+                                <a delete-id={{ $u->document_id }}  class = "deletesent"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </table>
         </div>
     </div>
 @endsection

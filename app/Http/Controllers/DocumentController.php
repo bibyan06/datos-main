@@ -152,6 +152,7 @@ class DocumentController extends Controller
 
         // Update the document status, remark, and declined_by
         $document->document_status = 'Declined';
+        $document->declined_date = now();
         $document->remark = $request->remark;
         $document->status = 'delivered';
         $document->declined_by = auth()->user()->first_name . ' ' . auth()->user()->last_name;

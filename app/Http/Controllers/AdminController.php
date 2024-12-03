@@ -114,6 +114,7 @@ class AdminController extends Controller
         $document = RequestDocument::find($request->request_id);
         if ($document) {
             $document->approval_status = 'declined';
+            $document->declined_date = now();
             $document->remarks= $request->remarks;
             $document->save();
     
@@ -190,8 +191,9 @@ class AdminController extends Controller
         } elseif ($action == 'Decline') {
             $document->document_status = 'Declined';
         }
+          
+            $document->save();
 
-        $document->save();
         if ($document->document_status == 'Approved') {
             return redirect()->route('admin.documents.approved_docs')->with('success', 'Document approved successfully.');
         } else {
@@ -408,7 +410,7 @@ class AdminController extends Controller
     public function archiveNotif()
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+        $currentUser = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
         // Fetch forwarded documents marked as archive
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
@@ -419,7 +421,7 @@ class AdminController extends Controller
         // Fetch declined documents marked as archive, but only for those uploaded by the current user
         $uploaded = Document::where('document_status', 'Declined')
             ->where('status', 'archive')
-            ->where('uploaded_by', $currentUserName)  
+            ->where('uploaded_by', $currentUser)  
             ->get();
 
         return view('admin.archive_notif', compact('forward', 'uploaded'));
@@ -478,10 +480,25 @@ class AdminController extends Controller
     public function trash()
     {
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'deleted')->get();
-        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_by', $id)->where('status', 'deleted')->get();
+        $currentUser = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
-        return view('admin.trash', compact('forward', 'sent'));
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to', $id)
+            ->where('status', 'deleted')
+            ->get();
+
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])
+            ->where('issued_by', $id)
+            ->where('status', 'deleted')
+            ->get();
+
+        $uploaded = Document::where('document_status', 'Declined')
+            ->where('status', 'deleted')
+            ->where('uploaded_by', $currentUser)
+            ->get();
+            
+        return view('admin.trash', compact('forward', 'sent', 'uploaded'));
+    
     }
     public function restoreDocs($id)
     {

@@ -79,7 +79,7 @@ tbody{
     color: #f5c518;
 }
 .sender {
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-right: 70px;
 }
 .subject {
