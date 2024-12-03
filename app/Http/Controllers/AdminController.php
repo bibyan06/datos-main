@@ -406,24 +406,24 @@ class AdminController extends Controller
     }
 
     public function archiveNotif()
-{
-    $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-    $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+    {
+        $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
+        $currentUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
-    // Fetch forwarded documents marked as archive
-    $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
-        ->where('forwarded_to', $id)
-        ->where('status', 'archive')
-        ->get();
+        // Fetch forwarded documents marked as archive
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to', $id)
+            ->where('status', 'archive')
+            ->get();
 
-    // Fetch declined documents marked as archive, but only for those uploaded by the current user
-    $uploaded = Document::where('document_status', 'Declined')
-        ->where('status', 'archive')
-        ->where('uploaded_by', $currentUserName)  
-        ->get();
+        // Fetch declined documents marked as archive, but only for those uploaded by the current user
+        $uploaded = Document::where('document_status', 'Declined')
+            ->where('status', 'archive')
+            ->where('uploaded_by', $currentUserName)  
+            ->get();
 
-    return view('admin.archive_notif', compact('forward', 'uploaded'));
-}
+        return view('admin.archive_notif', compact('forward', 'uploaded'));
+    }
 
 
 
