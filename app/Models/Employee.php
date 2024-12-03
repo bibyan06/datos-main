@@ -26,4 +26,9 @@ class Employee extends Model
     {
         return $this->hasMany(ForwardedDocument::class, 'forwarded_to', 'id');
     }
+
+    public function declinedDocuments()
+    {
+        return $this->hasMany(Document::class, 'declined_by', 'employee_id');
+    }
 }

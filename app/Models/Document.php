@@ -34,10 +34,10 @@ class Document extends Model
         return $this->belongsToMany(Tag::class, 'document_tags', 'document_id', 'tag_id');
     }
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class, 'uploaded_by');
-    // }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'uploaded_by');
+    }
 
     public function scopePending($query)
     {
@@ -46,20 +46,21 @@ class Document extends Model
 
     public function uploadedBy()
     {
-        return $this->belongsTo(Employee::class, 'uploaded_by', 'id');
+        return $this->belongsTo(Employee::class, 'uploaded_by', 'employee_id');
     }
 
     public function declinedBy()
     {
-        return $this->belongsTo(Employee::class, 'declined_by', 'id');
+        return $this->belongsTo(Employee::class, 'declined_by', 'employee_id');
     }
+
 
     public function scopeDeclined($query)
     {
         return $query->where('document_status', 'Declined');
     }
     
-    public function document()
+    public function documents()
     {
         return $this->belongsTo(Document::class, 'document_id', 'document_id');
     }

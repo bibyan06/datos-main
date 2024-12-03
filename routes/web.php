@@ -106,7 +106,7 @@ Route::middleware('role:1')->group(function () {
             ->defaults('viewName', 'admin.admin_notification');
         Route::get('/viewRequested', [DocumentController::class, 'viewRequest'])->name('viewRequest');
         Route::get('/archive_document/{id}', [AdminController::class, 'archiveDocument'])->name('admin.archive_docs');
-        Route::post('/admin/archive_document', [AdminController::class, 'archiveDeclinedDocument'])->name('admin.archive_document');
+        Route::get('/archive_document/{id}', [AdminController::class, 'archiveDeclinedDocument'])->name('admin.archive_notif');
         Route::get('/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
         Route::get('/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
         Route::get('/trash', [AdminController::class, 'trash'])->name('admin.trash');
@@ -242,6 +242,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/sent/upload', [SentDocumentController::class, 'sentUpload'])->name('admin.admin_send_document');
     Route::get('/deleteNotif/{id}/{status}', [NotificationController::class, 'destroy'])->name('deleteNotif');
     Route::get('/deleteNotifsent/{id}/{status}', [NotificationController::class, 'destroysent'])->name('deleteNotifsent');
+    Route::get('/deleteNotifdeclined/{id}/{status}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
+
     Route::get('/trash/{id}', [TrashController::class, 'deleteNotifForever'])->name('deleteNotifForever');
     Route::get('/trash/sent/{id}', [TrashController::class, 'deleteNotifForeversent'])->name('deleteNotifForeversent');
     Route::get('/restore/{id}', [AdminController::class, 'restoreDocs'])->name('restoreDocs');

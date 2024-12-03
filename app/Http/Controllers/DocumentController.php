@@ -141,24 +141,24 @@ class DocumentController extends Controller
     }
 
     public function decline($documentId, Request $request)
-{
-    // Validate the remark
-    $request->validate([
-        'remark' => 'required|string|max:255',
-    ]);
+    {
+        // Validate the remark
+        $request->validate([
+            'remark' => 'required|string|max:255',
+        ]);
 
-    // Find the document
-    $document = Document::findOrFail($documentId);
+        // Find the document
+        $document = Document::findOrFail($documentId);
 
-    // Update the document status, remark, and declined_by
-    $document->document_status = 'Declined';
-    $document->remark = $request->remark;
-    $document->status = 'delivered';
-    $document->declined_by = auth()->user()->first_name . ' ' . auth()->user()->last_name;
-    $document->save();
+        // Update the document status, remark, and declined_by
+        $document->document_status = 'Declined';
+        $document->remark = $request->remark;
+        $document->status = 'delivered';
+        $document->declined_by = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+        $document->save();
 
-    return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
-}
+        return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
+    }
 
     public function showApprovedDocuments()
     {

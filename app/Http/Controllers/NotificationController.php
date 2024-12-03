@@ -39,6 +39,7 @@ class NotificationController extends Controller
             // Fetch declined documents uploaded by the current user
             $declinedDocuments = Document::where('uploaded_by', $uploadedBy)
             ->where('document_status', 'Declined')
+            ->whereIn('status',['viewed', 'delivered'])
             ->get();
 
             \Log::info('Uploaded by: ' . $uploadedBy);

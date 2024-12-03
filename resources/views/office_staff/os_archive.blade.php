@@ -22,35 +22,56 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($forward->isEmpty() && $forward->isEmpty())
-            <p class="no-notifications">You have no Archive at this time.</p>
-        @endif
-            <table class="email-list">
-                @if ($forward)
-                   @foreach ($forward as $r)
-                   <tr class="email-item">
-                    <td class="checkbox"><input type="checkbox"></td>
-                    <td class="sender">{{$r->forwardedBy->first_name." ".$r->forwardedBy->last_name}}</td>
-                    <td class="subject">
+            @if ($forward->isEmpty() && $uploaded->isEmpty())
+                <p class="no-notifications">You have no Archive Notifications at this time.</p>
+            @else
+                <table class="email-list">
+                    <!-- Forwarded Notifications -->
+                    @if (!$forward->isEmpty())
+                        @foreach ($forward as $r)
+                            <tr class="email-item">
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">{{ $r->forwardedBy->first_name . ' ' . $r->forwardedBy->last_name }}</td>
+                                <td class="document-type">Forwarded Document</td>
+                                <td class="subject">
+                                    <span class="snippet">{{ $r->documents->document_name }} - {{ $r->message }}</span>
+                                </td>
+                                <td class="date">{{ \Carbon\Carbon::parse($r->documents->upload_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id='{{ $r->forwarded_document_id }}' status='viewed' class="notifForward"
+                                       style="text-decoration: none; color:black;">
+                                        <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
 
-                        <span class="snippet"> {{$r->documents->category_name}} - {{$r->message}}</span>
-                    </td>
-                    <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
-                    <td class="email-actions">
-
-                        <a notif-id={{ $r->forwarded_document_id }} status= 'viewed'
-                            class = "notifForward" style="text-decoration: none; color:black;"><i
-                                class="bi bi-arrow-counterclockwise" title="Restore"></i></a>
-
-                    </td>
-                </tr>
-                   @endforeach
-                @endif
-            </table>
+                   <!-- Uploaded Declined Documents -->
+                   @if (!$uploaded->isEmpty())
+                        @foreach ($uploaded as $u)
+                            <tr class="email-item">
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">{{ $u->declined_by }}</td> 
+                                <td class="document-type">Declined Document</td>
+                                <td class="subject">
+                                    <span class="snippet">{{ $u->document_name }} - {{ $u->remark }}</span>
+                                </td>
+                                <td class="date">{{ \Carbon\Carbon::parse($u->upload_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id="{{ $u->document_id }}" status="viewed" class="notifDeclined" 
+                                    style="text-decoration: none; color:black;">
+                                        <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </table>
+            @endif
         </div>
     </div>
 @endsection
-
 
 @section('custom-js')
     <script src="js/archived.js"></script>

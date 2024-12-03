@@ -814,6 +814,39 @@ th {
 
 
 
+@media (max-width: 576px) {
+    .search-container {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) { 
+    .search-container {
+        display: none;
+    }
+    
+ }
+
+@media (max-width: 992px) { 
+    .search-container {
+        /* Adjust width as needed */
+        display: flex;
+        position: relative;
+        margin-right: 30px; 
+    }    
+ }
+
+@media (max-width: 1200px) { 
+    .search-container {
+        /* Adjust width as needed */
+        display: flex;
+        position: relative;
+        margin-right: 30px; 
+    }      
+ }
+
+@media (max-width: 1400px) { }
+
 
 
 
