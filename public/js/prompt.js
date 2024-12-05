@@ -96,7 +96,7 @@ sentnotifButtons.forEach(btn => {
         Swal.fire({
             title: 'Are you sure?',
             text: `Do you want to ${status === "deleted" ? "delete" : (status === "viewed" ? "restore" : status)} this item?`,            
-            icon: status=="archive"||status=="viewed"?'warning':'error',
+            icon: status=="Archive"||status=="viewed"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -211,7 +211,7 @@ deletesentButtons.forEach(btn => {
         
         Swal.fire({
             title: 'Are you sure?',
-            text:  `Do you want to ${status=="delivered"?"restored":status} this item?`,
+            text:  `Do you want to ${status=="viewed"?"Restored":status} this item?`,
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -222,6 +222,44 @@ deletesentButtons.forEach(btn => {
             if (result.isConfirmed) {
                    
                fetch(`/trash/sent/${id}`)
+               .then(res=>res.json())
+               .then(data=>{
+                if(data.success){
+                    Swal.fire(`Deleted`, data.message, 'success').then(() => {
+                        // Optionally refresh or redirect
+                        window.location.reload(); // Refresh the page
+                    });
+                }else{
+                    Swal.fire('Error!', data.message, 'error');
+                }
+               })
+                // Additional logic for archiving can be added here
+            }
+        });
+    });
+});
+
+const deletedeclinedButtons = document.querySelectorAll('.deletedeclined');
+
+deletedeclinedButtons.forEach(btn => {
+    btn.style.cursor = "pointer";
+    btn.addEventListener('click', function () {
+        const id = btn.getAttribute('delete-id');
+        const status = btn.getAttribute('status');
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text:  `Do you want to ${status=="viewed"?"Restored":status} this item?`,
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                   
+               fetch(`/trash/declined/${id}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){

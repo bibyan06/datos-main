@@ -41,7 +41,7 @@
                                 <a notif-id={{ $r->forwarded_document_id }} status= 'viewed' class = "notifForward"
                                     style="text-decoration: none; color:black;"><i class="bi bi-arrow-counterclockwise"
                                         title="Restore"></i></a>
-                                <a delete-id={{ $r->forwarded_document_id }} class = "deleteForward"
+                                <a delete-id={{ $r->forwarded_document_id }} class = "deleteForward" status= 'delete'
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill"
                                         title="Delete Forever"></i></a>
                                 </a>
@@ -65,7 +65,7 @@
                                 <a notif-id={{ $s->send_id }} status= 'viewed'
                                     class = "notifSent" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $s->send_id }}  class = "deletesent"
+                                <a delete-id={{ $s->send_id }}  class = "deletesent" status= 'delete'
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>
                             </td>
@@ -86,10 +86,10 @@
                             </td>
                             <td class="email-actions">
                                 <a notif-id={{ $u->document_id }} status= 'viewed'
-                                    class = "notifSent" style="text-decoration: none; color:black;"><i
+                                        class = "notifDeclined" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $u->document_id }}  class = "deletesent"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                <a delete-id={{ $u->document_id }}  class = "deletedeclined" status= 'delete'
+                                        style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>
                             </td>
                         </tr>

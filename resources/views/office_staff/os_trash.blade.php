@@ -62,9 +62,9 @@
                             </td>
                             <td class="email-actions">
                                 <a notif-id={{ $u->document_id }} status= 'viewed'
-                                    class = "notifSent" style="text-decoration: none; color:black;"><i
+                                    class = "notifDeclined" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $u->document_id }}  class = "deletesent"
+                                <a delete-id={{ $u->document_id }}  class = "deletedeclined" status= 'delete'
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>
                             </td>

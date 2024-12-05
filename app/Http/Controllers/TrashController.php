@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
+use App\Models\Document;
 use Illuminate\Http\Request;
 
 class TrashController extends Controller
@@ -25,5 +26,13 @@ class TrashController extends Controller
         ]);
     }
 
+    public function deleteNotifForeverdeclined($currentUser){
+        $data = Document::where('document_id', $currentUser)->first();
+        $data->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Document deleted successfully.',
+        ]);
+    }
 
 }
