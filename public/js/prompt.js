@@ -147,7 +147,45 @@ declinednotifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                        // Optionally refresh or redirect
+                        window.location.reload(); // Refresh the page
+                    });
+                }else{
+                    Swal.fire('Error!', data.message, 'error');
+                    }
+                })
+                // Additional logic for archiving can be added here
+            }
+        });
+    });
+});
+
+const reqdeclinednotifButtons = document.querySelectorAll('.notifDeclined');
+
+reqdeclinednotifButtons.forEach(btn => {
+    btn.style.cursor = "pointer";
+    btn.addEventListener('click', function () {
+        const id = btn.getAttribute('notif-id');
+        const status = btn.getAttribute('status');
+            
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to ${status === "deleted" ? "delete" : (status === "viewed" ? "restore" : status)} this item?`,            
+            icon: status=="Archive"||status=="delivered"?'warning':'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                   
+               fetch(`/deleteNotifReqdeclined/${id}/${status}`)
+               .then(res=>res.json())
+               .then(data=>{
+                if(data.success){
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -277,6 +315,43 @@ deletedeclinedButtons.forEach(btn => {
     });
 });
 
+const deleterequestedButtons = document.querySelectorAll('.deletedeclined');
+
+deleterequestedButtons.forEach(btn => {
+    btn.style.cursor = "pointer";
+    btn.addEventListener('click', function () {
+        const id = btn.getAttribute('delete-id');
+        const status = btn.getAttribute('status');
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text:  `Do you want to ${status=="viewed"?"Restored":status} this item?`,
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                   
+               fetch(`/trash/requested/${id}`)
+               .then(res=>res.json())
+               .then(data=>{
+                if(data.success){
+                    Swal.fire(`Deleted`, data.message, 'success').then(() => {
+                        // Optionally refresh or redirect
+                        window.location.reload(); // Refresh the page
+                    });
+                }else{
+                    Swal.fire('Error!', data.message, 'error');
+                }
+               })
+                // Additional logic for archiving can be added here
+            }
+        });
+    });
+});
 
 const restoredocs = document.querySelectorAll('.restore');
 

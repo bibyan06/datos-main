@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RequestDocument;
 use Illuminate\Http\Request;
 use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
@@ -38,15 +39,18 @@ class NotificationController extends Controller
     
             // Fetch declined documents uploaded by the current user
             $declinedDocuments = Document::where('uploaded_by', $uploadedBy)
-            ->where('document_status', 'Declined')
-            ->whereIn('status',['viewed', 'delivered'])
-            ->get();
+                ->where('document_status', 'Declined')
+                ->whereIn('status',['viewed', 'delivered'])
+                ->get();
+            
+            $declinedReqDocuments = RequestDocument::with(['requestedBy', 'document'])
+                ->where('requested_by', $employee->id)
+                ->whereIn('approval_status', ['Declined'])
+                ->whereIn('status', ['viewed', 'delivered'])
+                ->get();
 
-            \Log::info('Uploaded by: ' . $uploadedBy);
-            \Log::info('Declined documents query result: ', $declinedDocuments->toArray());
-    
             // Return the appropriate view with the documents
-            return view($viewName, compact('forwardedDocuments', 'sentDocuments', 'declinedDocuments'));
+            return view($viewName, compact('forwardedDocuments', 'sentDocuments', 'declinedDocuments', 'declinedReqDocuments'));
         } else {
             \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
             return view($viewName)->withErrors(['Employee record not found.']);
@@ -78,7 +82,7 @@ class NotificationController extends Controller
                 ->where('issued_to', $employee->id)
                 ->count();
             
-                $declinedCount = DB::table('documents')
+            $declinedCount = DB::table('documents')
                 ->where('status', 'delivered')
                 ->where('uploaded_by', $fullName) 
                 ->count();
@@ -122,10 +126,24 @@ class NotificationController extends Controller
     public function destroydeclined($id, $status)
     {
 
-        $forwardedDocuments = Document::where('document_id', $id)->first();
-        if ($forwardedDocuments) {
-            $forwardedDocuments->status = $status;
-            $forwardedDocuments->update();
+        $uploadedDocuments = Document::where('document_id', $id)->first();
+        if ($uploadedDocuments) {
+            $uploadedDocuments->status = $status;
+            $uploadedDocuments->update();
+            return response()->json([
+                'success' => true,
+                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
+            ]);
+        }
+    }
+
+    public function destroyreqdeclined($id, $status)
+    {
+
+        $requestedDocuments = RequestDocument::where('request_id', $id)->first();
+        if ($requestedDocuments) {
+            $requestedDocuments->status = $status;
+            $requestedDocuments->update();
             return response()->json([
                 'success' => true,
                 'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',

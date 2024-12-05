@@ -60,10 +60,10 @@
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-fill" id="pendings"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-symlink-fill" id="pendings"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-symlink-fill" id=""></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-fill" id=""></i></div>
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">

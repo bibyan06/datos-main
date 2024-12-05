@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-ocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener('click', function (e) {
         if (e.target.closest('.declined-docs')) {
             const item = e.target.closest('.declined-docs');
@@ -148,7 +148,12 @@ ocument.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <div>
                                 <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
-                                <p style="margin: 0; font-size: 20px; color: #555;">${dataStatus}</p>
+                               <p style="margin: 0; font-size: 20px; color: ${
+                                    dataStatus === 'Pending' ? '#F47122' :
+                                    dataStatus === 'Declined' ? '#e74c3c' :
+                                    dataStatus === 'Approved' ? '#87ab69' :
+                                    '#555'
+                                };">${dataStatus}</p>
                             </div>
                         </div>
                     </div>

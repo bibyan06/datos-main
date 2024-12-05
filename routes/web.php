@@ -230,7 +230,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
     Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
     Route::patch('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
-
+    Route::patch('/requested-declined-documents/{requestId}/update-status', [DocumentController::class, 'updateStatusRequested'])->name('declinedDocuments.updateStatusRequested');
     Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
     Route::post('/dean_request', [RequestController::class, 'index'])->name('dean.request');
     Route::get('/verification', function (Request $req) {
@@ -239,14 +239,16 @@ Route::middleware(['auth'])->group(function () {
         $user->sendEmailVerificationNotification();
         return response()->json(['success' => true, 'id' => $userID]);
     })->name('verification.notices');
-    Route::post('/sent/upload', [SentDocumentController::class, 'sentUpload'])->name('admin.admin_send_document');
+    Route::post('/sent/upload', [SentDocumentController::class, 'sentRequested'])->name('admin.admin_send_document');
     Route::get('/deleteNotif/{id}/{status}', [NotificationController::class, 'destroy'])->name('deleteNotif');
     Route::get('/deleteNotifsent/{id}/{status}', [NotificationController::class, 'destroysent'])->name('deleteNotifsent');
     Route::get('/deleteNotifdeclined/{id}/{status}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
+    Route::get('/deleteNotifReqdeclined/{id}/{status}', [NotificationController::class, 'destroyreqdeclined'])->name('deleteNotifReqdeclined');
 
     Route::get('/trash/{id}', [TrashController::class, 'deleteNotifForever'])->name('deleteNotifForever');
     Route::get('/trash/sent/{id}', [TrashController::class, 'deleteNotifForeversent'])->name('deleteNotifForeversent');
     Route::get('/trash/declined/{id}', [TrashController::class, 'deleteNotifForeverdeclined'])->name('deleteNotifForeverdeclined');
+    Route::get('/trash/requested/{id}', [TrashController::class, 'deleteNotifForeverrequested'])->name('deleteNotifForeverrequested');
 
     Route::get('/restore/{id}', [AdminController::class, 'restoreDocs'])->name('restoreDocs');
     Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);

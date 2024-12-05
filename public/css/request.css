@@ -80,21 +80,15 @@ main {
     margin: 0;
 }
 
-.approved {
-    color: green;
+.Approved {
+    color: green ;
 }
-.pending {
-    color: orange;
-}
-.declined {
-    color: red;
-}
-.decline{
-    color:red;
+.Pending {
+    color: #F47122;
 }
 
-.approve{
-    color:green;
+.Declined{
+    color:#e74c3c;
 }
 
 .swal-decline-btn {

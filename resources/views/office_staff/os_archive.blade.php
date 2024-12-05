@@ -42,6 +42,9 @@
                                        style="text-decoration: none; color:black;">
                                         <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                     </a>
+                                    <a notif-id={{ $r->forwarded_document_id }} status= 'deleted'
+                                        class = "notifForward" style="text-decoration: none; color:black;"><i class="bi bi-trash" title ="Delete"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -60,8 +63,12 @@
                                 <td class="date">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
                                 <td class="email-actions">
                                     <a notif-id="{{ $u->document_id }}" status="viewed" class="notifDeclined" 
-                                    style="text-decoration: none; color:black;">
+                                        style="text-decoration: none; color:black;">
                                         <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                    </a>
+                                    <a notif-id={{ $u->document_id }} status= 'deleted'
+                                        class="notifDeclined" style="text-decoration: none; color: black;">
+                                        <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>

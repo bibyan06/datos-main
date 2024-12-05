@@ -114,7 +114,7 @@
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
                             
-                        <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Decline Documents</td>
+                        <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
 
                         <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>

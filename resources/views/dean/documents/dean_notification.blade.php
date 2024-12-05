@@ -30,7 +30,7 @@
 
 <div id="dashboard-section">
     <div class="dashboard-container">
-        @if ($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
+        @if ($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty() && $declinedReqDocuments->isEmpty())
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
             <table class="email-list">
@@ -97,34 +97,34 @@
                     </tr>
                 @endforeach
 
-                @foreach ($declinedDocuments as $declined)
-                        <tr class="declined-docs {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}"
-                            data-id="{{ $declined->document_id }}"
+                @foreach ($declinedReqDocuments as $declined)
+                        <tr class="requested-declined-docs {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}"
+                            data-id="{{ $declined->request_id }}"
                             data-type="declined"
                             data-sender="{{ $declined->declined_by ?? 'Admin' }}"
-                            data-document="{{ $declined->document_name ?? 'No Title' }}"
+                            data-document="{{ $declined->document_subject ?? 'No Title' }}"
                             data-snippet="Your document was declined. Please review and try again."
-                            data-remark="{{ $declined->remark ?? 'Your document was declined. Please review and re-upload.' }}"
-                            data-status ="{{$declined->document_status}}"
+                            data-remark="{{ $declined->remarks ?? 'Your document was declined. Please review and re-upload.' }}"
+                            data-status ="{{$declined->approval_status}}"
                             data-file-url="{{ asset('storage/' . $declined->file_path) }}">
 
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
                             
-                            <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Document</td>
+                            <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Requested Document</td>
 
                             <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                                <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>
-                                <span class="remark "> - {{ $declined->remark ?? 'No remark' }}</span>  
+                                <span class="subject-text">{{ $declined->document_subject ?? 'No Title' }}</span>
+                                <span class="remark "> - {{ $declined->remarks ?? 'No remark' }}</span>  
                             </td>
 
                             <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->upload_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id={{ $declined->document_id }} status='archive'
+                                <a notif-id={{ $declined->request_id }} status='archive'
                                     class="notifDeclined" style="text-decoration: none; color: black;">
                                     <i class="bi bi-archive"></i>
                                 </a>
-                                <a notif-id={{ $declined->document_id }} status= 'deleted'
+                                <a notif-id={{ $declined->request_id }} status= 'deleted'
                                     class="notifDeclined" style="text-decoration: none; color: black;">
                                     <i class="bi bi-trash"></i>
                                 </a>

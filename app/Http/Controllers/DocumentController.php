@@ -326,8 +326,6 @@ class DocumentController extends Controller
 
     public function updateStatusSent(Request $request, $forwardedDocumentId)
     {
-        Log::info("Attempting to update status for document ID: " . $forwardedDocumentId);
-
         // Find the forwarded document by 'forwarded_document_id'
         $forwardedDocument = SendDocument::where('send_id', $forwardedDocumentId)->first();
 
@@ -349,6 +347,23 @@ class DocumentController extends Controller
     {
         try {
             $document = Document::findOrFail($documentId);
+            $document->status = 'viewed'; 
+            $document->save();
+
+            return response()->json(['success' => true, 'message' => 'Document status updated successfully.']);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Handle the case when the document is not found
+            return response()->json(['success' => false, 'message' => 'Document not found.']);
+        } catch (\Exception $e) {
+            // Handle any other errors
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function updateStatusRequested($requestId)
+    {
+        try {
+            $document = RequestDocument::findOrFail($requestId);
             $document->status = 'viewed'; 
             $document->save();
 

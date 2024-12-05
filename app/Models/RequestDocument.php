@@ -13,6 +13,12 @@ class RequestDocument extends Model
 
     public function requestedBy()
     {
-        return $this->belongsTo(Employee::class, 'requested_by');
+        return $this->belongsTo(Employee::class, 'requested_by', 'id');
     }
+
+    public function document()
+    {
+        return $this->belongsTo(Document::class, 'document_id', 'document_id');
+    }
+
 }

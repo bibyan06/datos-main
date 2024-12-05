@@ -61,7 +61,7 @@ class DeanController extends Controller
             // Fetch forwarded documents where the current user is the one who forwarded the document
             $requestedDocuments = RequestDocument::with(['requestedBy'])
                 ->where('requested_by', $employeeId) // Correct filter for employee id
-                ->whereIn('approval_status', ['pending', 'approved'])
+                ->whereIn('approval_status', ['Pending', 'Approved'])
                 ->get();
     
             // Log the results to verify data
@@ -262,10 +262,23 @@ class DeanController extends Controller
     }
     public function archiveDocs(){
         $id = Employee::where('employee_id', auth()->user()->employee_id)->first()->id;
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])->where('forwarded_to', $id)->where('status', 'archived')->get();
-        $sent = SendDocument::with(['recipient', 'document', 'sender'])->where('issued_to', $id)->where('status', 'archived')->get();
 
-        return view('dean.dean_archive', compact('forward','sent'));
+        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to', $id)
+            ->where('status', 'archived')
+            ->get();
+
+        $sent = SendDocument::with(['recipient', 'document', 'sender'])
+            ->where('issued_to', $id)
+            ->where('status', 'archived')
+            ->get();
+
+        $request = RequestDocument::where('approval_status', 'Declined')
+            ->where('status', 'archive')
+            ->where('requested_by', $id)
+            ->get();
+
+        return view('dean.dean_archive', compact('forward','sent', 'request'));
     }
     public function trash()
     {
@@ -282,12 +295,12 @@ class DeanController extends Controller
             ->where('status', 'deleted')
             ->get();
 
-        $uploaded = Document::where('document_status', 'Declined')
+        $request = RequestDocument::where('approval_status', 'Declined')
             ->where('status', 'deleted')
-            ->where('uploaded_by', $currentUser)
+            ->where('requested_by', $id)
             ->get();
             
-        return view('dean.dean_trash', compact('forward', 'sent'));
+        return view('dean.dean_trash', compact('forward', 'sent', 'request'));
     }
     public function restoreDocs($id)
     {

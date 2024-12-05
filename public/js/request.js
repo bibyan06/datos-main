@@ -94,7 +94,7 @@ function declineDocument(requestId) {
                 },
                 body: JSON.stringify({
                     request_id: requestId,
-                    approval_status: 'declined',
+                    approval_status: 'Declined',
                     remarks: remarks
                 })
             })

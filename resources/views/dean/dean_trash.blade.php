@@ -21,7 +21,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($sent->isEmpty() && $forward->isEmpty() && $uploaded->isEmpty())
+            @if ($sent->isEmpty() && $forward->isEmpty() && $request->isEmpty())
                 <p class="no-notifications">You have no Trash at this time.</p>
             @endif
             <table class="email-list">
@@ -73,22 +73,22 @@
                     @endforeach
                 @endif
 
-                @if ($uploaded)
-                    @foreach ($uploaded as $u)
+                @if ($request)
+                    @foreach ($request as $r)
                         <tr class="email-item">
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">{{ $u->declined_by ?? 'Admin'}}</td>
+                            <td class="sender">{{ $r->declined_by ?? 'Admin'}}</td>
                             <td class="document-type">Declined Document</td>
                             <td class="subject">
-                                <span class="snippet">{{ $u->document_name }} - {{ $u->remark }} </span>
+                                <span class="snippet">{{ $r->document_subject }} - {{ $r->remarks }} </span>
                             </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}
+                            <td class="date">{{ \Carbon\Carbon::parse($r->declined_date)->format('M d H:i') }}
                             </td>
                             <td class="email-actions">
-                                <a notif-id={{ $u->document_id }} status= 'viewed'
+                                <a notif-id={{ $r->request_id }} status= 'viewed'
                                     class = "notifDeclined" style="text-decoration: none; color:black;"><i
                                         class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $u->document_id }}  class = "deletedeclined" status = 'delete'
+                                <a delete-id={{ $r->request_id }}  class = "deletedeclined" status = 'delete'
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
                                 </a>
                             </td>

@@ -49,7 +49,7 @@ class SentDocumentController extends Controller
         return view($viewName, ['forwardedDocuments' => $forwardedDocuments,'sentDocuments' => $sentDocuments,]);
     }
 
-    public function sentUpload(Request $request){
+    public function sentRequested(Request $request){
         try {
             $validatedData = $request->validate([
                 'docu-id'=>'required',
@@ -72,7 +72,7 @@ class SentDocumentController extends Controller
                     'file_path' => $path
                 ]);
                 $req = RequestDocument::where('request_id', $validatedData['docu-id'])->first();
-                $req->approval_status = 'approved';
+                $req->approval_status = 'Approved';
                 $req->save();
     
                 return response()->json(['msg' => 'Successful']);

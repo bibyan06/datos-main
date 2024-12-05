@@ -21,7 +21,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($forward->isEmpty() && $sent->isEmpty())
+            @if ($forward->isEmpty() && $sent->isEmpty() && $request->isEmpty())
                 <p class="no-notifications">You have no Archive Notification at this time.</p>
             @endif
             <table class="email-list">
@@ -39,6 +39,9 @@
                                 <a notif-id={{ $r->forwarded_document_id }} status= 'viewed'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
                                     class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                </a>
+                                <a notif-id={{ $r->forwarded_document_id }} status= 'deleted'
+                                    class = "notifForward" style="text-decoration: none; color:black;"><i class="bi bi-trash" title ="Delete"></i>
                                 </a>
                             </td>
                         </tr>
@@ -58,10 +61,38 @@
                                     class = "notifSent" style="text-decoration: none; color:black;">
                                     <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                 </a>
+                                <a notif-id={{ $s->document_id }} status= 'deleted'
+                                    class="notifSent" style="text-decoration: none; color: black;">
+                                    <i class="bi bi-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
                 @endif
+
+                @if (!$request->isEmpty())
+                        @foreach ($request as $r)
+                            <tr class="email-item">
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">{{ $r->declined_by }}</td>
+                                <td class="document-type">Declined Document</td>
+                                <td class="subject">
+                                    <span class="snippet">{{ $r->document_subject }} - {{ $r->remarks }}</span>
+                                </td>
+                                <td class="date">{{ \Carbon\Carbon::parse($r->declined_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id="{{ $r->request_id }}" status="viewed" class="notifDeclined" 
+                                        style="text-decoration: none; color:black;">
+                                        <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                    </a>
+                                    <a notif-id={{ $r->request_id }} status= 'deleted'
+                                        class="notifDeclined" style="text-decoration: none; color: black;">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
             </table>
         </div>
     </div>

@@ -113,8 +113,10 @@ class AdminController extends Controller
     {
         $document = RequestDocument::find($request->request_id);
         if ($document) {
-            $document->approval_status = 'declined';
+            $document->approval_status = 'Declined';
             $document->declined_date = now();
+            $document->status = 'delivered';
+            $document->declined_by = auth()->user()->first_name . ' ' . auth()->user()->last_name;
             $document->remarks= $request->remarks;
             $document->save();
     

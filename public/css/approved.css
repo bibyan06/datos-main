@@ -89,10 +89,14 @@ main {
     margin: 0;
 }
 .approved {
-    color: green;
+    color: #87ab69 ;
 }
 .pending {
-    color: red;
+    color: #F47122;
+}
+
+.Declined{
+    color:#e74c3c;
 }
 
 
