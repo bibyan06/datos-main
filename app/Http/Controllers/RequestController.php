@@ -19,7 +19,7 @@ class RequestController extends Controller
 
         $empID =  Employee::where('employee_id',$id)->first()->id;
 
-        $requestDocument = RequestDocument::create([
+        $requestedDocuments = RequestDocument::create([
             'requested_by'=>$empID,
             'college_id'=>$validated['colleges'],
             'document_subject'=>$validated['document-subject'],

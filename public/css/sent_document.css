@@ -23,11 +23,33 @@ main {
     font-size: 15px;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    text-align: left;
 }
+
+.email-items {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.requested-declined-docs{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
 .email-item:hover {
     background-color: #f5f5f5;
 }
+
+.email-items:hover {
+    background-color: #f5f5f5;
+}
+
 
 .receiver {
     margin-left: 0;
@@ -44,7 +66,7 @@ main {
 }
 
 .sender {
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-right: 10px;
 }
 
@@ -52,18 +74,11 @@ main {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start; 
-    text-align: left;
 }
-
-.subject-container {
-    display: flex;
-    align-items: center;
-}
-
 .subject-text {
     margin-right: 5px;
 }
+
 .document-name {
     flex-grow: 1;
     text-align: left;

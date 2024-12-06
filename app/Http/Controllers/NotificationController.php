@@ -42,15 +42,15 @@ class NotificationController extends Controller
                 ->where('document_status', 'Declined')
                 ->whereIn('status',['viewed', 'delivered'])
                 ->get();
-            
-            $declinedReqDocuments = RequestDocument::with(['requestedBy', 'document'])
+
+            $requestedDocuments = RequestDocument::with(['requestedBy', 'document'])
                 ->where('requested_by', $employee->id)
                 ->whereIn('approval_status', ['Declined'])
                 ->whereIn('status', ['viewed', 'delivered'])
                 ->get();
 
             // Return the appropriate view with the documents
-            return view($viewName, compact('forwardedDocuments', 'sentDocuments', 'declinedDocuments', 'declinedReqDocuments'));
+            return view($viewName, compact('forwardedDocuments', 'sentDocuments', 'declinedDocuments', 'requestedDocuments', ));
         } else {
             \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
             return view($viewName)->withErrors(['Employee record not found.']);

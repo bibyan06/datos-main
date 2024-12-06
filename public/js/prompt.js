@@ -186,14 +186,12 @@ reqdeclinednotifButtons.forEach(btn => {
                .then(data=>{
                 if(data.success){
                     Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
-                        // Optionally refresh or redirect
-                        window.location.reload(); // Refresh the page
+                        window.location.reload(); 
                     });
                 }else{
                     Swal.fire('Error!', data.message, 'error');
                     }
                 })
-                // Additional logic for archiving can be added here
             }
         });
     });

@@ -19,11 +19,6 @@ class SentDocumentController extends Controller
         // Fetch the corresponding employee record from the Employee table
         $employee = Employee::where('employee_id', $userEmployeeId)->first();
 
-        // Initialize variables as empty collections
-        $forwardedDocuments = collect();
-        $sentDocuments = collect();
-        $declinedDocuments = collect();
-
         // Ensure that the employee record exists before querying documents
         if ($employee) {
             // Use the employee's id for filtering the forwarded and sent documents
