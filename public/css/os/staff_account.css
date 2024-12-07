@@ -331,7 +331,7 @@ main {
 }
 
 #closeModalBtn:hover{
-  background-color:#cc0000 ;
+  background-color:#8888 ;
 }
 
 input:invalid::before {

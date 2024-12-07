@@ -133,8 +133,8 @@
                     </div>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" id="closeModalBtn">Cancel</button>
                     <button type="button" id="saveChangesBtn">Save Changes</button>
+                    <button type="button" id="closeModalBtn">Cancel</button>                   
                 </div>
             </form>
         </div>
