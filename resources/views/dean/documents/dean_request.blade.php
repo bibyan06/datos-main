@@ -23,7 +23,7 @@
         <div class="dashboard-container d-flex">
             
             <div class="left-container">
-                <img src="{{ asset('images/sidebar-logo.png') }}" alt="DATOS" class="img-fluid">
+                <img src="{{ asset('images/right-image.png') }}" alt="DATOS" class="img-fluid">
             </div>
 
             <div class="right-container">

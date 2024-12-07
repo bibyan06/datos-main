@@ -83,6 +83,7 @@ main {
 .Approved {
     color: green ;
 }
+
 .Pending {
     color: #F47122;
 }
@@ -90,6 +91,7 @@ main {
 .Declined{
     color:#e74c3c;
 }
+
 
 .swal-decline-btn {
     background-color: #f94449 !important;
@@ -201,13 +203,18 @@ main {
 }
 
 .popup-form .form-buttons button#cancel-btn {
-    background: #f44336;
+    background: #888;
     color: white;
     font-family: 'Poppins';
 }
 
 .popup-form .form-buttons button#send-document-btn {
-    background: #F47122;
+    background: #007bff;
     color: white;
     font-family: 'Poppins';
+}
+
+
+.popup-form .form-buttons button#send-document-btn:hover {
+    background-color: #009FEA;
 }

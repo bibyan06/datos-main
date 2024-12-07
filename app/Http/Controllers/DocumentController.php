@@ -101,7 +101,7 @@ class DocumentController extends Controller
                 Log::info('Document saved successfully with ID: ' . $document->id);
 
                 return response()->json([
-                    'message' => 'Document uploaded and pending review.'
+                    'message' => 'Document is uploaded and pending for review.'
                 ], 200);
             } else {
                 Log::warning('No file was uploaded with the request.');

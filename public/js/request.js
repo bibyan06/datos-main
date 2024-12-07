@@ -65,9 +65,12 @@ function sendDocument() {
 function declineDocument(requestId) {
     Swal.fire({
         title: 'Decline Document',
-        input: 'text',
+        input: 'textarea',
         // inputLabel: 'Reason for Decline',
         inputPlaceholder: 'Enter your remark here...',
+        inputAttributes: {
+            'aria-label': 'Enter your remark here'
+        },
         showCancelButton: true,
         confirmButtonText: 'Decline',
         cancelButtonText: 'Cancel',
