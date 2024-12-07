@@ -3,7 +3,7 @@
 @section('title', 'Sent and Forwarded Documents')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/sent_document.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -32,10 +32,8 @@
                             data-status="{{ $forwarded->status }}">
                             
                             <td class="checkbox"><input type="checkbox"></td>
-                            <!-- <td class="star">★</td> -->
-                            <!-- <td class="sender">DATOS</td> -->
-                            <td class="subject">
-                                <span class="subject-text">Forwarded Document to:</span>
+                            <td class="sender">Forwarded Document to:</td>
+                            <td class="document-type">
                                 <span class="receiver">
                                     {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
                                     {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}

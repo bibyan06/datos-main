@@ -81,6 +81,11 @@ main {
 .sender {
     margin-right: 70px;
 }
+
+.receiver {
+    margin-right: 70px;
+}
+
 .subject {
     flex-grow: 1;
     display: flex;
@@ -88,6 +93,12 @@ main {
 }
 .subject-text {
     margin-right: 5px;
+}
+
+.document-name {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 .bold-row {

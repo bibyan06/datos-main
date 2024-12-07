@@ -3,7 +3,7 @@
 @section('title', 'Sent and Forwarded Documents')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/sent_document.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -32,9 +32,8 @@
                             data-status="{{ $forwarded->status }}">
                             
                             <td class="checkbox"><input type="checkbox"></td>
-                            <!-- <td class="star">★</td> -->
-                            <td class="subject">
-                                <span class="subject-text">Forwarded Document to:</span>
+                            <td class="sender">Forwarded Document to:</td>
+                            <td class="document-type">
                                 <span class="receiver">
                                     {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
                                     {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
@@ -43,10 +42,10 @@
                             <td class="document-name">{{ $forwarded->document->document_name ?? 'Unknown Document' }}</td>
                             <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a href="{{ route('deleteNotif', ['id' => $forwarded->forwarded_document_id, 'status' => 'archive']) }}"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
-                                <a href="{{ route('deleteNotif', ['id' => $forwarded->forwarded_document_id, 'status' => 'deleted']) }}"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
+                                <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
+                                    class = "notifForward" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-trash"></i></a>
+
                             </td>
                         </tr>
                     @endforeach
