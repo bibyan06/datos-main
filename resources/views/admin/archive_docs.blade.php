@@ -42,7 +42,6 @@
                                     <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
                                     <div class="dropdown-more">
                                         <a data-id={{$r->document_id}} class="view-btn restore">Restore</a>
-                                    
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +57,7 @@
             </div>
         @endsection
 
-
-        @section('custom-js')
-            <script src="js/archived.js"></script>
-        @endsection
+ @section('custom-js')
+    <script src="js/archived.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ @endsection

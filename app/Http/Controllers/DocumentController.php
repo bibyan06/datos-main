@@ -126,6 +126,7 @@ class DocumentController extends Controller
         if ($document && $document->document_status == 'Pending') {
             // Update the document status to 'approved'
             $document->document_status = 'Approved';
+            $document->status = 'active';
             $document->save();
 
             // Flash a success message to the session

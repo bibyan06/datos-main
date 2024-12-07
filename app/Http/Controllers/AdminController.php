@@ -506,13 +506,19 @@ class AdminController extends Controller
     {
         $docs = Document::where('document_id', $id)->first();
         if ($docs) {
-            $docs->status = NULL;
+            $docs->status = 'active';
             $docs->updated_at = now();
-            $docs->update();
+            $docs->save(); // Use save() instead of update() for better clarity
+    
             return response()->json([
                 'success' => true,
                 'message' => 'Document restored successfully.',
             ]);
         }
+    
+        return response()->json([
+            'success' => false,
+            'message' => 'Document not found.',
+        ]);
     }
 }

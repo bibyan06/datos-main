@@ -250,7 +250,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/trash/declined/{id}', [TrashController::class, 'deleteNotifForeverdeclined'])->name('deleteNotifForeverdeclined');
     Route::get('/trash/requested/{id}', [TrashController::class, 'deleteNotifForeverrequested'])->name('deleteNotifForeverrequested');
 
-    Route::get('/restore/{id}', [AdminController::class, 'restoreDocs'])->name('restoreDocs');
+    Route::post('/restore/{id}', [AdminController::class, 'restoreDocs'])->name('restoreDocs');
     Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);
     Route::get('/employees/exclude-current', [OfficeStaffController::class, 'getEmployee']);
 

@@ -357,7 +357,7 @@ restoredocs.forEach(btn => {
     btn.style.cursor = "pointer";
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('data-id');
-        const originalStatus = btn.getAttribute('data-status'); // Get the original status, like "delivered"
+        const originalStatus = btn.getAttribute('data-status'); 
         
         Swal.fire({
             title: 'Are you sure?',
@@ -373,22 +373,26 @@ restoredocs.forEach(btn => {
                 fetch(`/restore/${id}`, {
                     method: 'POST',
                     body: JSON.stringify({
-                        status: originalStatus, // Send the original status back
+                        status: originalStatus,
                     }),
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     },
                 })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         Swal.fire('Restored', data.message, 'success').then(() => {
-                            // Optionally refresh or redirect
                             window.location.reload(); // Refresh the page
                         });
                     } else {
                         Swal.fire('Error!', data.message, 'error');
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error!', 'An unexpected error occurred.', 'error');
                 });
             }
         });
