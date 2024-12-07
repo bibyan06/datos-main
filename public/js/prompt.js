@@ -109,7 +109,7 @@ sentnotifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -161,7 +161,7 @@ declinednotifButtons.forEach(btn => {
     });
 });
 
-const reqdeclinednotifButtons = document.querySelectorAll('.notifDeclined');
+const reqdeclinednotifButtons = document.querySelectorAll('.notifReqDeclined');
 
 reqdeclinednotifButtons.forEach(btn => {
     btn.style.cursor = "pointer";

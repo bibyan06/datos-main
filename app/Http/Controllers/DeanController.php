@@ -251,12 +251,12 @@ class DeanController extends Controller
 
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
             ->where('forwarded_to', $id)
-            ->where('status', 'archived')
+            ->where('status', 'archive')
             ->get();
 
         $sent = SendDocument::with(['recipient', 'document', 'sender'])
             ->where('issued_to', $id)
-            ->where('status', 'archived')
+            ->where('status', 'archive')
             ->get();
 
         $request = RequestDocument::where('approval_status', 'Declined')
@@ -277,7 +277,7 @@ class DeanController extends Controller
             ->get();
 
         $sent = SendDocument::with(['recipient', 'document', 'sender'])
-            ->where('issued_by', $id)
+            ->where('issued_to', $id)
             ->where('status', 'deleted')
             ->get();
 

@@ -30,7 +30,7 @@
 
 <div id="dashboard-section">
     <div class="dashboard-container">
-        @if ($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty() && $declinedReqDocuments->isEmpty())
+        @if ($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
             <table class="email-list">
@@ -76,13 +76,13 @@
                         data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" 
                         data-type="request"
                         data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
+                       
                         <td class="checkbox"><input type="checkbox"></td>
-                        <td class="star">★</td>
                         <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             {{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                             {{ $sentDocument->sender->last_name ?? '' }}
                         </td>
-                        <td>Sent a Document</td>
+                        <td>Sent Document</td>
                         <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
                         </td>

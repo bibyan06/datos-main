@@ -116,8 +116,8 @@
 
                             <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->declined_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id={{ $declined->document_id }} status='archive'
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                <a notif-id={{ $declined->document_id }} status= 'archive'
+                                    class = "notifDeclined" style="text-decoration: none; color:black;">
                                     <i class="bi bi-archive"></i>
                                 </a>
                                 <a notif-id={{ $declined->document_id }} status= 'deleted'

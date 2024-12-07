@@ -31,7 +31,7 @@
 
 <div id="dashboard-section">
     <div class="dashboard-container">
-        @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
+        @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty() && $declinedDocuments->isEmpty())
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
         <table class="email-list">
@@ -101,33 +101,33 @@
             @endforeach
 
             {{-- Display Declined Documents --}}
-            @foreach ($declinedDocuments as $declined)
-                    <tr class="declined-docs {{ $declined->status === 'viewed' ? 'delivered' : '' }}"
-                        data-id="{{ $declined->document_id }}"
+            @foreach ($declinedDocuments as $d)
+                    <tr class="declined-docs {{ $d->status === 'viewed' ? 'delivered' : '' }}"
+                        data-id="{{ $d->document_id }}"
                         data-type="declined"
-                        data-sender="{{ $declined->declined_by ?? 'Admin' }}"
-                        data-document="{{ $declined->document_name ?? 'No Title' }}"
+                        data-sender="{{ $d->declined_by ?? 'Admin' }}"
+                        data-document="{{ $d->document_name ?? 'No Title' }}"
                         data-snippet="Your document was declined. Please review and try again."
-                        data-remark="{{ $declined->remark ?? 'Your document was declined. Please review and re-upload.' }}"
-                        data-status ="{{$declined->document_status}}"
-                        data-file-url="{{ asset('storage/' . $declined->file_path) }}">
+                        data-remark="{{ $d->remark ?? 'Your document was declined. Please review and re-upload.' }}"
+                        data-status ="{{$d->document_status}}"
+                        data-file-url="{{ asset('storage/' . $d->file_path) }}">
                         <td class="checkbox"><input type="checkbox"></td>
-                        <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
+                        <td class="sender {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $d->declined_by ?? 'Admin' }}</td>
                             
-                        <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
+                        <td class="document-type  {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
 
-                        <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                            <span class="subject-text">{{ $declined->document_name ?? 'No Title' }}</span>
-                            <span class="remark"> - {{ $declined->remark ?? 'No remark' }}</span>  
+                        <td class="subject {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                            <span class="subject-text">{{ $d->document_name ?? 'No Title' }}</span>
+                            <span class="remark"> - {{ $d->remark ?? 'No remark' }}</span>  
                         </td>
 
-                        <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->declined_date)->format('M d H:i') }}</td>
+                        <td class="date  {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($d->declined_date)->format('M d H:i') }}</td>
                         <td class="email-actions">
-                        <a notif-id="{{ $declined->document_id }}" status="archive" 
+                        <a notif-id={{ $d->document_id }} status='archive' 
                                 class="notifDeclined" style="text-decoration: none; color: black;">
                             <i class="bi bi-archive"></i>
                         </a>
-                        <a notif-id="{{ $declined->document_id }}" status="deleted" 
+                        <a notif-id={{ $d->document_id }} status='deleted'
                              class="notifDeclined" style="text-decoration: none; color: black;">
                             <i class="bi bi-trash"></i>
                         </a>

@@ -56,11 +56,11 @@
                             </td>
                             <td class="email-actions">
                                 <a notif-id={{ $r->request_id }} status='archive'
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                    class="notifReqDeclined" style="text-decoration: none; color: black;">
                                     <i class="bi bi-archive"></i>
                                 </a>
                                 <a notif-id={{ $r->request_id }} status='deleted'
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                    class="notifReqDeclined" style="text-decoration: none; color: black;">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>

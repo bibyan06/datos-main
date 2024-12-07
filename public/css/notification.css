@@ -79,7 +79,6 @@ main {
     color: #f5c518;
 }
 .sender {
-    font-weight: bold;
     margin-right: 70px;
 }
 .subject {
@@ -94,7 +93,6 @@ main {
 .bold-row {
     font-weight: bold;
 }
-
 
 .date {
     margin-left: 10px;

@@ -3,7 +3,7 @@
 @section('title', 'Deleted Documents')
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/trash.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -27,23 +27,34 @@
             <table class="email-list">
                 @if ($forward)
                     @foreach ($forward as $r)
-                        <tr class="email-item">
-                            <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">{{ $r->forwardedBy->first_name . ' ' . $r->forwardedBy->last_name }}</td>
-                            <td class="document-type">Forwarded Document</td>
-                            <td class="subject">
-                                <span class="snippet">{{ $r->documents->document_name }} - {{ $r->message }}</span>
-                            </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}
+                        <tr class="email-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
+                            data-id="{{ $r->forwarded_document_id }}"
+                            data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}"
+                            data-document="{{ $r->document->document_name ?? 'No Title' }}"
+                            data-snippet="{{ $r->message ?? 'No message' }}" 
+                            data-type="forward"
+                            data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
 
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <!-- <td class="star">★</td> -->
+                            <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                {{ $r->forwardedByEmployee->first_name ?? 'Unknown' }}
+                                {{ $r->forwardedByEmployee->last_name ?? '' }}
                             </td>
+                            <td>Forwarded Document</td>
+                            <td class="subject {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                <span class="subject-text">{{ $r->document->document_name ?? 'No Title' }}</span>
+                                <span class="snippet"> - {{ $r->message ?? 'No message' }}</span>
+                            </td>
+                            
+                            <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }} </td>
                             <td class="email-actions">
-                                <a notif-id={{ $r->forwarded_document_id }} status= 'viewed' class = "notifForward"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-arrow-counterclockwise"
-                                        title="Restore"></i></a>
-                                <a delete-id={{ $r->forwarded_document_id }} class = "deleteForward"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill"
-                                        title="Delete Forever"></i></a>
+                                <a notif-id={{ $r->forwarded_document_id }} status= 'viewed'
+                                    class = "notifForward" style="text-decoration: none; color:black;"><i
+                                    class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                </a>
+                                <a notif-id={{ $r->forwarded_document_id }} status='deleted' class="notifForward"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -51,23 +62,31 @@
                 @endif
                 @if ($sent)
                     @foreach ($sent as $s)
-                        <tr class="email-item">
+                        <tr class="email-items {{ $s->status === 'delivered' ? 'delivered' : 'viewed' }}"
+                            data-id="{{ $s->send_id }}"
+                            data-sender="{{ $s->sender->first_name ?? 'Unknown Sender' }} {{ $s->sender->last_name ?? '' }}"
+                            data-document="{{ $s->document_subject ?? 'No Title' }}" 
+                            data-type="request"
+                            data-file-url="{{ asset('storage/' . $s->file_path) }}">
+                        
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">{{ $s->sender->first_name . ' ' . $s->sender->last_name }}</td>
-                            <td class="document-type">Sent Document</td>
-                            <td class="subject">
-                                <span class="snippet">{{ $s->document_subject }}
-                                </span>
+                            <td class="sender {{ $s->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                {{ $s->sender->first_name ?? 'Unknown Sender' }}
+                                {{ $s->sender->last_name ?? '' }}
                             </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($s->issued_date)->format('M d H:i') }}
+                            <td>Sent Document</td>
+                            <td class="subject {{ $s->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                <span class="subject-text">{{ $s->document_subject ?? 'No Title' }}</span>
                             </td>
+                        
+                            <td class="date">{{ \Carbon\Carbon::parse($s->issued_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <a notif-id={{ $s->send_id }} status= 'viewed'
-                                    class = "notifSent" style="text-decoration: none; color:black;"><i
-                                        class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $s->send_id }}  class = "deletesent"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                    class = "notifSent" style="text-decoration: none; color:black;">
+                                    <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                 </a>
+                                <a notif-id={{ $s->send_id }} status='deleted' class="notifSent"
+                                    style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -75,21 +94,46 @@
 
                 @if ($request)
                     @foreach ($request as $r)
-                        <tr class="email-item">
-                            <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">{{ $r->declined_by ?? 'Admin'}}</td>
-                            <td class="document-type">Declined Document</td>
-                            <td class="subject">
-                                <span class="snippet">{{ $r->document_subject }} - {{ $r->remarks }} </span>
+                    <tr class="requested-docs {{ $r->approval_status === 'Pending' ? 'Pending' : 'Declined' }} {{ $r->status === 'delivered' ? 'bold-row' : '' }}"
+                            data-id="{{ $r->request_id }}"
+                            data-type="{{ $r->approval_status }}"
+                            data-document="{{ $r->document_subject ?? 'No Title' }}"
+                            data-status="{{ $r->approval_status }}"
+                            data-declined-by="{{ $r->declined_by ?? 'Admin' }}"
+                            data-remarks="{{ $r->remarks ?? '' }}"
+                            data-request-purpose ="{{ $r->request_purpose ?? 'No Purpose Provided' }}">
+                            
+                            <td class="checkbox">
+                                <input type="checkbox">
                             </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($r->declined_date)->format('M d H:i') }}
+                            <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                {{ $r->declined_by ?? 'Unknown Sender' }}
+        
+                            </td>
+                            <td class="document-type {{ $r->approval_status === 'Pending' ? 'Pending' : 'Approved' }}">
+                                Declined Document
+                            </td>
+                            <td class="subject {{ $r->approval_status === 'Pending' ? 'Pending' : 'Approved' }}" style="display: flex; align-items: center;">
+                                <span class="subject-text">{{ $r->document_subject ?? 'No Title' }}</span>
+
+                                @if($r->approval_status === 'Approved')
+                                    <span class="request-purpose">
+                                       - {{ $r->request_purpose ?? 'No Purpose Provided' }}
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="date {{ $r->approval_status === 'Pending' ? 'Pending' : 'Approved' }}">
+                                {{ \Carbon\Carbon::parse($r->upload_date)->format('M d H:i') }}
                             </td>
                             <td class="email-actions">
-                                <a notif-id={{ $r->request_id }} status= 'viewed'
-                                    class = "notifDeclined" style="text-decoration: none; color:black;"><i
-                                        class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
-                                <a delete-id={{ $r->request_id }}  class = "deletedeclined" status = 'delete'
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash3-fill" title="Delete Forever"></i></a>
+                                <a notif-id="{{ $r->request_id }}" status="viewed" class="notifDeclined" 
+                                    style="text-decoration: none; color:black;">
+                                    <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                </a>
+                                <a notif-id={{ $r->request_id }} status='deleted'
+                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -102,5 +146,6 @@
 
 
 @section('custom-js')
-    <script src="js/trash.js"></script>
+    <script src="{{ asset('js/dean/notification.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
