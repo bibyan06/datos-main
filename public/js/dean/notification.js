@@ -451,50 +451,52 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.closest('.requested-docs')) {
             const item = e.target.closest('.requested-docs');
 
-            // Prevent actions when clicking on email actions or checkboxes
             if (e.target.closest('.email-actions') || e.target.type === 'checkbox') {
                 return; 
             }
-
-            // Extract relevant data from the row
+            
             const requestId = item.getAttribute('data-id');
             const documentName = item.getAttribute('data-document');
             const status = item.getAttribute('data-status');
             const declinedBy = item.getAttribute('data-declined-by');
             const remarks = item.getAttribute('data-remarks');
-            const requestPurpose = item.getAttribute('data-request-purpose'); 
+            const requestPurpose = item.getAttribute('data-request-purpose');
 
-            // Prepare the HTML content for the SweetAlert modal
             let modalContent = `
-                <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px; text-align: left;">
-                    <div style="margin-bottom: 10px;">
-                        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
-                        <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
-                        <p style="margin: 0; font-size: 20px; color: ${status === 'Pending' ? '#F47122' :
-                            status === 'Declined' ? '#e74c3c' :
-                            status === 'Approved' ? '#87ab69' :
-                            '#555'};">${status}</p>
-                    </div>
-                    ${status === 'Approved' ? `
-                        <div style="margin-bottom: 10px;">
-                            <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Request Purpose:</p>
-                            <p style="margin: 0; font-size: 20px; color: #555;">${requestPurpose}</p>
-                        </div>
-                    ` : `
-                        <div style="margin-bottom: 10px;">
-                            <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Declined by:</p>
-                            <p style="margin: 0; font-size: 20px; color: #555;">${declinedBy}</p>
-                        </div>
-                        <div style="margin-bottom: 10px;">
-                            <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Remark:</p>
-                            <p style="margin: 0; font-size: 20px; color: #555;">${remarks}</p>
-                        </div>
-                    `}
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px; text-align: left;">
+                <div style="margin-bottom: 10px;">
+                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
+                    <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
                 </div>
-            `;
+        
+                <div style="margin-bottom: 10px;">
+                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
+                    <p style="margin: 0; font-size: 20px; color: ${status === 'Pending' ? '#F47122' :
+                        status === 'Declined' ? '#e74c3c' :
+                        status === 'Approved' ? '#87ab69' :
+                        '#555'};">${status}</p>
+                </div>
+        
+                ${status === 'Pending' || status === 'Approved' ? `
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Request Purpose:</p>
+                        <p style="margin: 0; font-size: 20px; color: #555;">${requestPurpose}</p>
+                    </div>
+                ` : ''}
+        
+                ${status === 'Declined' ? `
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Declined By:</p>
+                        <p style="margin: 0; font-size: 20px; color: #555;">${declinedBy}</p>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Remarks:</p>
+                        <p style="margin: 0; font-size: 20px; color: #555;">${remarks}</p>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
 
             // Show SweetAlert with the content
             Swal.fire({
@@ -511,15 +513,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 didOpen: () => {
                     const modalContentElement = Swal.getPopup().querySelector('.swal2-html-container');
-                    modalContentElement.style.maxHeight = '900px'; // Max height for the modal content
-                    modalContentElement.style.overflowY = 'auto'; // Enable vertical scrolling
+                    modalContentElement.style.maxHeight = '900px';
+                    modalContentElement.style.overflowY = 'auto'; 
                 },
                 allowOutsideClick: false,
                 didOpen: () => {
-                    if (status === 'Approved') {
+                    if (status === 'Approved' || status == 'Pending') {
                         const confirmButton = Swal.getConfirmButton();
-                        confirmButton.setAttribute('disabled', true); // Disable the confirm button
-                        confirmButton.style.backgroundColor = '#bbb'; // Change the background color to grey
+                        confirmButton.setAttribute('disabled', true); 
+                        confirmButton.style.backgroundColor = '#bbb';
                     }
                 }
             }).then((result) => {
