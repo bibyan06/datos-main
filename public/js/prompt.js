@@ -3,7 +3,7 @@ const archiveButtons = document.querySelectorAll('.archive');
 archiveButtons.forEach(archive => {
     archive.style.cursor = "pointer";
     archive.addEventListener('click', function () {
-        const attr = archive.getAttribute('data-id');
+        const id = archive.getAttribute('data-id');
         const status = archive.getAttribute('data-status'); // Get the current status
         
         Swal.fire({
@@ -17,15 +17,16 @@ archiveButtons.forEach(archive => {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/admin/archive_document/${attr}`, {
+                fetch(`/admin/archive_document/${id}`, {
                     method: 'POST',
                     body: JSON.stringify({
                         status: status, // Send current status
                     }),
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Add CSRF token
                     },
-                })
+                })                
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {

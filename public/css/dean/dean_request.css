@@ -166,17 +166,18 @@ form {
 
 }
 .btn-primary {
-    padding: 10px 40px;
+    width: 100%; 
+    padding: 10px;
     font-family: 'Poppins';
-    background-color: #F47122;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    align-self: flex-end; /* Align the button to the left */
+    /* align-self: flex-end;  */
 }
 
 .btn-primary:hover {
-    background-color: #D35400;
+    background-color: #0056b3;
 }

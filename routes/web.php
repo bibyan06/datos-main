@@ -105,7 +105,7 @@ Route::middleware('role:1')->group(function () {
             ->middleware('auth')
             ->defaults('viewName', 'admin.admin_notification');
         Route::get('/viewRequested', [DocumentController::class, 'viewRequest'])->name('viewRequest');
-        Route::get('/archive_document/{id}', [AdminController::class, 'archiveDocument'])->name('admin.archive_docs');
+        Route::post('/archive_document/{id}', [AdminController::class, 'archiveDocument'])->name('admin.archive_docs');
         Route::get('/archive_document/{id}', [AdminController::class, 'archiveDeclinedDocument'])->name('admin.archive_notif');
         Route::get('/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
         Route::get('/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
@@ -232,6 +232,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
     Route::patch('/requested-declined-documents/{requestId}/update-status', [DocumentController::class, 'updateStatusRequested'])->name('declinedDocuments.updateStatusRequested');
     Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
+    Route::get('/declined-notification/count', [NotificationController::class, 'getDeclinedRequestedCount'])->name('declined-notification.count');
+
     Route::post('/dean_request', [RequestController::class, 'index'])->name('dean.request');
     Route::get('/verification', function (Request $req) {
         $userID = $req->query('userID');

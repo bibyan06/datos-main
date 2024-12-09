@@ -23,7 +23,8 @@ class RequestController extends Controller
             'requested_by'=>$empID,
             'college_id'=>$validated['colleges'],
             'document_subject'=>$validated['document-subject'],
-            'request_purpose'=>$validated['request-purpose']
+            'request_purpose'=>$validated['request-purpose'],
+            'approval_status'   => 'Pending',
         ]);
         return redirect()->route('dean.documents.dean_request')->with('success', 'Request Document has been submitted successfully.');
   

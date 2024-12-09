@@ -21,7 +21,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if($requestedDocuments->isEmpty())
+            @if($requestedDocuments->isEmpty() && $pendingDocuments->isEmpty())
                 <p class="no-notifications">You have no requested documents at this time.</p>
             @else
                 <table class="email-list">
@@ -66,9 +66,51 @@
                             </td>
                         </tr>
                     @endforeach
+
+                    @foreach ($pendingDocuments as $p)
+                        <tr class="requested-docs {{ $p->approval_status === 'Pending' ? 'Pending' : 'Declined' }}"
+                            data-id="{{ $p->request_id }}"
+                            data-type="{{ $p->approval_status }}"
+                            data-document="{{ $p->document_subject ?? 'No Title' }}"
+                            data-status="{{ $p->approval_status }}"
+                            data-declined-by="{{ $p->declined_by ?? 'Admin' }}"
+                            data-remarks="{{ $p->remarks ?? '' }}"
+                            data-request-purpose ="{{ $p->request_purpose ?? 'No Purpose Provided' }}">
+                            
+                            <td class="checkbox">
+                                <input type="checkbox">
+                            </td>
+                            <td class="document-type {{ $p->approval_status === 'Pending' ? 'Pending' : 'Approved' }}">
+                                Requested Document:
+                            </td>
+                            <td class="subject {{ $p->approval_status === 'Pending' ? 'Pending' : 'Approved' }}" style="display: flex; align-items: center;">
+                                <span class="subject-text">{{ $p->document_subject ?? 'No Title' }}</span>
+
+                                @if($p->approval_status === 'Approved')
+                                    <span class="request-purpose">
+                                       - {{ $p->request_purpose ?? 'No Purpose Provided' }}
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="date {{ $p->approval_status === 'Pending' ? 'Pending' : 'Approved' }}">
+                                {{ \Carbon\Carbon::parse($p->upload_date)->format('M d H:i') }}
+                            </td>
+                            <td class="email-actions">
+                                <a notif-id={{ $p->request_id }} status='archive'
+                                    class="notifReqDeclined" style="text-decoration: none; color: black;">
+                                    <i class="bi bi-archive"></i>
+                                </a>
+                                <a notif-id={{ $p->request_id }} status='deleted'
+                                    class="notifReqDeclined" style="text-decoration: none; color: black;">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
                 <div class="pagination">
-                    {{ $requestedDocuments->links() }}
+                    {{ $requestedDocuments->links() && $pendingDocuments->links()}}
                 </div>
             @endif
         </div>

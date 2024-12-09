@@ -528,6 +528,19 @@ h2 {
     font-weight: bold;
     margin-top: -19px;
 }
+
+
+#notification-declined-count {
+    position: absolute;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: -19px;
+}
 .navbar-divider {
     width: 100%;
     height: 2px;

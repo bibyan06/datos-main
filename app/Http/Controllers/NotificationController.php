@@ -85,7 +85,7 @@ class NotificationController extends Controller
             $declinedCount = DB::table('documents')
                 ->where('status', 'delivered')
                 ->where('uploaded_by', $fullName) 
-                ->count();
+                ->count();        
     
             $notificationCount = $forwardedCount + $sentCount + $declinedCount;
     
@@ -95,6 +95,34 @@ class NotificationController extends Controller
             return response()->json(['error' => 'Server error'], 500);
         }
     }
+
+    public function getDeclinedRequestedCount()
+    {
+        try {
+            $user = Auth::user();
+
+            if (!$user) {
+                return response()->json(['error' => 'Unauthenticated'], 401);
+            }
+
+            $employee = Employee::where('employee_id', $user->employee_id)->first();
+            $fullName = $employee->first_name . ' ' . $employee->last_name;
+
+            // Count declined notifications requested by the user
+            $declinedCount = DB::table('request_document')
+                ->where('status', 'delivered') 
+                ->where('approval_status', 'Declined')
+                ->where('requested_by', $employee->id)
+                ->count();
+
+            return response()->json(['notificationCount' => $declinedCount]);
+        } catch (\Exception $e) {
+            \Log::error("Error in getDeclinedRequestedCount: " . $e->getMessage());
+            return response()->json(['error' => 'Server error'], 500);
+        }
+    }
+
+
 
     public function destroy($id, $status)
     {

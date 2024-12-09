@@ -127,12 +127,12 @@
                                 {{ \Carbon\Carbon::parse($r->upload_date)->format('M d H:i') }}
                             </td>
                             <td class="email-actions">
-                                <a notif-id="{{ $r->request_id }}" status="viewed" class="notifDeclined" 
+                                <a notif-id={{ $r->request_id }} status='viewed' class='notifReqDeclined'
                                     style="text-decoration: none; color:black;">
                                     <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                 </a>
                                 <a notif-id={{ $r->request_id }} status='deleted'
-                                    class="notifDeclined" style="text-decoration: none; color: black;">
+                                    class="notifReqDeclined" style="text-decoration: none; color: black;">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>

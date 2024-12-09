@@ -148,6 +148,45 @@ function fetchNotificationCount() {
         });
 }
 
+function fetchDeclinedNotificationCount() {
+    let notificationCountElement = document.getElementById('notification-declined-count');
+
+    fetch('/declined-notification/count')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (notificationCountElement) {
+                const notificationCount = data.notificationCount;
+
+                notificationCountElement.textContent = notificationCount;
+
+                // Show or hide the notification count based on the value
+                if (notificationCount > 0) {
+                    notificationCountElement.style.display = 'inline';
+                } else {
+                    notificationCountElement.style.display = 'none';
+                }
+            } else {
+                console.error('Notification count element not found');
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    fetchDeclinedNotificationCount();
+});
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const profileIcon = document.getElementById("profile-icon");

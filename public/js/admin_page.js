@@ -182,7 +182,6 @@ function fetchNotificationCount() {
         });
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const profileIcon = document.getElementById("profile-icon");
     const profileDropdown = document.getElementById("profile-dropdown");

@@ -55,10 +55,14 @@ class DeanController extends Controller
     {
         $requestedDocuments = RequestDocument::with('requestedBy') 
             ->whereIn('status', ['viewed', 'delivered'])
-            ->whereIn('approval_status', ['Pending', 'Approved', 'Declined']) 
+            ->whereIn('approval_status', ['Approved', 'Declined'])
             ->paginate(10); 
 
-        return view($viewName, compact('requestedDocuments'));
+        $pendingDocuments = RequestDocument::with('requestedBy')
+            ->where('approval_status', 'Pending')
+            ->paginate(10);
+
+        return view($viewName, compact('requestedDocuments', 'pendingDocuments'));
     }
 
 

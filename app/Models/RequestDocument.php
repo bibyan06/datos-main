@@ -21,4 +21,14 @@ class RequestDocument extends Model
         return $this->belongsTo(Document::class, 'document_id', 'document_id');
     }
 
+    public function scopeFilterStatus($query, $status)
+    {
+        return $status ? $query->whereIn('status', $status) : $query;
+    }
+
+    public function scopeFilterApprovalStatus($query, $approvalStatus)
+    {
+        return $query->whereIn('approval_status', $approvalStatus);
+    }
+
 }
