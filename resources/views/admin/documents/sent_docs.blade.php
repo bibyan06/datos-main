@@ -57,10 +57,8 @@
                             data-status="{{ $sent->status }}">
             
                             <td class="checkbox"><input type="checkbox"></td>
-                            <!-- <td class="star">★</td> -->
-                            <!-- <td class="sender">DATOS</td> -->
-                            <td class="subject">
-                                <span class="subject-text">Sent Requested Document to:</span>
+                            <td class="sender">Sent Requested Document to:</td>
+                            <td class="document-type">
                                 <span class="receiver">
                                     {{ $sent->recipient->first_name ?? 'Unknown' }} 
                                     {{ $sent->recipient->last_name ?? 'User' }} 
