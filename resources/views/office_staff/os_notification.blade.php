@@ -47,21 +47,20 @@
 
                     <td class="checkbox"><input type="checkbox"></td>
                     <!-- <td class="star">★</td> -->
-                    <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
+                    <td class="sender {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                         {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                     </td>
 
-                    <td>Forwarded Document</td>
-
-                    <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                        <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
+                    <td class="document-type {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">Forwarded Document</td>
+                    <td class="subject {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">
+                        <span class="subject-text{{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted'? 'delivered' : 'viewed' }}">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                         <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                     </td>
 
-                    <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                    <td class="date{{ $forwarded->status === 'delivered'  || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                     
                     <td class="email-actions">
-                        <a notif-id={{ $forwarded->forwarded_document_id }} status= 'archive'
+                        <a notif-id={{ $forwarded->forwarded_document_id }} status= 'archiveNotif'
                             class = "notifForward" style="text-decoration: none; color:black;"><i
                                 class="bi bi-archive"></i></a>
                         <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
@@ -73,7 +72,7 @@
 
             {{-- Display Sent Documents --}}
             @foreach ($sentDocuments as $sentDocument)
-                <tr class="email-item {{ $sentDocument->status !== 'viewed' ? 'delivered' : '' }}"
+                <tr class="email-item {{ $sentDocument->status !== 'viewed' || $sentDocument->status === 'deleted'? 'delivered' : '' }}"
                     data-id="{{ $sentDocument->id }}"
                     data-type="request"
                     data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}"
@@ -82,9 +81,9 @@
                     data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
                     <td class="checkbox"><input type="checkbox"></td>
                     <!-- <td class="star">★</td> -->
-                    <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
+                    <td class="sender {{ $sentDocument->status === 'delivered'|| $sentDocument->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                         {{ $sentDocument->sender->last_name ?? '' }}</td>
-                    <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                    <td class="subject {{ $sentDocument->status === 'delivered'|| $sentDocument->status === 'deleted' ? 'delivered' : 'viewed' }}">
                         <span
                             class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
                     </td>
@@ -102,7 +101,7 @@
 
             {{-- Display Declined Documents --}}
             @foreach ($declinedDocuments as $d)
-                    <tr class="declined-docs {{ $d->status === 'viewed' ? 'delivered' : '' }}"
+                    <tr class="declined-docs {{ $d->status === 'viewed' || $d->status === 'deleted'? 'delivered' : '' }}"
                         data-id="{{ $d->document_id }}"
                         data-type="declined"
                         data-sender="{{ $d->declined_by ?? 'Admin' }}"
@@ -111,17 +110,17 @@
                         data-remark="{{ $d->remark ?? 'Your document was declined. Please review and re-upload.' }}"
                         data-status ="{{$d->document_status}}"
                         data-file-url="{{ asset('storage/' . $d->file_path) }}">
+                       
                         <td class="checkbox"><input type="checkbox"></td>
-                        <td class="sender {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $d->declined_by ?? 'Admin' }}</td>
-                            
-                        <td class="document-type  {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
+                        <td class="sender {{ $d->status === 'delivered'|| $d->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ $d->declined_by ?? 'Admin' }}</td>          
+                        <td class="document-type  {{ $d->status === 'delivered' || $d->status === 'deleted'? 'delivered' : 'viewed' }}">Declined Documents</td>
 
                         <td class="subject {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">
                             <span class="subject-text">{{ $d->document_name ?? 'No Title' }}</span>
                             <span class="remark"> - {{ $d->remark ?? 'No remark' }}</span>  
                         </td>
 
-                        <td class="date  {{ $d->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($d->declined_date)->format('M d H:i') }}</td>
+                        <td class="date  {{ $d->status === 'delivered'|| $d->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($d->declined_date)->format('M d H:i') }}</td>
                         <td class="email-actions">
                         <a notif-id={{ $d->document_id }} status='archive' 
                                 class="notifDeclined" style="text-decoration: none; color: black;">

@@ -417,7 +417,7 @@ class AdminController extends Controller
         // Fetch forwarded documents marked as archive
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
             ->where('forwarded_to', $id)
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->get();
 
         // Fetch declined documents marked as archive, but only for those uploaded by the current user
@@ -489,6 +489,11 @@ class AdminController extends Controller
             ->where('status', 'deleted')
             ->get();
 
+        $forwardedDocuments = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_by', $id)
+            ->where('status', 'deleted')
+            ->get();
+
         $sent = SendDocument::with(['recipient', 'document', 'sender'])
             ->where('issued_by', $id)
             ->where('status', 'deleted')
@@ -499,9 +504,10 @@ class AdminController extends Controller
             ->where('uploaded_by', $currentUser)
             ->get();
             
-        return view('admin.trash', compact('forward', 'sent', 'uploaded'));
+        return view('admin.trash', compact('forward', 'sent', 'uploaded','forwardedDocuments'));
     
     }
+
     public function restoreDocs($id)
     {
         $docs = Document::where('document_id', $id)->first();

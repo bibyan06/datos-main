@@ -18,7 +18,7 @@ class SentDocumentController extends Controller
 
         // Fetch the corresponding employee record from the Employee table
         $employee = Employee::where('employee_id', $userEmployeeId)->first();
-
+        // if($viewName == "office_staff.documents.sent_docs"){
         // Ensure that the employee record exists before querying documents
         if ($employee) {
             // Use the employee's id for filtering the forwarded and sent documents
@@ -26,14 +26,18 @@ class SentDocumentController extends Controller
 
             // Fetch forwarded documents where the current user is the one who forwarded the document
             $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
-                ->where('forwarded_by', $employeeId)
-                ->whereIn('status', ['viewed', 'delivered'])
-                ->get();
+            ->where('forwarded_by', $employeeId)
+            ->where('status', 'viewed','delivered')
+            ->whereNotIn('status', ['archive']) // Exclude 'archive'
+           
+            ->get();
 
             // Fetch sent documents where the current user issued the document
             $sentDocuments = SendDocument::with(['sender', 'document'])
                 ->where('issued_by', $employeeId)
-                ->whereIn('status', ['viewed', 'delivered'])
+                ->where('status', 'viewed','delivered')
+                ->whereNotIn('status', ['archive']) 
+               
                 ->get();
         } else {
             // Log the issue for debugging purposes
@@ -42,6 +46,7 @@ class SentDocumentController extends Controller
 
         // Return the view with the documents (empty collections as fallback)
         return view($viewName, ['forwardedDocuments' => $forwardedDocuments,'sentDocuments' => $sentDocuments,]);
+    
     }
 
     public function sentRequested(Request $request){

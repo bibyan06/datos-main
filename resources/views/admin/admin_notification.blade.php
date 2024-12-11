@@ -37,7 +37,7 @@
                 <table class="email-list">
                     {{-- Display Forwarded Documents --}}
                     @foreach ($forwardedDocuments as $forwarded)
-                        <tr class="email-item" 
+                        <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}" 
                             data-id="{{ $forwarded->forwarded_document_id }}"
                             data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
                             data-document="{{ $forwarded->document->document_name ?? 'No Title' }}"
@@ -50,17 +50,17 @@
                             <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                                 {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                             </td>
-                            <td class="document-type {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">Forwarded Document</td>
-                            <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                                <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
+                            <td class="document-type {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">Forwarded Document</td>
+                            <td class="subject {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted'  ? 'delivered' : 'viewed' }}">
+                                <span class="subject-text{{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted'? 'delivered' : 'viewed' }}">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                                 <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                             </td>
                             
-                            <td class="date{{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                            <td class="date{{ $forwarded->status === 'delivered'  || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id= {{ $forwarded->forwarded_document_id }} status= 'archive'
+                                <a notif-id= {{ $forwarded->forwarded_document_id }} status= 'archiveNotif'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
-                                        class="bi bi-archive"></i>
+                                    class="bi bi-archive"></i>
                                 </a>
                                 <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
                                     class = "notifForward" style="text-decoration: none; color:black;"><i
@@ -72,9 +72,11 @@
 
                     {{-- Display Sent Documents --}}
                     @foreach ($sentDocuments as $sentDocument)
-                        <tr class="email-item" data-id="{{ $sentDocument->sent_id }}"
+                        <tr class="email-item {{ $sentDocument->status !== 'viewed' || $sentDocument->status === 'deleted'? 'delivered' : '' }}"
+                            data-id="{{ $sentDocument->sent_id }}"
                             data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown' }} {{ $sentDocument->sender->last_name ?? '' }}"
-                            data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" data-snippet="No message"
+                            data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" 
+                            data-snippet="No message"
                             data-type="forward" data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
                             <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}" >{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
                                 {{ $sentDocument->sender->last_name ?? '' }}</td>
@@ -84,7 +86,7 @@
                             <td>Sent Document</td>
                             <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id={{ $sentDocument->send_id }} status= 'archive' class = "notifSent"
+                                <a notif-id={{ $sentDocument->send_id }} status= 'archiveNotif' class = "notifSent"
                                     style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
                                 <a notif-id={{ $sentDocument->send_id }} status= 'deleted' class = "notifSent"
                                     style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
@@ -94,7 +96,7 @@
 
                     {{-- Display Declined Documents --}}
                     @foreach ($declinedDocuments as $declined)
-                        <tr class="declined-docs {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}"
+                        <tr class="declined-docs {{ $d->status === 'viewed' || $d->status === 'deleted'? 'delivered' : '' }}"
                             data-id="{{ $declined->document_id }}"
                             data-type="declined"
                             data-sender="{{ $declined->declined_by ?? 'Admin' }}"
@@ -105,8 +107,7 @@
                             data-file-url="{{ asset('storage/' . $declined->file_path) }}">
 
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $declined->declined_by ?? 'Admin' }}</td>
-                            
+                            <td class="sender {{ $d->status === 'delivered'|| $d->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ $d->declined_by ?? 'Admin' }}</td>                            
                             <td class="document-type  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Document</td>
 
                             <td class="subject {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">
@@ -114,9 +115,9 @@
                                 <span class="remark "> - {{ $declined->remark ?? 'No remark' }}</span>  
                             </td>
 
-                            <td class="date  {{ $declined->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($declined->declined_date)->format('M d H:i') }}</td>
+                            <td class="date  {{ $d->status === 'delivered'|| $d->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($d->declined_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
-                                <a notif-id={{ $declined->document_id }} status= 'archive'
+                                <a notif-id={{ $declined->document_id }} status= 'archiveNotif'
                                     class = "notifDeclined" style="text-decoration: none; color:black;">
                                     <i class="bi bi-archive"></i>
                                 </a>

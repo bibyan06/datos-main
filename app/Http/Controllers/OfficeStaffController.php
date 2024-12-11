@@ -282,9 +282,9 @@ class OfficeStaffController extends Controller
         // Fetch forwarded documents marked as archive
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
             ->where('forwarded_to', $id)
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->get();
-
+    
         // Fetch declined documents marked as archive, but only for those uploaded by the current user
         $uploaded = Document::where('document_status', 'Declined')
             ->where('status', 'archive')
@@ -301,16 +301,21 @@ class OfficeStaffController extends Controller
         $currentUser = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
-        ->where('forwarded_to', $id)
-        ->where('status', 'deleted')
-        ->get();
+            ->where('forwarded_to', $id)
+            ->where('status', 'deleted')
+            ->get();
+
+        $forwardedDocuments = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_by', $id)
+            ->where('status', 'deleted')
+            ->get();
 
         $uploaded = Document::where('document_status', 'Declined')
         ->where('status', 'deleted')
         ->where('uploaded_by', $currentUser)
         ->get();
 
-        return view('office_staff.os_trash',compact('forward', 'uploaded'));
+        return view('office_staff.os_trash',compact('forward', 'uploaded','forwardedDocuments'));
     }
 
 }

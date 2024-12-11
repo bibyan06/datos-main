@@ -21,7 +21,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($forward->isEmpty() && $uploaded->isEmpty())
+            @if ($forward->isEmpty() && $uploaded->isEmpty() && $forwardedDocuments->isEmpty())
             <p class="no-notifications">You have no Trash at this time.</p>
         @endif
             <table class="email-list">
@@ -29,7 +29,7 @@
                     @foreach ($forward as $r)
                     <tr class="email-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
                                 data-id="{{ $r->forwarded_document_id }}"
-                                data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}"
+                                data-sender="{{ $r->forwardedBy->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}"
                                 data-document="{{ $r->document->document_name ?? 'No Title' }}"
                                 data-snippet="{{ $r->message ?? 'No message' }}" 
                                 data-type="forward"
@@ -38,8 +38,8 @@
                                 <td class="checkbox"><input type="checkbox"></td>
                                 <!-- <td class="star">★</td> -->
                                 <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                                    {{ $r->forwardedByEmployee->first_name ?? 'Unknown' }}
-                                    {{ $r->forwardedByEmployee->last_name ?? '' }}
+                                    {{ $r->forwardedBy->first_name ?? 'Unknown' }}
+                                    {{ $r->forwardedBy->last_name ?? '' }}
                                 </td>
                                 <td>Forwarded Document</td>
                                 <td class="subject {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
@@ -58,6 +58,32 @@
                                     </a>
                                 </td>
                             </tr>
+                    @endforeach
+                @endif
+
+                @if($forwardedDocuments)
+                    @foreach($forwardedDocuments as $forwarded)
+                        <tr class="email-item"
+                            data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
+                            data-status="{{ $forwarded->status }}">
+                            
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="sender">Forwarded Document to:</td>
+                            <td class="document-type">
+                                <span class="receiver">
+                                    {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
+                                    {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
+                                </span>
+                            </td>
+                            <td class="document-name">{{ $forwarded->document->document_name ?? 'Unknown Document' }}</td>
+                            <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                            <td class="email-actions">
+                                <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
+                                    class = "notifForward" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-trash"></i></a>
+
+                            </td>
+                        </tr>
                     @endforeach
                 @endif
                 @if ($uploaded)

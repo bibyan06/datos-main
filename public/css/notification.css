@@ -48,6 +48,14 @@ main {
     border-bottom: 1px solid #ccc;
 }
 
+.forwarded-item{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
 .requested-docs{
     display: flex;
     align-items: center;

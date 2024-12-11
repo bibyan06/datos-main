@@ -21,7 +21,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($sent->isEmpty() && $forward->isEmpty() && $uploaded->isEmpty())
+            @if ($sent->isEmpty() && $forward->isEmpty() && $uploaded->isEmpty() && $forwardedDocuments->isEmpty())
                 <p class="no-notifications">You have no Trash at this time.</p>
             @endif
             <table class="email-list">
@@ -54,8 +54,44 @@
                                     </a>
                                     <a notif-id={{ $r->forwarded_document_id }} status= 'deleted'
                                         class = "notifForward" style="text-decoration: none; color:black;"><i
-                                            class="bi bi-trash"></i>
+                                            class="bi bi-trash" title="Delete Forever"></i>
                                     </a>
+                                </td>
+                            </tr>
+                    @endforeach
+                @endif
+                
+                @if($forwardedDocuments)
+                    @foreach($forwardedDocuments as $forwarded)
+                            <tr class="forwarded-item"
+                                data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
+                                data-status="{{ $forwarded->status }}"
+                                data-message="{{ $forwarded->message ?? 'No message' }}" 
+                                data-document-name="{{ $forwarded->document->document_name ?? 'Unknown Document' }}">
+                            
+                                
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">Forwarded Document to:</td>
+                                <td class="document-type">
+                                    <span class="receiver">
+                                        {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
+                                        {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
+                                    </span>
+                                </td>
+                                <td class="document-name">
+                                    {{ $forwarded->document->document_name ?? 'Unknown Document' }} - {{ $forwarded->message ?? 'No message' }}
+                                </td>
+                                <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id={{ $forwarded->forwarded_document_id }} status= 'viewed'
+                                        class = "notifForward" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-arrow-counterclockwise" title="Restore"></i>
+                                    </a>
+                                    <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
+                                        class = "notifForward" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-trash"title="Delete Forever"></i>
+                                    </a>
+
                                 </td>
                             </tr>
                     @endforeach

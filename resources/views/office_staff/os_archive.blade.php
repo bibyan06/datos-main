@@ -39,12 +39,12 @@
 
                                 <td class="checkbox"><input type="checkbox"></td>
                                 <!-- <td class="star">★</td> -->
-                                <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                <td class="sender {{ $r->status === 'delivered'||$r->status === 'archive' ? 'delivered' : 'viewed' }}">
                                     {{ $r->forwardedByEmployee->first_name ?? 'Unknown' }}
                                     {{ $r->forwardedByEmployee->last_name ?? '' }}
                                 </td>
                                 <td>Forwarded Document</td>
-                                <td class="subject {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                <td class="subject {{ $r->status === 'delivered'||$r->status === 'archive' ? 'delivered' : 'viewed' }}">
                                     <span class="subject-text">{{ $r->document->document_name ?? 'No Title' }}</span>
                                     <span class="snippet"> - {{ $r->message ?? 'No message' }}</span>
                                 </td>
@@ -66,7 +66,7 @@
                    <!--Display Declined Documents -->
                    @if (!$uploaded->isEmpty())
                         @foreach ($uploaded as $u)
-                                <tr class="declined-docs {{ $u->status === 'viewed' ? 'delivered' : '' }}"
+                                <tr class="declined-docs {{ $u->status !== 'viewed' ? 'delivered' : '' }}"
                                     data-id="{{ $u->document_id }}"
                                     data-type="declined"
                                     data-sender="{{ $u->declined_by ?? 'Admin' }}"
@@ -76,16 +76,16 @@
                                     data-status ="{{$u->document_status}}"
                                     data-file-url="{{ asset('storage/' . $u->file_path) }}">
                                     <td class="checkbox"><input type="checkbox"></td>
-                                    <td class="sender {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $u->declined_by ?? 'Admin' }}</td>
+                                    <td class="sender {{ $u->status === 'delivered'||$u->status === 'archive' ? 'delivered' : 'viewed' }}">{{ $u->declined_by ?? 'Admin' }}</td>
                                         
-                                    <td class="document-type  {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">Declined Documents</td>
+                                    <td class="document-type  {{ $u->status === 'delivered'||$u->status === 'archive' ? 'delivered' : 'viewed' }}">Declined Documents</td>
 
-                                    <td class="subject {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">
+                                    <td class="subject {{ $u->status === 'delivered'||$u->status === 'archive' ? 'delivered' : 'viewed' }}">
                                         <span class="subject-text">{{ $u->document_name ?? 'No Title' }}</span>
                                         <span class="remark"> - {{ $u->remark ?? 'No remark' }}</span>  
                                     </td>
 
-                                    <td class="date  {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
+                                    <td class="date  {{ $u->status === 'delivered'||$u->status === 'archive' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
                                     <td class="email-actions">
                                     <a notif-id={{ $u->document_id }} status= 'viewed'
                                         class = "notifDeclined" style="text-decoration: none; color:black;"><i

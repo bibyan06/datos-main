@@ -35,19 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Get relevant information from the clicked row
-            const documentName = this.querySelector('.document-name').textContent.trim();
+            // const documentName = this.querySelector('.document-name').textContent.trim();
             const receiverName = this.querySelector('.receiver').textContent.trim();
-            const status = this.getAttribute('data-status'); 
+            const currentStatus = this.getAttribute('data-status');
+            const message = this.getAttribute('data-message');
+            const documentName = this.getAttribute('data-document-name');
+            const status = (currentStatus == 'archiveNotif' || currentStatus == 'deleted') 
+               ? 'viewed' 
+               : (currentStatus == 'delivered' ? 'delivered' : currentStatus);
+            const snippet = this.getAttribute('data-snippet');
             const fileUrl = this.getAttribute('data-file-url');
 
-            // Use SweetAlert2 to display the document details
             Swal.fire({
                 html: `
                     <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
 
                         <iframe src="${fileUrl}" style="width: 100%; height: 700px; border: none;"></iframe>
                         
-                        <div style="width: 50%; height: 188px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="width: 50%; height: 293px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
                             <div style="margin-bottom: 20px;">
                                 <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
                                 <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
@@ -56,6 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">To:</p>
                                 <p style="margin: 0; font-size: 20px; color: #555;">${receiverName}</p>
                             </div>
+                            <div style="margin-bottom: 20px;">
+                                <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Message:</p>
+                                <p style="margin: 0; font-size: 20px; color: #555;">${message}</p>
+                            </div>
                             <div>
                                 <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Status:</p>
                                 <p style="margin: 0; font-size: 20px; color: #555;">${status ? status : 'delivered'}</p>
@@ -63,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     </div>
                 `,
+                
                 showCloseButton: true,
                 focusConfirm: false,
                 confirmButtonText: 'Close',
