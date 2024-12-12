@@ -101,7 +101,7 @@
 @section('custom-js')
     <script src="{{ asset ('js/dean/search.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+         document.addEventListener('DOMContentLoaded', function () {
             const hidden = document.querySelector('#hidden');
             const searchText = document.querySelector('#search-document');
             const documents = document.querySelectorAll('#documents-list .document');
@@ -139,7 +139,7 @@
 
                     const matchesSearch = !query || name.includes(query);
                     const matchesMonth = !selectedMonth || docMonth === selectedMonth.toLowerCase();
-                    const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
+                    const matchesCategory = selectedCategory === '' || selectedCategory === 'all' || docCategory === selectedCategory;
 
                     const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
                     doc.style.display = shouldDisplay ? '' : 'none';

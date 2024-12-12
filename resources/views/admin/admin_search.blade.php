@@ -135,7 +135,7 @@
 
                     const matchesSearch = !query || name.includes(query);
                     const matchesMonth = !selectedMonth || docMonth === selectedMonth.toLowerCase();
-                    const matchesCategory = selectedCategory === 'all' || docCategory === selectedCategory;
+                    const matchesCategory = selectedCategory === '' || selectedCategory === 'all' || docCategory === selectedCategory;
 
                     const shouldDisplay = matchesSearch && matchesMonth && matchesCategory;
                     doc.style.display = shouldDisplay ? '' : 'none';
