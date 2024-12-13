@@ -58,26 +58,25 @@
             </div>
         </section>
 
-        <section class="title">
-            <div class="title-content">
-                <h3>Announcements</h3>
-                <div class="date-time">
-                    <i class="bi bi-calendar2-week-fill"></i>
-                    <p id="current-date-time"></p>
-                </div>
-            </div>
-        </section>
-
         <section class="dashboard-section">
             <div class="dashboard-container">
+                <div class="title-content">
+                    <h3>Digitized Documents</h3>
+                    <div class="date-time">
+                        <i class="bi bi-calendar2-week-fill"></i>
+                        <p id="current-date-time"></p>
+                    </div>
+                </div>
                 <div class="documents" id="documents-list">
                     @forelse($documents as $document)
-                    <div class="document" data-id="{{ $document->document_id }}" data-name="{{ $document->document_name }}">                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0"
-                                        width="100%" frameborder="0"></iframe>
+                    <div class="document" data-id="{{ $document->document_id }}" data-name="{{ $document->document_name }}">                            
+                        <div class="file-container">
+                            <div class="document-card">
+                                <div id="pdf-preview-container" style="width: 100%; height: 500px; overflow: hidden;">
+                                    <canvas id="pdf-preview-{{ $document->document_id }}" style="width: 100%; height: 100%;"></canvas>
                                 </div>
                             </div>
+                        </div>
                             <div class="document-description">
                                 <div class="row">
                                     <div class="column-left">
@@ -113,6 +112,35 @@
 
 @section('custom-js')
     <script src="{{ asset('js/dean/dean_home.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script>
+        @foreach ($documents as $document)
+        (function() {
+            var url = "{{ route('document.serve', basename($document->file_path)) }}";
+            var canvas = document.getElementById('pdf-preview-{{ $document->document_id }}');
+
+            if (canvas) {
+                pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                    pdf.getPage(1).then(function(page) {
+                        var scale = 1.5; // Adjust this scale factor if needed
+                        var viewport = page.getViewport({ scale: scale });
+
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        var context = canvas.getContext('2d');
+                        page.render({
+                            canvasContext: context,
+                            viewport: viewport
+                        });
+                    });
+                }).catch(function(error) {
+                    console.error("Error loading PDF:", error);
+                });
+            }
+        })();
+        @endforeach
+    </script>
 @endsection
 
 </body>

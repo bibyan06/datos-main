@@ -58,54 +58,54 @@
             </div>
         </section>
 
-        <section class="title">
-            <div class="title-content">
-                <h3>Recent Digitized Documents</h3>
-                <div class="date-time">
-                    <i class="bi bi-calendar2-week-fill"></i>
-                    <p id="current-date-time"></p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Recent Documents -->
+        <!-- Title and Date Time Moved Inside Dashboard Section -->
         <section class="dashboard-section">
             <div class="dashboard-container">
+                <div class="title-content">
+                    <h3>Digitized Documents</h3>
+                    <div class="date-time">
+                        <i class="bi bi-calendar2-week-fill"></i>
+                        <p id="current-date-time"></p>
+                    </div>
+                </div>
+
                 <div class="documents" id="documents-list">
                     @forelse($documents as $document)
-                    <div class="document" data-id="{{ $document->document_id }}" data-name="{{ $document->document_name }}">                            <div class="file-container">
-                                <div class="document-card">
-                                    <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0"
-                                        width="100%" frameborder="0"></iframe>
-                                </div>
-                            </div>
-                            <div class="document-description">
-                                <div class="row">
-                                    <div class="column-left">
-                                        <h3>{{ $document->document_name }}</h3>
-                                    </div>
-                                    <input type="text" hidden
-                                        value="{{ \Carbon\Carbon::parse($document->updated_date)->format('F') }}">
-
-                                    <div class="column-right">
-                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
-                                        <div class="dropdown-more">
-                                            <a href="{{ route('admin.documents.view_docs', $document->document_id) }}"
-                                                class="view-btn">View</a>
-                                            <a href="{{ route('document.serve', basename($document->file_path)) }}"
-                                                download>Download</a>
-                                            <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
-                                            <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
-                                            <a data-id="{{ $document->document_id }}" class="forward-btns archive" style="cursor: pointer">Archive</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="other-details">
-                                    <p>{{ $document->description }}</p>
-                                    <p> Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>  
+                    <div class="document" data-id="{{ $document->document_id }}" data-name="{{ $document->document_name }}">                            
+                        <div class="file-container">
+                            <div class="document-card">
+                                <div id="pdf-preview-container" style="width: 100%; height: 500px; overflow: hidden;">
+                                    <canvas id="pdf-preview-{{ $document->document_id }}" style="width: 100%; height: 100%;"></canvas>
                                 </div>
                             </div>
                         </div>
+                        <div class="document-description">
+                            <div class="row">
+                                <div class="column-left">
+                                    <h3>{{ $document->document_name }}</h3>
+                                </div>
+                                <input type="text" hidden
+                                    value="{{ \Carbon\Carbon::parse($document->updated_date)->format('F') }}">
+
+                                <div class="column-right">
+                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                    <div class="dropdown-more">
+                                        <a href="{{ route('admin.documents.view_docs', $document->document_id) }}"
+                                            class="view-btn">View</a>
+                                        <a href="{{ route('document.serve', basename($document->file_path)) }}"
+                                            download>Download</a>
+                                        <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                        <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>
+                                        <a data-id="{{ $document->document_id }}" class="forward-btns archive" style="cursor: pointer">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="other-details">
+                                <p>{{ $document->description }}</p>
+                                <p> Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F d, Y') }}</p>  
+                            </div>
+                        </div>
+                    </div>
                     @empty
                         <p id="hidden">No documents available at the moment.</p>
                     @endforelse
@@ -122,6 +122,35 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script>
+        @foreach ($documents as $document)
+        (function() {
+            var url = "{{ route('document.serve', basename($document->file_path)) }}";
+            var canvas = document.getElementById('pdf-preview-{{ $document->document_id }}');
+
+            if (canvas) {
+                pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                    pdf.getPage(1).then(function(page) {
+                        var scale = 1.5; // Adjust this scale factor if needed
+                        var viewport = page.getViewport({ scale: scale });
+
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        var context = canvas.getContext('2d');
+                        page.render({
+                            canvasContext: context,
+                            viewport: viewport
+                        });
+                    });
+                }).catch(function(error) {
+                    console.error("Error loading PDF:", error);
+                });
+            }
+        })();
+        @endforeach
+    </script>
 @endsection
 
 </body>
