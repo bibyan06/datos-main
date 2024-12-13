@@ -269,8 +269,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        modal.style.display = 'none'; // Close the modal
-                        location.reload(); // Reload the page (if required)
+                        modal.style.display = 'none'; 
+                        location.reload(); 
                     }
                 });
             } else if (data.errors) {

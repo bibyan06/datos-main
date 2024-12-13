@@ -204,3 +204,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+// For view document 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.document').forEach(function(documentElement) {
+        documentElement.addEventListener('click', function(event) {
+            // Check if the click was inside the dropdown-more or its children
+            if (!event.target.closest('.column-right')) {
+                const documentId = this.getAttribute('data-id');
+                window.location.href = `/dean/documents/view_docs/${documentId}`;
+            }
+        });
+    });
+});

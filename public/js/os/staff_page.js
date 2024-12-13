@@ -42,6 +42,13 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.add("active");
         });
     });
+    // Close the extra sidebar when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!extraSidebar.contains(event.target) && !event.target.closest(".icon-container")) {
+            extraSidebar.classList.remove("active");
+            iconContainers.forEach((icon) => icon.classList.remove("active"));
+        }
+    });
 });
 
 document.addEventListener('click', function(e) {

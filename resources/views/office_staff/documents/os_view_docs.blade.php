@@ -13,7 +13,7 @@
             <div class="doc-container">
                 <div class="view-documents">
                     <div class="doc-description">
-                        <a href="{{ route('home.office_staff') }}" class="back-icon" aria-label="Go back">
+                        <a  href="javascript:history.back()" class="back-icon" aria-label="Go back">
                             <i class="bi bi-arrow-return-left"></i>
                             <span class="tooltip">Go back</span>
                         </a>                        
