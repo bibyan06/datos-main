@@ -48,12 +48,12 @@
                 <img src="{{ asset('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
             </div>
             <ul class="nav-icons">
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"  id="dashboard-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div> </li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"  id="employees-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon" title="Home"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill"  id="dashboard-icon" title="Overview"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon" title="Digitized Documents"></i></div> </li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill"  id="employees-icon" title="Employee"></i></div></li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar">
+                    <div class="icon-container" data-target="#sidebar" title="Review">
                         <i class="bi bi-hourglass-split" id="pendings"></i>
                         @if (isset($pendingCount) && $pendingCount > 0)
                             <span class="badge badge-pill badge-danger" id="pending-count">{{ $pendingCount }}</span>
@@ -63,10 +63,10 @@
 
                 <li>
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill"
-                            id="sent"></i></div>
+                            id="sent" title="Sent"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar">
+                    <div class="icon-container" data-target="#sidebar" title="Notifications">
                         <i class="bi bi-bell-fill" id="notification-count"></i>
                         {{-- @if (isset($notificationCount) && $notificationCount > 0) --}}
                             <span class="badge badge-pill badge-danger"
@@ -76,20 +76,20 @@
                 </li>
                 <li>
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-cloud-arrow-up-fill"
-                            id="upload-icon"></i></div>
+                            id="upload-icon" title="Upload"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon" title="Search"></i>
                     </div>
                 </li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-archive-fill" id="archive"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-archive-fill" id="archive" title="Archive"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash" title="Trash"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="profile-settings">
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill" title="Logout"></i></div>
                     <div class="icon-container" data-target="#sidebar"><img src="{{ asset('images/girl-1.png') }}"
-                            alt="Profile Icon" class="profile-pic"></div>
+                            alt="Profile Icon" class="profile-pic" title="Account"></div>
                 </div>
 
             </div>

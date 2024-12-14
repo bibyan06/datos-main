@@ -53,25 +53,25 @@
             </div>
             <ul class="nav-icons">
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon" title="Home"></i>
                     </div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon"></i></div>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-table" id="digitized-icon" title="Digitized Documents"></i></div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-symlink-fill" id="pendings"></i>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-folder-symlink-fill" id="pendings" title="Request Document"></i>
                     </div>
                 </li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar">
+                    <div class="icon-container" data-target="#sidebar" title="Requested Document">
                         <i class="bi bi-folder-fill" id="declined-icon"></i>
                         <span class="badge badge-pill badge-danger" id="notification-declined-count" style="display: none;"></span>
                     </div>
                 </li>
 
                 <li>
-                    <div class="icon-container" data-target="#sidebar">
+                    <div class="icon-container" data-target="#sidebar" title="Notifications">
                         <i class="bi bi-bell-fill" id="notification-icon"></i>
                         {{-- @if (isset($notificationCount) && $notificationCount > 0) --}}
                             <span class="badge badge-pill badge-danger"
@@ -81,11 +81,11 @@
                 </li>
 
                 <li>
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i>
+                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon" title="Search"></i>
                     </div>
                 </li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-archive-fill" id="archive"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-archive-fill" id="archive" title="Archive"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash" title="Trash"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
