@@ -37,7 +37,7 @@
         <table class="email-list">
             <th></th>
             <th>Sender</th>
-            <th></th>
+            <th>Type</th>
             <th>Document Name - Message</th>
             <th>Date</th>
             <th>Action</th>
