@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }); 
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const emailItems = document.querySelectorAll('.forwarded-item');
 

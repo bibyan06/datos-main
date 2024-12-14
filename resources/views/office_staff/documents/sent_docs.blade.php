@@ -25,6 +25,12 @@
                 <p class="no-notifications">You have no sent or forwarded documents at this time.</p>
             @else
                 <table class="email-list">
+                    <th></th>
+                    <th></th>
+                    <th>Receiver</th>
+                    <th>Document Name - Message</th>
+                    <th>Date</th>
+                    <th>Action</th>
                     <!-- Loop through Forwarded Documents -->
                     @foreach($forwardedDocuments as $forwarded)
                         <tr class="email-item"

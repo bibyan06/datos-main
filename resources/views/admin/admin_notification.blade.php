@@ -35,6 +35,12 @@
                 <p class="no-notifications">You have no notifications at this time.</p>
             @else
                 <table class="email-list">
+                    <th></th>
+                    <th>Sender</th>
+                    <th></th>
+                    <th>Document Name - Message</th>
+                    <th>Date</th>
+                    <th>Action</th>
                     {{-- Display Forwarded Documents --}}
                     @foreach ($forwardedDocuments as $forwarded)
                         <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}" 

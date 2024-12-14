@@ -35,6 +35,12 @@
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
         <table class="email-list">
+            <th></th>
+            <th>Sender</th>
+            <th></th>
+            <th>Document Name - Message</th>
+            <th>Date</th>
+            <th>Action</th>
             {{-- Display Forwarded Documents --}}
             @foreach ($forwardedDocuments as $forwarded)
                 <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}"
@@ -47,17 +53,17 @@
 
                     <td class="checkbox"><input type="checkbox"></td>
                     <!-- <td class="star">★</td> -->
-                    <td class="sender {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
+                    <td class="sender {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'viewed' : 'delivered' }}">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
                         {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
                     </td>
 
-                    <td class="document-type {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">Forwarded Document</td>
-                    <td class="subject {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">
-                        <span class="subject-text{{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted'? 'delivered' : 'viewed' }}">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
+                    <td class="document-type {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'viewed' : 'delivered' }}">Forwarded Document</td>
+                    <td class="subject {{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted' ? 'viewed' : 'delivered' }}">
+                        <span class="subject-text{{ $forwarded->status === 'delivered' || $forwarded->status === 'deleted'? 'viewed' : 'delivered' }}">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                         <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                     </td>
 
-                    <td class="date{{ $forwarded->status === 'delivered'  || $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                    <td class="date{{ $forwarded->status === 'delivered'  || $forwarded->status === 'deleted' ? 'viewed' : 'delivered' }}">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                     
                     <td class="email-actions">
                         <a notif-id={{ $forwarded->forwarded_document_id }} status= 'archiveNotif'

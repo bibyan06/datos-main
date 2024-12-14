@@ -25,6 +25,12 @@
                 <p class="no-notifications">You have no sent or forwarded documents at this time.</p>
             @else
                 <table class="email-list">
+                    <th></th>
+                    <th></th>
+                    <th>Receiver</th>
+                    <th>Document Name - Message</th>
+                    <th>Date</th>
+                    <th>Action</th>
                     <!-- Loop through Forwarded Documents -->
                     @foreach($forwardedDocuments as $forwarded)
                         <tr class="email-item"
@@ -57,9 +63,12 @@
 
                     <!-- Loop through Sent Documents -->
                     @foreach($sentDocuments as $sent)
-                        <tr class="email-item"
+                        <tr class="sent-items"
                             data-file-url="{{ asset('storage/' . $sent->file_path) }}"
-                            data-status="{{ $sent->status }}">
+                            data-status="{{ $sent->status }}"
+                            data-document-name="{{ $sent->document_subject ?? 'Unknown Document' }}"
+                            data-receiver="{{ $sent->recipient->first_name ?? 'Unknown' }} {{ $sent->recipient->last_name ?? 'User' }} ">
+                            
             
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="sender">Sent Requested Document to:</td>

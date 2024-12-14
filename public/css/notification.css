@@ -14,38 +14,104 @@ main {
 
 .email-list {
     width: 100%;
-    margin: 0 auto;
+    table-layout: fixed;  /* Forces columns to respect their width */
     border-collapse: collapse;
+}
+
+.email-list th, .email-list td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+.email-list th {
+    font-weight: bold;
+    background-color: transparent;
+    font-size: 14px;
+    border: none;
+}
+
+.email-list td.sender {
+    text-align: left; 
+}
+.email-list td.receiver {
+    text-align: left;
+}
+
+
+.email-list .email-item {
+    font-size: 15px;
+    display: table-row;
+}
+
+.email-list .checkbox, .email-list .sender, .email-list .receiver, .email-list .subject, .email-list .document-name, .email-list .date, .email-list .email-actions {
+    display: table-cell; /* Ensures cells align within the row */
+    padding: 10px; /* Consistent padding for cells */
+}
+
+.email-list .email-actions a {
+    cursor: pointer;
+}
+
+.checkbox, .sender, .receiver, .document-name, .date, .email-actions {
+    width: auto;
+}
+.email-list th:nth-child(1), .email-list td:nth-child(1) {
+    width: 3%;
+}
+
+.email-list th:nth-child(2), .email-list td:nth-child(2) {
+    width: 20%;
+}
+
+.email-list th:nth-child(3), .email-list td:nth-child(3) {
+    width: 25%;
+}
+
+.email-list th:nth-child(4), .email-list td:nth-child(4) {
+    width: 30%;
+}
+
+.email-list th:nth-child(5), .email-list td:nth-child(5) {
+    width: 9%;
+}
+
+.email-list th:nth-child(6), .email-list td:nth-child(6) {
+    width: 6%;
+}
+
+th{
+    align-items: center;
+
 }
 .email-item {
     display: flex;
     align-items: center;
     font-size: 15px;
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #ccc;
 }
 
-.email-items {
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+.email-items td {
+    font-size: 14px;
+    padding: 11px;
+    border-bottom: 1px solid #ccc; 
 }
 
-.declined-docs{
-    display: flex;
-    align-items: center;
+.sent-items td {
     font-size: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 15px;
+    border-bottom: 1px solid #ccc; 
 }
-.requested-declined-docs{
-    display: flex;
-    align-items: center;
+
+.declined-docs td{
+    font-size: 14px;
+    padding: 11px;
+    border-bottom: 1px solid #ccc; 
+}
+.requested-declined-docs td {
     font-size: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    padding: 15px;
+    border-bottom: 1px solid #ccc; 
 }
 
 .forwarded-item{
