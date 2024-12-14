@@ -21,10 +21,16 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-        @if($requestedDocuments->isEmpty())
-    <p class="no-notifications">You have no requested documents at this time.</p>
-@else
+    @if($requestedDocuments->isEmpty())
+        <p class="no-notifications">You have no requested documents at this time.</p>
+    @else
     <table class="email-list">
+        <th></th>
+        <th>Type</th>
+        <th>Document Name - Message</th>
+        <th>Date</th>
+        <th>Action</th>
+
         @foreach ($requestedDocuments as $r)
              <tr class="requested-docs {{ $r->approval_status === 'Pending' ? 'Pending' : 'Declined' }} {{ $r->status === 'delivered' ? 'bold-row' : '' }}"
                 data-id="{{ $r->request_id }}" 
@@ -46,9 +52,9 @@
                                 <span class="subject-text">{{ $r->document_subject ?? 'No Title' }}</span>
 
                 @if($r->approval_status === 'Approved')
-                    <span class="request-purpose">
+                    <!-- <span class="request-purpose">
                         - {{ $r->request_purpose ?? 'No Purpose Provided' }}
-                    </span>
+                    </span> -->
                 @endif
                 
                 </td>
