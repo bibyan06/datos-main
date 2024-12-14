@@ -21,7 +21,6 @@ main {
 .email-list th, .email-list td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #ccc;
 }
 .email-list th {
     font-weight: bold;
@@ -114,21 +113,38 @@ th{
     border-bottom: 1px solid #ccc; 
 }
 
-.forwarded-item{
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+.forwarded-item td{
+    font-size: 14px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc; 
 }
 
-.requested-docs{
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+.requested-docs td{
+    width: 100%;
+    table-layout: fixed;  
+    border-collapse: collapse;
 }
+.requested-docs th, .requested-docs  td {
+    padding: 10px;
+    text-align: left;
+}
+.requested-docs th {
+    font-weight: bold;
+    background-color: transparent;
+    font-size: 14px;
+    border: none;
+}
+
+.subject-text {
+    text-align: left;
+    display: inline-block; 
+    width: 100%; 
+}
+
+.requested-docs td.subject {
+    text-align: left; 
+}
+
 
 .request-purpose {
     display: inline-block;
