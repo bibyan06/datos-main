@@ -117,14 +117,33 @@ class OfficeStaffController extends Controller
 
     public function showHomePage()
     {
+        $employeeId = Auth::user()->employee->id;
         $documents = Document::where('document_status', '=', 'Approved')
-                             ->where(function ($query) {
-                                 $query->whereNull('status')
-                                       ->orWhere('status', '!=', 'archive');
-                             })
-                             ->get();
+            ->where(function ($query) {$query->whereNull('status')
+            ->orWhere('status', '!=', 'archive');})
+            ->get();
+        
+        $forwarded = ForwardedDocument::where('forwarded_to', $employeeId)
+            ->orderBy('forwarded_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Forwarded';
+                $item->date = $item->forwarded_date;
+                return $item;
+            });
+
+        $declined = Document::where('uploaded_by', (string)$employeeId)  
+            ->orderBy('declined_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Declined Document';
+                $item->date = $item->declined_date;
+                return $item;
+            });
     
-        return view('home.office_staff', compact('documents'));
+        return view('home.office_staff', compact('documents','forwarded', 'declined'));
     }
 
     public function view($document_id)

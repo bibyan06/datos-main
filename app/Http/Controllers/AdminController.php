@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\SendDocument;
 use App\Models\ForwardedDocument;
 use App\Models\RequestDocument;
+use App\Models\Notification;
 use App\Models\Role;
 
 class AdminController extends Controller
@@ -218,15 +219,55 @@ class AdminController extends Controller
 
     public function adminHome()
     {
+        $employeeId = Auth::user()->employee->id;
        
         $documents = Document::where('document_status', '=', 'Approved')
-                             ->where(function ($query) {
-                                 $query->whereNull('status')
-                                       ->orWhere('status', '!=', 'archive');
-                             })
-                             ->get();
-    
-        return view('home.admin', compact('documents'));
+            ->where(function ($query) {
+            $query->whereNull('status')
+            ->orWhere('status', '!=', 'archive');})
+            ->get();
+
+          // Fetch forwarded documents
+        $forwarded = ForwardedDocument::where('forwarded_to', $employeeId)
+            ->orderBy('forwarded_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Forwarded';
+                $item->date = $item->forwarded_date;
+                return $item;
+            });
+
+        // Fetch sent documents
+        $sent = SendDocument::where('issued_to', $employeeId)
+            ->orderBy('issued_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Sent';
+                $item->date = $item->issued_date;
+                return $item;
+            });
+
+        // Fetch declined documents
+        $declined = Document::where('uploaded_by', (string)$employeeId)  // Cast $employeeId to string
+            ->orderBy('declined_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Declined Document';
+                $item->date = $item->declined_date;
+                return $item;
+            });
+
+        // Merge all collections into one
+        $notifications = $forwarded->merge($sent)->merge($declined);
+
+        // Sort by date in descending order
+        $sortedNotifications = $notifications->sortByDesc('date');
+            
+            
+        return view('home.admin', compact('documents','forwarded','sent','declined'));
     }
 
     public function adminDashboard()

@@ -28,37 +28,74 @@
             <div class="container rectangle" id="notifications">
                 <h4>Notifications</h4>
                 <div class="notification-content">
-                    <div class="notification-list">
-                        <div class="notification-item">
-                            <img src="{{ asset ('images/boy-2.png')}}" alt="Profile Icon" class="profile-icon-notif">
-                            <div class="notification-content-item">
-                                <span class="sender-name">DATOS</span>
-                                <span class="document-title">New Memorandum Available</span>
+                <div class="notification-list">
+                        @forelse ($forwarded as $r)
+                            <div class="notification-item">
+                                <img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
+                                <div class="notification-content-item">
+                                    <div class="content-wrapper">
+                                        <span class="document-title">
+                                            {{ $r->document->document_name ?? 'No Title' }}
+                                        </span>
+                                        <span class="notification-type">
+                                            ({{ $r->type }})
+                                        </span>
+                                        <i class="date">
+                                            {{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d, H:i') }}
+                                        </i>
+                                    </div>
+                                </div>
                             </div>
-                            <i class="bi bi-envelope-fill mail-icon"></i>
-                        </div>
-                        <div class="notification-item">
-                            <img src="{{ asset ('images/girl-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
-                            <div class="notification-content-item">
-                                <span class="sender-name">DATOS</span>
-                                <span class="document-title">Audited Disbursement Voucher</span>
-                            </div>
-                            <i class="bi bi-envelope-fill mail-icon"></i>
-                        </div>
-                        <div class="notification-item">
-                            <img src="images/boy-2.png" alt="Profile Icon" class="profile-icon-notif">
-                            <div class="notification-content-item">
-                                <span class="sender-name">DATOS</span>
-                                <span class="document-title">Claim Monitoring Sheet</span>
-                            </div>
-                            <i class="bi bi-envelope-fill mail-icon"></i>
-                        </div>
+                        @empty
+                            @forelse ($sent as $r)
+                                <div class="notification-item">
+                                    <img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
+                                    <div class="notification-content-item">
+                                        <div class="content-wrapper">
+                                            <span class="document-title">
+                                                {{ $r->document_subject ?? 'No Title' }}
+                                            </span>
+                                            <span class="notification-type">
+                                                ({{ $r->type }})
+                                            </span>
+                                            <i class="date">
+                                                {{ \Carbon\Carbon::parse($r->issued_date)->format('M d, H:i') }}
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                @forelse ($declined as $r)
+                                    <div class="notification-item">
+                                        <img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
+                                        <div class="notification-content-item">
+                                            <div class="content-wrapper">
+                                                <span class="document-title">
+                                                    {{ $r->document_name ?? 'No Title' }}
+                                                </span>
+                                                <span class="notification-type">
+                                                    ({{ $r->type }})
+                                                </span>
+                                                <i class="date">
+                                                    {{ \Carbon\Carbon::parse($r->declined_date)->format('M d, H:i') }}
+                                                </i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="notification-item">
+                                        <div class="notification-content-item">
+                                            <span class="document-title" style="color: red;">No Notifications Available</span>
+                                        </div>
+                                    </div>
+                                @endforelse
+                            @endforelse
+                        @endforelse
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Title and Date Time Moved Inside Dashboard Section -->
         <section class="dashboard-section">
             <div class="dashboard-container">
                 <div class="title-content">
@@ -85,7 +122,7 @@
                                     <h3>{{ $document->document_name }}</h3>
                                 </div>
                                 <input type="text" hidden
-                                    value="{{ \Carbon\Carbon::parse($document->updated_date)->format('F') }}">
+                                    value="{{ \Carbon\Carbon::parse($document->upload_date)->format('F') }}">
 
                                 <div class="column-right">
                                     <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
