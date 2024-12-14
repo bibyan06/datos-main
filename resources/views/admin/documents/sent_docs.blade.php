@@ -26,68 +26,66 @@
             @else
                 <table class="email-list">
                     <th></th>
-                    <th></th>
+                    <th>Type</th>
                     <th>Receiver</th>
                     <th>Document Name - Message</th>
                     <th>Date</th>
                     <th>Action</th>
-                    <!-- Loop through Forwarded Documents -->
-                    @foreach($forwardedDocuments as $forwarded)
-                        <tr class="email-item"
-                            data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
-                            data-status="{{ $forwarded->status }}"
-                            data-message="{{ $forwarded->message ?? 'No message' }}" 
-                            data-document-name="{{ $forwarded->document->document_name ?? 'Unknown Document' }}">
-                            
-                            <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">Forwarded Document to:</td>
-                            <td class="document-type">
-                                <span class="receiver">
-                                    {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
-                                    {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
-                                </span>
-                            </td>
-                            <td class="document-name">
-                                {{ $forwarded->document->document_name ?? 'Unknown Document' }} - {{ $forwarded->message ?? 'No message' }}
-                            </td>
+                    <tbody>
+                        <!-- Loop through Forwarded Documents -->
+                        @foreach($forwardedDocuments as $forwarded)
+                            <tr class="email-item"
+                                data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
+                                data-status="{{ $forwarded->status }}"
+                                data-message="{{ $forwarded->message ?? 'No message' }}" 
+                                data-document-name="{{ $forwarded->document->document_name ?? 'Unknown Document' }}">
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">Forwarded Document to:</td>
+                                <td class="document-type">
+                                    <span class="receiver">
+                                        {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
+                                        {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
+                                    </span>
+                                </td>
+                                <td class="document-name">
+                                    {{ $forwarded->document->document_name ?? 'Unknown Document' }} - {{ $forwarded->message ?? 'No message' }}
+                                </td>
+                                <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id={{ $forwarded->forwarded_document_id }} status='deleted'
+                                        class="notifForward" style="text-decoration: none; color:black;">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
 
-                            <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
-                            <td class="email-actions">
-                                <a notif-id={{ $forwarded->forwarded_document_id }} status= 'deleted'
-                                    class = "notifForward" style="text-decoration: none; color:black;"><i
-                                        class="bi bi-trash"></i></a>
-
-                            </td>
-                        </tr>
-                    @endforeach
-
-                    <!-- Loop through Sent Documents -->
-                    @foreach($sentDocuments as $sent)
-                        <tr class="sent-items"
-                            data-file-url="{{ asset('storage/' . $sent->file_path) }}"
-                            data-status="{{ $sent->status }}"
-                            data-document-name="{{ $sent->document_subject ?? 'Unknown Document' }}"
-                            data-receiver="{{ $sent->recipient->first_name ?? 'Unknown' }} {{ $sent->recipient->last_name ?? 'User' }} ">
-                            
-            
-                            <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">Sent Requested Document to:</td>
-                            <td class="document-type">
-                                <span class="receiver">
-                                    {{ $sent->recipient->first_name ?? 'Unknown' }} 
-                                    {{ $sent->recipient->last_name ?? 'User' }} 
-
-                                </span>
-                            </td>
-                            <td class="document-name">{{ $sent->document_subject ?? 'Unknown Document' }}</td>
-                            <td class="date">{{ \Carbon\Carbon::parse($sent->issued_date)->format('M d H:i') }}</td>
-                            <td class="email-actions">
-                                <a notif-id={{ $sent->send_id }} status= 'deleted' class = "notifSent"
-                                    style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
-
-                            </td>
-                        </tr>
-                    @endforeach
+                        <!-- Loop through Sent Documents -->
+                        @foreach($sentDocuments as $sent)
+                            <tr class="sent-items"
+                                data-file-url="{{ asset('storage/' . $sent->file_path) }}"
+                                data-status="{{ $sent->status }}"
+                                data-document-name="{{ $sent->document_subject ?? 'Unknown Document' }}"
+                                data-receiver="{{ $sent->recipient->first_name ?? 'Unknown' }} {{ $sent->recipient->last_name ?? 'User' }}">
+                                <td class="checkbox"><input type="checkbox"></td>
+                                <td class="sender">Sent Requested Document to:</td>
+                                <td class="document-type">
+                                    <span class="receiver">
+                                        {{ $sent->recipient->first_name ?? 'Unknown' }} 
+                                        {{ $sent->recipient->last_name ?? 'User' }}
+                                    </span>
+                                </td>
+                                <td class="document-name">{{ $sent->document_subject ?? 'Unknown Document' }}</td>
+                                <td class="date">{{ \Carbon\Carbon::parse($sent->issued_date)->format('M d H:i') }}</td>
+                                <td class="email-actions">
+                                    <a notif-id={{ $sent->send_id }} status='deleted' class="notifSent"
+                                        style="text-decoration: none; color:black;">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             @endif
         </div>
