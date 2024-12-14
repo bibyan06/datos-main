@@ -30,7 +30,9 @@
                 <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                 <img src="{{ asset('images/girl-1.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
+                    <a href="{{ route('admin.admin_account') }}">
+                        <i class="bi bi-person-circle" id="account-icon"></i> Account
+                    </a>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bi bi-box-arrow-left logout" id="logout-icon"></i> Logout
                     </a>
@@ -87,7 +89,7 @@
             </ul>
             <div class="profile-settings">
                 <div class="profile-settings">
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill" title="Logout"></i></div>
+                    <!-- <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill" title="Logout"></i></div> -->
                     <div class="icon-container" data-target="#sidebar"><img src="{{ asset('images/girl-1.png') }}"
                             alt="Profile Icon" class="profile-pic" title="Account"></div>
                 </div>
@@ -176,7 +178,7 @@
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}"> Logout</a></li>
+                    <!-- <li><a href="{{ route('logout') }}"> Logout</a></li> -->
                     <li><a href="{{ route('admin.admin_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>

@@ -36,7 +36,7 @@
                         </i>Account</a>
                     <a href="#"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                        <i class="bi bi-box-arrow-left logout" id="logout-icon"></i> Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -88,9 +88,9 @@
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash" title="Trash"></i></div></li>
             </ul>
             <div class="profile-settings">
-                <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
+                <!-- <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div> -->
                 <div class="icon-container" data-target="#sidebar"><img src="{{ asset('images/boy-1.png') }}"
-                        alt="Profile Icon" class="profile-pic"></div>
+                        alt="Profile Icon" class="profile-pic" title="Account"></div>
             </div>
         </div>
     </nav>
@@ -135,7 +135,7 @@
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <!-- <li><a href="{{ route('logout') }}">Logout</a></li> -->
                     <li><a href="{{ route('dean.dean_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>

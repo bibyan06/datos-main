@@ -95,10 +95,46 @@ h2 {
     width: 150px;
     z-index: 10;
 }
+
 .profile-dropdown a:hover {
     background-color: #f2f2f2;
 }
 
+/* Hover effect for profile icon */
+.profile-icon:hover .profile-dropdown {
+    display: block;
+}
+
+.profile-icon a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 1px;
+}
+
+.profile-icon img {
+    height: 30px;
+    border-radius: 50%;
+}
+
+.profile-icon a:hover {
+    color: #007bff; 
+}
+
+.profile-dropdown .logout {
+    color: red; 
+}
+
+.profile-dropdown .logout:hover {
+    color: red; 
+}
+
+/* Separator between Account and Logout */
+.profile-dropdown a:not(.logout) {
+    border-bottom: 1px solid #e0e0e0;
+}
 .profile-icon:hover .profile-dropdown {
     display: block;
 }

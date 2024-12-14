@@ -30,10 +30,10 @@
                 <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
                 <img src="{{ asset('images/boy-2.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"></i>Account</a>
+                    <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle account" id="account-icon"></i>Account</a>
                     <a href="{{ route('logout') }}" 
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                        <i class="bi bi-box-arrow-left logout" id="logout-icon"></i> Logout
                     </a>
                 </div>
             </div>
@@ -71,8 +71,8 @@
             </ul>
             <div class="profile-settings">
                 <div class="profile-settings">
-                    <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-2.png') }}" alt="Profile Icon" class="profile-pic"></div>
+                    <!-- <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div> -->
+                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-2.png') }}" alt="Profile Icon" class="profile-pic" title="Account"></div>
                 </div>
                 
             </div>
@@ -111,7 +111,7 @@
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <!-- <li><a href="{{ route('logout') }}">Logout</a></li> -->
                     <li><a href="{{ route ('office_staff.os_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>
