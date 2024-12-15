@@ -165,15 +165,40 @@ class DeanController extends Controller
 
     public function showDeanHome()
     {
-        $documents = Document::where('category_name', 'Memorandum')
-        ->where('document_status', 'Approved')
-        ->where(function ($query) {
-            $query->whereNull('status')
-                  ->orWhere('status', '!=', 'archive');
-        })
-        ->get();
+        $employeeId = Auth::user()->employee->id;
 
-        return view('home.dean', compact('documents'));
+        $documents = Document::where('category_name', 'Memorandum')
+            ->where('document_status', 'Approved')
+            ->where(function ($query) {
+                $query->whereNull('status')
+                    ->orWhere('status', '!=', 'archive');
+            })
+            ->get();
+
+
+        $forwarded = ForwardedDocument::where('forwarded_to', $employeeId)
+            ->orderBy('forwarded_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Forwarded';
+                $item->date = $item->forwarded_date;
+                return $item;
+            });
+
+
+        // Fetch declined documents
+        $declined = RequestDocument::where('requested_by',$employeeId)  
+            ->orderBy('declined_date', 'desc')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'Declined Document';
+                $item->date = $item->declined_date;
+                return $item;
+            });
+
+        return view('home.dean', compact('documents', 'forwarded', 'declined'));
     }
 
 

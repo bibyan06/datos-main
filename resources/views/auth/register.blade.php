@@ -13,7 +13,7 @@
     <div class="register-container mx-auto p-4">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full md:w-1/2 xl:w-1/2 p-6 bg-blue-400">
-                <img src="{{ asset('images/login-image.png') }}" alt="Left Image" class="w-full h-full object-cover">
+                <img src="{{ asset('images/login-image.png') }}" alt="Left Image" style="width: 800px; height: 700px; margin-top:75px;" class="object-cover">
             </div>
             <div class="registerForm w-full md:w-1/2 xl:w-1/2 p-4">
             <form method="POST" id="registerForm" action="{{ route('register') }}">

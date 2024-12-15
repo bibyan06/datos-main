@@ -247,6 +247,10 @@ main {
     margin-left: 1rem;
 }
 
+.notification-type{
+    font-size: 0.9rem;
+}
+
 .mail-icon {
     font-size: 20px;
     margin-left: auto;
