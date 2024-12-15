@@ -306,7 +306,7 @@ class OfficeStaffController extends Controller
     
         // Fetch declined documents marked as archive, but only for those uploaded by the current user
         $uploaded = Document::where('document_status', 'Declined')
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->where('uploaded_by', $currentUserName)  
             ->get();
         

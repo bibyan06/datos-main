@@ -13,6 +13,7 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="{{ asset('css\bootstrap.min.css')}}"> 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- @vite(['resources/css/app.css','resources/js/app.js']) -->
 </head>
 
 <body>

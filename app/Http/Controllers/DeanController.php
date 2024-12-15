@@ -70,7 +70,7 @@ class DeanController extends Controller
             ->where(function ($queryBuilder) use ($query) {
                 $queryBuilder->where(function ($statusQuery) {
                     $statusQuery->whereNull('status')
-                                ->orWhere('status', '!=', 'archive');
+                                ->orWhere('status', '!=', 'archiveNotif');
                 })
                 ->where(function ($searchQuery) use ($query) {
                     $searchQuery->where('document_name', 'LIKE', "%{$query}%")
@@ -157,7 +157,7 @@ class DeanController extends Controller
                             ->where('document_status', 'Approved')
                             ->where(function ($query) {
                                 $query->whereNull('status')
-                                    ->orWhere('status', '!=', 'archive');
+                                    ->orWhere('status', '!=', 'archiveNotif');
                             })
                             ->get();
         return view('dean.documents.dean_search', compact('documents'));
@@ -171,7 +171,7 @@ class DeanController extends Controller
             ->where('document_status', 'Approved')
             ->where(function ($query) {
                 $query->whereNull('status')
-                    ->orWhere('status', '!=', 'archive');
+                    ->orWhere('status', '!=', 'archiveNotif');
             })
             ->get();
 
@@ -276,16 +276,16 @@ class DeanController extends Controller
 
         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
             ->where('forwarded_to', $id)
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->get();
 
         $sent = SendDocument::with(['recipient', 'document', 'sender'])
             ->where('issued_to', $id)
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->get();
 
         $request = RequestDocument::where('approval_status', 'Declined')
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->where('requested_by', $id)
             ->get();
 

@@ -456,14 +456,14 @@ class AdminController extends Controller
         $currentUser = auth()->user()->first_name . ' ' . auth()->user()->last_name;
 
         // Fetch forwarded documents marked as archive
-        $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
-            ->where('forwarded_to', $id)
+         $forward = ForwardedDocument::with(['forwardedTo', 'documents', 'forwardedBy'])
+            ->where('forwarded_to',  $id)
             ->where('status', 'archiveNotif')
             ->get();
 
         // Fetch declined documents marked as archive, but only for those uploaded by the current user
         $uploaded = Document::where('document_status', 'Declined')
-            ->where('status', 'archive')
+            ->where('status', 'archiveNotif')
             ->where('uploaded_by', $currentUser)  
             ->get();
 
@@ -489,7 +489,7 @@ class AdminController extends Controller
 
         $document = Document::find($id);
         if ($document) {
-            $document->document_status = "archive";
+            $document->document_status = "archiveNotif";
             $document->updated_at = now();
             $document->update();
 

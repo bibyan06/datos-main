@@ -4,6 +4,9 @@
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <style>
         .delivered {
             font-weight: bold;
@@ -16,7 +19,6 @@
 @endsection
 
 @section('main-id', 'dashboard-content')
-
 @section('content')
 <section class="title">
     <div class="title-content">
@@ -29,87 +31,69 @@
 </section>
 
 <div id="dashboard-section">
-    <div class="dashboard-container">
-        @if ($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
-            <p class="no-notifications">You have no notifications at this time.</p>
-        @else
-            <table class="email-list">
-                <th></th>
-                <th>Sender</th>
-                <th>Type</th>
-                <th>Document Name - Message</th>
-                <th>Date</th>
-                <th>Action</th>
-                {{-- Display Forwarded Documents --}}
-                @foreach ($forwardedDocuments as $forwarded)
-                    <tr class="email-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}"
-                        data-id="{{ $forwarded->forwarded_document_id }}"
-                        data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
-                        data-document="{{ $forwarded->document->document_name ?? 'No Title' }}"
-                        data-snippet="{{ $forwarded->message ?? 'No message' }}" 
-                        data-type="forward"
-                        data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
-
-                        <td class="checkbox"><input type="checkbox"></td>
-                        <!-- <td class="star">★</td> -->
-                        <td class="sender {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                            {{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }}
-                            {{ $forwarded->forwardedByEmployee->last_name ?? '' }}
-                        </td>
-                        <td>Forwarded Document</td>
-                        <td class="subject {{ $forwarded->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                            <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
-                            <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
-                        </td>
-                        
-                        <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }} </td>
-                        <td class="email-actions">
-                            <a notif-id={{ $forwarded->forwarded_document_id }} status='archive' class="notifForward"
-                                style="text-decoration: none; color:black;"><i class="bi bi-archive"></i>
-                            </a>
-                            <a notif-id={{ $forwarded->forwarded_document_id }} status='deleted' class="notifForward"
-                                style="text-decoration: none; color:black;"><i class="bi bi-trash"></i>
-                            </a>
-                        </td>
+        <div class="dashboard-container">
+            @if ($documents->isEmpty() && $documents->isEmpty())
+                <p class="no-notifications">You have no notification at this time.</p>
+            @else
+                <table class="email-list" id="myTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Sender</th>
+                        <th>Type</th>
+                        <th>Document Name</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
-                @endforeach
+                </thead>
+                <tbody>
+                    <!-- Forwarded Documents -->
+                    @foreach ($documents as $forwarded)
+                        <tr class="email-item" data-file-url="{{ asset('storage/'.$forwarded['file_path']) }}"
+                            data-status="{{ $forwarded['status'] }}"
+                            data-message="{{ $forwarded['message'] ?? 'No message' }}"
+                            data-document-name="{{ $forwarded['document_name'] ?? 'Unknown Document' }}">
 
-                {{-- Display Sent Documents --}}
-                @foreach ($sentDocuments as $sentDocument)
-                    <tr class="email-items {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}"
-                        data-id="{{ $sentDocument->send_id }}"
-                        data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}"
-                        data-document="{{ $sentDocument->document_subject ?? 'No Title' }}" 
-                        data-type="request"
-                        data-file-url="{{ asset('storage/' . $sentDocument->file_path) }}">
-                       
-                        <td class="checkbox"><input type="checkbox"></td>
-                        <td class="sender {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                            {{ $sentDocument->sender->first_name ?? 'Unknown Sender' }}
-                            {{ $sentDocument->sender->last_name ?? '' }}
-                        </td>
-                        <td>Sent Document</td>
-                        <td class="subject {{ $sentDocument->status === 'delivered' ? 'delivered' : 'viewed' }}">
-                            <span class="subject-text">{{ $sentDocument->document_subject ?? 'No Title' }}</span>
-                        </td>
-                       
-                        <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d H:i') }}</td>
-                        <td class="email-actions">
-                            <a notif-id={{ $sentDocument->send_id }} status='archive' class="notifSent"
-                                style="text-decoration: none; color:black;"><i class="bi bi-archive"></i></a>
-                            <a notif-id={{ $sentDocument->send_id }} status='deleted' class="notifSent"
-                                style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        @endif
+                            <td class="checkbox"><input type="checkbox"></td>
+                            <td class="document-type">
+                                <span class="receiver">
+                                    {{ $forwarded['receiver_name'] ?? 'Unknown' }}
+                                </span>
+                            </td>
+                            <td class="sender">{{ $forwarded['type'] }} Document</td>
+                           
+                            <td class="document-name">
+                                {{ $forwarded['document_name'] ?? 'Unknown Document' }} -
+                                {{ $forwarded['message'] ?? 'No message' }}
+                            </td>
+
+                            <td class="date">{{ \Carbon\Carbon::parse($forwarded['date'])->format('M d H:i') }}</td>
+                            <td class="email-actions">
+                                <a notif-id= {{ $forwarded ['id']}} status= 'archiveNotif' type="{{$forwarded ['type']}}"
+                                    class = "{{"notif".$forwarded['type']}}" style="text-decoration: none; color:black;"><i
+                                    class="bi bi-archive"></i>
+                                </a>
+                                <a notif-id={{ $forwarded['id']}} status= 'deleted' type="{{$forwarded['type']}}"
+                                    class = "{{ "notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
+                                        class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
     </div>
-</div>
 @endsection
+
 
 @section('custom-js')
     <script src="{{ asset('js/dean/notification.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+    
 @endsection
 

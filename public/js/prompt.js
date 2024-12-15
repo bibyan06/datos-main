@@ -85,6 +85,85 @@ notifButtons.forEach(btn => {
     });
 });
 
+// New NotifForward 
+
+const notifButtons1 = document.querySelectorAll('.notifForwarded');
+
+notifButtons1.forEach(btn => {
+    btn.style.cursor = "pointer";
+    btn.addEventListener('click', function () {
+        const id = btn.getAttribute('notif-id');
+        const status = btn.getAttribute('status');
+        const type = btn.getAttribute('type');
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif") ? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            icon: status=="Archive"||status=="delivered"?'warning':'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                   
+               fetch(`/deleteNotif/${id}/${status}/${type}`)
+               .then(res=>res.json())
+               .then(data=>{
+                if(data.success){
+                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                        // Optionally refresh or redirect
+                        window.location.reload(); // Refresh the page
+                    });
+                }else{
+                    Swal.fire('Error!', data.message, 'error');
+                }
+               })
+            }
+        });
+    });
+});
+
+// New notifSent
+const sentnotifButtons1 = document.querySelectorAll('.notifSent');
+
+sentnotifButtons1.forEach(btn => {
+    btn.style.cursor = "pointer";
+    btn.addEventListener('click', function () {
+        const id = btn.getAttribute('notif-id');
+        const status = btn.getAttribute('status');
+        const type = btn.getAttribute('type');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif") ? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            icon: status=="Archive"||status=="viewed"?'warning':'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                   fetch(`/deleteNotif/${id}/${status}/${type}`)
+               .then(res=>res.json())
+               .then(data=>{
+                if(data.success){
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                        // Optionally refresh or redirect
+                        window.location.reload(); // Refresh the page
+                    });
+                }else{
+                    Swal.fire('Error!', data.message, 'error');
+                    }
+                })
+                // Additional logic for archiving can be added here
+            }
+        });
+    });
+});
+
+
 
 const sentnotifButtons = document.querySelectorAll('.notifSent');
 
@@ -110,7 +189,7 @@ sentnotifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"restored":capital(status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -124,6 +203,7 @@ sentnotifButtons.forEach(btn => {
     });
 });
 
+// New notifDeclined
 const declinednotifButtons = document.querySelectorAll('.notifDeclined');
 
 declinednotifButtons.forEach(btn => {
@@ -131,10 +211,11 @@ declinednotifButtons.forEach(btn => {
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
+        const type = btn.getAttribute('type');
             
         Swal.fire({
             title: 'Are you sure?',
-            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif")? "Archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif")? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -144,11 +225,11 @@ declinednotifButtons.forEach(btn => {
         }).then((result) => {
             if (result.isConfirmed) {
                    
-               fetch(`/deleteNotifdeclined/${id}/${status}`)
+               fetch(`/deleteNotifdeclined/${id}/${status}/${type}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":(status==="archiveNotif")? "Archive":capital(status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -186,7 +267,7 @@ reqdeclinednotifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"restored":capital(status)}`, data.message, 'success').then(() => {
                         window.location.reload(); 
                     });
                 }else{

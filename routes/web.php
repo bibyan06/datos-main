@@ -243,8 +243,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('verification.notices');
     Route::post('/sent/upload', [SentDocumentController::class, 'sentRequested'])->name('admin.admin_send_document');
     Route::get('/deleteNotif/{id}/{status}', [NotificationController::class, 'destroy'])->name('deleteNotif');
+    Route::get('/deleteNotif/{id}/{status}/{type}', [NotificationController::class, 'newDestroy'])->name('newdelete');
     Route::get('/deleteNotifsent/{id}/{status}', [NotificationController::class, 'destroysent'])->name('deleteNotifsent');
     Route::get('/deleteNotifdeclined/{id}/{status}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
+    Route::get('/batchdelete', [NotificationController::class, 'batchdelete'])->name('batchdelete');
+    Route::get('/deleteNotifdeclined/{id}/{status}/{type}', [NotificationController::class, 'Newdestroydeclined'])->name('deleteNotifdeclined');
     Route::get('/deleteNotifReqdeclined/{id}/{status}', [NotificationController::class, 'destroyreqdeclined'])->name('deleteNotifReqdeclined');
 
     Route::get('/trash/{id}', [TrashController::class, 'deleteNotifForever'])->name('deleteNotifForever');

@@ -8,46 +8,71 @@ use App\Models\RequestDocument;
 use App\Models\SetDocument;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+
 
 class SentDocumentController extends Controller
 {
     public function index($viewName)
     {
-        // Fetch the authenticated user's employee_id
         $userEmployeeId = auth()->user()->employee_id;
 
-        // Fetch the corresponding employee record from the Employee table
         $employee = Employee::where('employee_id', $userEmployeeId)->first();
-        // if($viewName == "office_staff.documents.sent_docs"){
-        // Ensure that the employee record exists before querying documents
+
+        $documents = collect(); // Initialize an empty collection
+
         if ($employee) {
-            // Use the employee's id for filtering the forwarded and sent documents
             $employeeId = $employee->id;
 
-            // Fetch forwarded documents where the current user is the one who forwarded the document
+            // Fetch Forwarded Documents
             $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
-            ->where('forwarded_by', $employeeId)
-            ->where('status', 'viewed','delivered')
-            ->whereNotIn('status', ['archive']) // Exclude 'archive'
-           
-            ->get();
+                ->where('forwarded_by', $employeeId)
+                ->whereNotIn('status', ['archive','deleted'])
+                ->get()
+                ->map(function ($doc) {
+                    return [
+                        'id' => $doc->forwarded_document_id,
+                        'type' => 'Forwarded',
+                        'receiver_name' => optional($doc->forwardedToEmployee)->first_name . ' ' . optional($doc->forwardedToEmployee)->last_name,
+                        'document_name' => optional($doc->document)->document_name,
+                        'message' => $doc->message,
+                        'status' => $doc->status,
+                        'date' => $doc->forwarded_date,
+                        'file_path' => $doc->document->file_path ?? null,
+                    ];
+                });
 
-            // Fetch sent documents where the current user issued the document
+            // Fetch Sent Documents
             $sentDocuments = SendDocument::with(['sender', 'document'])
                 ->where('issued_by', $employeeId)
-                ->where('status', 'viewed','delivered')
-                ->whereNotIn('status', ['archive']) 
+                ->whereNotIn('status', ['archive','deleted'])
+                ->get()
+                ->map(function ($doc) {
+                    return [
+                        'id' => $doc->send_id,
+                        'type' => 'Sent',
+                        'receiver_name' => optional($doc->recipient)->first_name . ' ' . optional($doc->recipient)->last_name,
+                        'document_name' => $doc->document_subject,
+                        'message' => null, // Sent documents might not have a message
+                        'status' => $doc->status,
+                        'date' => $doc->issued_date,
+                        'file_path' => $doc->file_path ?? null,
+                    ];
+                });
+        // Combine the two collections
+            $documents = $forwardedDocuments->merge($sentDocuments);
                
-                ->get();
         } else {
-            // Log the issue for debugging purposes
             \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
         }
 
-        // Return the view with the documents (empty collections as fallback)
-        return view($viewName, ['forwardedDocuments' => $forwardedDocuments,'sentDocuments' => $sentDocuments,]);
-    
+        // Return combined documents to the view
+        return view($viewName, ['documents' => $documents]);
     }
+
 
     public function sentRequested(Request $request){
         try {

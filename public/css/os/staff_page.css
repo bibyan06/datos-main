@@ -596,6 +596,26 @@ h2 {
 }
 
 
+/* Forward Function */
+.send-btn {
+    background-color:#009FEA;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.send-btn:hover {
+    background-color: #009FEA;
+}
+
+.custom-cancel-button {
+    background-color: #ff4d4d !important; 
+    color: white !important; 
+    border: none !important;  
+}
+
 
 footer {
     background-color: #eceef1;

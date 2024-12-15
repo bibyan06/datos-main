@@ -29,12 +29,13 @@
                 <th>Date</th>
                 <th>Action</th>
                 <tbody>
-                    @if ($forward->isEmpty() && $uploaded->isEmpty())
+                    @if ($forwardedDocuments->isEmpty() && $sent->isEmpty())
                         <tr>
-                            <td colspan="6" class="no-notifications" style="text-align:center; color:red;">You have no Archive Notifications at this time.</td>
+                            <td colspan="6" class="no-notifications" style="text-align:center; color:red;">You have no deleted document at this time.</td>
                         </tr>
                     @else
                         @if ($forward)
+
                             @foreach ($forward as $r)
                             <tr class="email-item" 
                                     data-id="{{ $r->forwarded_document_id }}"
