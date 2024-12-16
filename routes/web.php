@@ -111,6 +111,8 @@ Route::middleware('role:1')->group(function () {
         Route::get('/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
         Route::get('/trash', [AdminController::class, 'trash'])->name('admin.trash');
         Route::post('/check-document-number', [DocumentController::class, 'checkDocumentNumber']) ->name('admin.check_document_number');   
+        Route::get('/batch_delete/{id}/{status}/{type}',[TrashController::class,'batch'])->name('batch');
+        
     });
 });
 
@@ -153,7 +155,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
         Route::get('/os_archive', [OfficeStaffController::class, 'archiveDocs'])->name('office_staff.os_archive');
         Route::get('/os_trash', [OfficeStaffController::class, 'trash'])->name('office_staff.os_trash');
         Route::post('/check-document-number', [DocumentController::class, 'checkDocumentNumber']) ->name('office_staff.check_document_number');   
-
+        Route::get('/batch_delete/{id}/{status}/{type}',[TrashController::class,'batch'])->name('batch');
     });
 });
 
@@ -191,6 +193,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
         });
         Route::get('/dean_archive', [DeanController::class, 'archiveDocs'])->name('dean.dean_archive');
         Route::get('/dean_trash', [DeanController::class, 'trash'])->name('dean.dean_trash');
+        Route::get('/batch_delete/{id}/{status}/{type}',[TrashController::class,'batch'])->name('batch');
+
     });
 });
 
@@ -227,7 +231,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');
     // Route::get('/logout', [AuthLoginController::class, 'logout'])->name('logout');
     Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
-    Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+    Route::get('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+    // Route::get('/forwarded-documents/{id}/{type}/{status}', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+
     Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
     Route::patch('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
     Route::patch('/requested-declined-documents/{requestId}/update-status', [DocumentController::class, 'updateStatusRequested'])->name('declinedDocuments.updateStatusRequested');

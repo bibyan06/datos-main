@@ -56,7 +56,7 @@
                 <form id="uploadDocumentForm" action="{{route('admin.admin_upload_document')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="document-number" id="dNumber">Document Number</label>
+                        <label for="document-number" id="dNumber">Document Number <span> (Check the Document Number if existed.) </span></label>
                         <div style="display: flex; align-items: center; width: 100%;">
                             <input type="text" id="document-number" name="document_number" class="form-control" value="{{$documentsCount}}" disabled>
                             <span id="edit-document-number-btn" style="margin-left: 10px; cursor: pointer;" title="Edit">
@@ -66,7 +66,7 @@
                         <small style="color: red; font-weight: bold" id="documentNumberError"></small>
                     </div>
                     <div class="form-group">
-                        <label for="document-name" id="dName">Document Name</label>
+                        <label for="document-name" id="dName">Document Name </label>
                         <input type="text" id="document-name" name="document_name" class="form-control">
                         <small style="color: red; font-weight: bold" id="nameText"></small>
                     </div>

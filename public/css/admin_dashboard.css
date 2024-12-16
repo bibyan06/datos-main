@@ -3,7 +3,7 @@ main {
   flex-grow: 1;
   padding:16px;
   transition: margin-left 0.3s ease, padding-left 0.3s ease;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 #main-content {
@@ -16,7 +16,7 @@ main {
 .reports-container {
   display: flex;
   justify-content: space-between;
-  margin: 1rem 1rem 1rem 3rem;
+  margin: 1rem 1rem 1rem 2.4rem;
 }
 
 .report {
@@ -39,16 +39,13 @@ main {
   color: #333;
 }
 
-#dashboard-section {
-  margin-top: 40px;
 
-}
 
 .filter-container {
   display: flex;
   justify-content: flex-end; 
   align-items: center;
-  gap: 15px; 
+  gap: 10px; 
 }
 
 /* Search Bar Styles */
@@ -78,7 +75,7 @@ main {
 
 /* Dropdown Styles */
 .filter-container select {
-  padding: 10px 35px 10px 10px; 
+  padding: 10px 10px 10px 10px; 
   font-size: 15px;
   border-radius: 4px;
   border: 1px solid #ccc; 
@@ -115,7 +112,6 @@ select {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 20px;
 }
 
 .dashboard-title h2 {
@@ -127,7 +123,7 @@ select {
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #ddd;
-  width: 300px;
+  width: 100px;
 }
 
 
@@ -269,4 +265,184 @@ th {
 
 .editable-field.editing {
   border: 2px solid #009FEA; /* Blue border when editable */
+}
+
+
+@media (max-width: 576px) {
+  .reports-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+  }
+
+  .dashboard-container{
+    padding: 20px;
+  }
+
+  .dashboard-container .table {
+    
+    min-width: 800px; /* Ensures the table maintains its full width */
+    width: 100%; /* Allows the table to expand fully */
+}
+
+.dashboard-container .table th,
+.dashboard-container .table td {
+    text-align: left; /* Ensures consistent text alignment */
+    padding: 8px; /* Adjust padding for readability */
+}
+
+.dashboard-container .table {
+    border-collapse: collapse; /* Keeps borders clean */
+}
+
+.dashboard-container .table th,
+.dashboard-container .table td {
+    border: 1px solid #ddd; /* Optional: Table cell borders */
+}
+
+.dashboard-title{
+  display: flex;
+}
+
+.dashboard-title h2{
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+.dashboard-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.status-filter{
+  width: 100px;
+}
+
+.filter-container{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.filter-container select{
+  width: 100px;
+}
+
+.option-text{
+  width: 90px;
+}
+
+.filter-container select {
+  padding: 10px 10px;
+  font-size: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  color: black;
+}
+
+.dashboard-title h2{
+  font-size: 20px;
+}
+
+.documents-search-bar {
+  display: none;
+}
+
+
+.table-content-container{
+  overflow-x: auto; 
+  
+}
+
+}
+
+@media (max-width: 768px) { 
+  .reports-container {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 3rem;
+  }
+
+  .dashboard-container{
+    padding: 20px;
+  }
+
+  .dashboard-container .table {
+    min-width: 800px; /* Ensures the table maintains its full width */
+    width: 100%; /* Allows the table to expand fully */
+  }
+
+  .dashboard-title h2{
+    font-size: 20px;
+  }
+
+  .dashboard-title .documents-search-bar{
+    width: 150px;
+    margin-left: 10px;
+  }
+
+
+  .table-container{
+    color: #ffffff;
+    overflow-x: auto; /* Allows horizontal scrolling */
+    white-space: nowrap;
+  }
+
+  .documents-search-bar {
+    display: none;
+  }
+  
+
+  .status-filter{
+    margin-right: 20px;
+    width: 100px;
+  }
+  
+  .filter-container{
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .filter-container select{
+    width: 120px;
+  }
+
+  .table-content-container{
+    overflow-x: auto; 
+    
+  }
+  
+}
+
+@media (max-width: 992px) { 
+  .reports-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+  }
+
+  .dashboard-container{
+    padding: 20px;
+  }
+
+  .status-filter{
+    margin-right: 20px;
+    width: 100px;
+  }
+  
+  .filter-container{
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .filter-container select{
+    width: 120px;
+  }
+
+  .table-content-container{
+    overflow-x: auto; 
+    
+  }
 }

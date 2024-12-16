@@ -304,7 +304,7 @@ class DocumentController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, $forwardedDocumentId)
+    public function updateStatus(Request $request, $forwardedDocumentId,)
     {
         Log::info("Attempting to update status for document ID: " . $forwardedDocumentId);
 

@@ -12,9 +12,10 @@ archiveButtons.forEach(archive => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`/admin/archive_document/${id}`, {
@@ -62,13 +63,14 @@ notifButtons.forEach(btn => {
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            cancelButtonText: 'Cancel',
+            reverseButtons: true, 
         }).then((result) => {
             if (result.isConfirmed) {
                    
-               fetch(`/deleteNotif/${id}/${status}`)
+               fetch(`/deleteNotif/${id}/${status=='archiveNotif'?'delivered':status}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
@@ -102,9 +104,10 @@ notifButtons1.forEach(btn => {
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -140,9 +143,10 @@ sentnotifButtons1.forEach(btn => {
             icon: status=="Archive"||status=="viewed"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    fetch(`/deleteNotif/${id}/${status}/${type}`)
@@ -179,9 +183,10 @@ sentnotifButtons.forEach(btn => {
             icon: status=="Archive"||status=="viewed"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -219,9 +224,10 @@ declinednotifButtons.forEach(btn => {
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -257,9 +263,10 @@ reqdeclinednotifButtons.forEach(btn => {
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -293,9 +300,10 @@ deleteforButtons.forEach(btn => {
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -333,9 +341,10 @@ deletesentButtons.forEach(btn => {
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -371,9 +380,10 @@ deletedeclinedButtons.forEach(btn => {
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -409,9 +419,10 @@ deleterequestedButtons.forEach(btn => {
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
@@ -447,9 +458,10 @@ restoredocs.forEach(btn => {
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
+            ccancelButtonText: 'Cancel',      
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`/restore/${id}`, {

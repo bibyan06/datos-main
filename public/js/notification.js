@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', function(e) {
             if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
                 const forwardedDocumentId = this.getAttribute('data-id');
-                const sender = this.getAttribute('data-sender');
-                const documentName = this.getAttribute('data-document');
-                const snippet = this.getAttribute('data-snippet');
+                const documentName = this.getAttribute('data-document-name');
+                const receiver = this.getAttribute('data-receiver');
+                const message = this.getAttribute('data-message');                
                 const fileUrl = this.getAttribute('data-file-url');
 
                 Swal.fire({
@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                                 <div style="margin-bottom: 20px;">
                                     <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">From:</p>
-                                    <p style="margin: 0; font-size: 20px; color: #555;">${sender}</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${receiver}</p>
                                 </div>
                                 <div style="margin-bottom: 20px;">
                                     <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Message:</p>
-                                    <p style="margin: 0; font-size: 20px; color: #555;">${snippet}</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${message}</p>
                                 </div>
                             </div>
                         </div>     
@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (result.isConfirmed && forwardedDocumentId) {
                         console.log("Attempting to send request to update status...");
                         
-                        fetch(`/forwarded-documents/${forwardedDocumentId}/update-status`, {
-                            method: 'PATCH',
+                        fetch( {
+                            method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -94,8 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                     .then(() => {
                                         document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
                                         document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .snippet`).style.fontWeight = 'normal';
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .document-name`).style.fontWeight = 'normal';
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .receiver`).style.fontWeight = 'normal';
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .date`).style.fontWeight = 'normal';
                                         location.reload();
                                     });
                             } else {

@@ -26,7 +26,7 @@ class NotificationController extends Controller{
             $uploadedBy = $employee->first_name . ' ' . $employee->last_name;
              
             // Fetch Forwarded Documents
-            $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
+            $forwardedDocuments = ForwardedDocument::with(['forwardedTo', 'document', 'forwardedBy'])
                 ->where('forwarded_to', $employeeId)
                 ->whereNotIn('status', ['archiveNotif','deleted'])
                 ->get()
@@ -34,7 +34,7 @@ class NotificationController extends Controller{
                     return [
                         'id' => $doc->forwarded_document_id,
                         'type' => 'Forwarded',
-                        'receiver_name' => optional($doc->forwardedToEmployee)->first_name . ' ' . optional($doc->forwardedToEmployee)->last_name,
+                        'receiver_name' => optional($doc->forwardedBy)->first_name . ' ' . optional($doc->forwardedBy)->last_name,
                         'document_name' => optional($doc->document)->document_name,
                         'message' => $doc->message,
                         'status' => $doc->status,
@@ -52,7 +52,7 @@ class NotificationController extends Controller{
                     return [
                         'id' => $doc->send_id,
                         'type' => 'Sent',
-                        'receiver_name' => optional($doc->recipient)->first_name . ' ' . optional($doc->recipient)->last_name,
+                        'receiver_name' => optional($doc->sender)->first_name . ' ' . optional($doc->sender)->last_name,
                         'document_name' => $doc->document_subject,
                         'message' => null, // Sent documents might not have a message
                         'status' => $doc->status,
@@ -73,7 +73,7 @@ class NotificationController extends Controller{
                         'document_name' => $doc->document_name,
                         'message' => $doc->remark, // Sent documents might not have a message
                         'status' => $doc->document_status,
-                        'date' => $doc->upload_date,
+                        'date' => $doc->declined_date,
                         'file_path' => $doc->file_path ?? null,
                     ];
                 });

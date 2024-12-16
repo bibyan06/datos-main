@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="table-content-container">
                 <table class="table">
                     <thead>
                         <tr>
@@ -95,6 +95,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
 
                 @if($documents->isEmpty())
                     <p>No documents available.</p>

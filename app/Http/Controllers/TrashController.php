@@ -26,6 +26,37 @@ class TrashController extends Controller
             'message' => 'Document deleted successfully.',
         ]);
     }
+    public function batch($id,$status,$type){
+        if($type=='Forwarded'){
+            $forward = ForwardedDocument::where('forwarded_document_id',$id)->first();
+            $forward->status = $status;
+            if($forward->save()){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Document deleted successfully.',
+                ]);
+            }else{
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Failed to delete a Document.',
+                ]);
+            }
+        }else{
+            $document = Document::where('document_id',$id)->first();
+            $document->status = $status;
+            if($document->save()){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Document deleted successfully.',
+                ]);
+            }else{
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Failed to delete a Document.',
+                ]);
+            }
+        }
+    }
 
     public function deleteNotifForeverdeclined($currentUser){
         $data = Document::where('document_id', $currentUser)->first();

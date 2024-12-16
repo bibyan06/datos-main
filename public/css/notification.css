@@ -170,9 +170,11 @@ th{
 }
 .sender {
     margin-right: 70px;
+    /* font-weight: bold; */
 }
 
 .receiver {
+    /* font-weight: bold; */
     margin-right: 70px;
 }
 
@@ -189,6 +191,7 @@ th{
     flex-grow: 1;
     display: flex;
     align-items: center;
+    /* font-weight: bold; */
 }
 
 .bold-row {
@@ -198,6 +201,7 @@ th{
 .date {
     margin-left: 10px;
     white-space: nowrap;
+    /* font-weight: bold; */
 }
 
 .email-actions {
@@ -244,7 +248,7 @@ main {
     color: #333;
 }
 #dashboard-section {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 .dashboard-container {
     background-color: #fff;
@@ -269,10 +273,6 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .title-content {

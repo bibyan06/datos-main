@@ -418,13 +418,18 @@ h2 {
 
 /* Search Container Styles  */
 .search-container {
-    width: 400px; 
+    width: 250px; 
     display: flex;
     align-items: center;
     position: relative;
     justify-content: right;
-    float: right; 
-    margin-left: 550px;
+    float: right;
+    margin-right: 20px;
+}
+
+.right-header{
+    align-items: center;
+    display: flex;
 }
 
 .search-container i {
@@ -710,7 +715,7 @@ h2 {
 
 
 footer {
-    background-color: #eceef1;
+    background-color: #E9ECF4;
     /* border-top: 1px solid #ddd; */
     padding: 5px;
     text-align: center;
@@ -724,12 +729,13 @@ footer {
 
 .footer-content {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 10px;
 }
 
 .footer-content p {
     margin: 0;
     font-size: 1em;
+    font-weight: bold;
     color: #666;
 }
 
@@ -750,11 +756,11 @@ table {
 
 #pending-count , #notification-counts {
     position: absolute;
-    right: 3px;
+    right: 5px;
     background-color: red;
     color: white;
-    border-radius: 50%;
-    padding: 1px 5px;
+    border-radius: 100%;
+    padding: 0px 6px;
     font-size: 12px;
     font-weight: bold;
     margin-top: -19px;
@@ -856,16 +862,14 @@ th {
 }
 
 
-
-
-@media (max-width: 576px) {
-    .search-container {
+@media screen and (max-width: 576px){
+    .header-content .search-container {
         display: none;
     }
 }
 
 @media (max-width: 768px) { 
-    .search-container {
+    .header-content .search-container {
         display: none;
     }
     
@@ -874,10 +878,23 @@ th {
 @media (max-width: 992px) { 
     .search-container {
         /* Adjust width as needed */
+        width: 100%;
         display: flex;
         position: relative;
-        margin-right: 30px; 
+        margin-right: 60px; 
     }    
+
+    #profile-icon-container {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #profile-icon-container h2{
+        font-size: 15px;
+    }
  }
 
 @media (max-width: 1200px) { 
@@ -889,30 +906,9 @@ th {
     }      
  }
 
-@media (max-width: 1400px) { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ @media (max-width:1400px) {
+    
+ }
 
 
 
