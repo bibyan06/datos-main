@@ -59,6 +59,9 @@
                     @foreach ($documents as $forwarded)
                         <tr class="email-item {{ $forwarded['status']=='delivered'?'delivered':'viewed' }}" data-file-url="{{ asset('storage/'.$forwarded['file_path']) }}"
                             data-status="{{ $forwarded['status'] }}"
+                            notif-id="{{ $forwarded['id'] }}"
+                            status="viewed"
+                            type="{{$forwarded['type']}}"
                             data-message="{{ $forwarded['message'] ?? 'No message' }}"
                             data-document-name="{{ $forwarded['document_name'] ?? 'Unknown Document' }}"
                             data-receiver="{{ $forwarded['receiver_name'] ?? 'Unknown User' }}">
