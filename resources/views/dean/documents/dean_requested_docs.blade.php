@@ -61,7 +61,7 @@
                 data-request-purpose="{{ $r->request_purpose ?? 'No Purpose Provided' }}">
                 
                 <td class="checkbox">
-                    <input type="checkbox" class="check" data-type={{$r['type']}}data-id={{ $r['id']}}>
+                    <!-- <input type="checkbox" class="check"> -->
                 </td>
                 
                 <td class="document-type {{ $r->approval_status === 'Pending' ? 'Pending' : 'Approved' }}">
