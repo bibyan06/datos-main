@@ -219,7 +219,9 @@ class NotificationController extends Controller{
             ]);
         }
     }
-    public function Newdestroydeclined($id, $status, $type)
+   
+
+    public function destroydeclined($id, $status, $type)
     {
         if($type=='Declined'){
             $uploadedDocuments = Document::where('document_id', $id)->first();
@@ -231,20 +233,6 @@ class NotificationController extends Controller{
                     'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
                 ]);
             }
-        }
-    }
-
-    public function destroydeclined($id, $status)
-    {
-
-        $uploadedDocuments = Document::where('document_id', $id)->first();
-        if ($uploadedDocuments) {
-            $uploadedDocuments->status = $status;
-            $uploadedDocuments->update();
-            return response()->json([
-                'success' => true,
-                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
-            ]);
         }
     }
 

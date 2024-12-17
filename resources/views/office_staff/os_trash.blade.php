@@ -4,17 +4,6 @@
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
-    <style>
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
-    </style>
 @endsection
 
 @section('main-id', 'dashboard-content')

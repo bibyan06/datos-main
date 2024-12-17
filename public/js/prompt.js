@@ -14,7 +14,7 @@ archiveButtons.forEach(archive => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -106,7 +106,7 @@ notifButtons1.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
@@ -137,6 +137,7 @@ sentnotifButtons1.forEach(btn => {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
         const type = btn.getAttribute('type');
+       
         Swal.fire({
             title: 'Are you sure?',
             text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif") ? "archive" : (status === "viewed"||status === "delivered" ? "restore" : status)} this item?`,            
@@ -145,23 +146,22 @@ sentnotifButtons1.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                   fetch(`/deleteNotif/${id}/${status}/${type}`)
+
+                fetch(`/deleteNotif/${id}/${status}/${type}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
                     Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
-                        // Optionally refresh or redirect
-                        window.location.reload(); // Refresh the page
+                        window.location.reload(); 
                     });
                 }else{
                     Swal.fire('Error!', data.message, 'error');
                     }
                 })
-                // Additional logic for archiving can be added here
             }
         });
     });
@@ -185,7 +185,7 @@ sentnotifButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -216,7 +216,7 @@ declinednotifButtons.forEach(btn => {
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
-        const type = btn.getAttribute('data-type');
+        const type = btn.getAttribute('type');
            
         Swal.fire({
             title: 'Are you sure?',
@@ -226,24 +226,22 @@ declinednotifButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                    
-               fetch(`/deleteNotifdeclined/${id}/${status}/${type}`)
+               fetch(`/deleteNotif/${id}/${status}/${type}`)
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":(status==="archiveNotif")? "Archive":capital(status)}`, data.message, 'success').then(() => {
-                       
+                    Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":(status==="archiveNotif")? "Archive":capital(status)}`, data.message, 'success').then(() => {                      
                         window.location.reload(); 
                     });
                 }else{
                     Swal.fire('Error!', data.message, 'error');
                     }
                 })
-                // Additional logic for archiving can be added here
             }
         });
     });
@@ -265,7 +263,7 @@ reqdeclinednotifButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -302,7 +300,7 @@ deleteforButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -343,7 +341,7 @@ deletesentButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -382,7 +380,7 @@ deletedeclinedButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -421,7 +419,7 @@ deleterequestedButtons.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
@@ -460,7 +458,7 @@ restoredocs.forEach(btn => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#8592A3',
             confirmButtonText: 'Yes',
-            ccancelButtonText: 'Cancel',      
+            cancelButtonText: 'Cancel',      
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {

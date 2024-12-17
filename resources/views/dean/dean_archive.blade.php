@@ -11,7 +11,7 @@
 @section('content')
     <section class="title">
         <div class="title-content">
-            <h3>Archive Document</h3>
+            <h3>Archive </h3>
             <div class="date-time">
                 <i class="bi bi-calendar2-week-fill"></i>
                 <p id="current-date-time"></p>
@@ -21,7 +21,15 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">      
-            <table class="email-list">
+            <p>
+                <div class="deletes btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                    </svg><span>Delete</span>
+                </div>
+            </p>
+        <table class="email-list">
                 <th></th>
                 <th>Sender</th>
                 <th>Type</th>
@@ -36,14 +44,17 @@
 
                     @if ($forward)
                         @foreach ($forward as $r)
-                            <tr class="email-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
+                            <tr class="email-item {{ $r['status']=='delivered'?'delivered':'viewed' }}"
                                 data-id="{{ $r->forwarded_document_id }}"
-                                data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}"
+                                data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? 'User' }}"
                                 data-document="{{ $r->document->document_name ?? 'No Title' }}"
                                 data-snippet="{{ $r->message ?? 'No message' }}" 
                                 data-type="forward"
                                 data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
-                                <td class="checkbox"><input type="checkbox"></td>
+                                
+                                <td class="checkbox">
+                                    <input type="checkbox" class="check" data-type={{ $r['type'] }} data-id={{ $r['id'] }}>                     
+                                </td>
                                 <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                     {{ $r->forwardedByEmployee->first_name ?? 'Unknown' }}
                                     {{ $r->forwardedByEmployee->last_name ?? '' }}
@@ -75,7 +86,10 @@
                                 data-document="{{ $s->document_subject ?? 'No Title' }}" 
                                 data-type="request"
                                 data-file-url="{{ asset('storage/' . $s->file_path) }}">
-                                <td class="checkbox"><input type="checkbox"></td>
+                                
+                                <td class="checkbox">
+                                    <input type="checkbox" class="check" data-type={{ $r['type'] }} data-id={{ $r['id'] }}>
+                                </td>
                                 <td class="sender {{ $s->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                     {{ $s->sender->first_name ?? 'Unknown Sender' }}
                                     {{ $s->sender->last_name ?? '' }}
@@ -90,8 +104,8 @@
                                         class="notifSent" style="text-decoration: none; color:black;">
                                         <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                     </a>
-                                    <a notif-id={{ $s->send_id }} status='deleted' class="notifSent"
-                                        style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
+                                    <a notif-id={{ $s->send_id }} status='deleted' 
+                                        class="notifSent" style="text-decoration: none; color:black;"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach

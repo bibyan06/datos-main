@@ -252,7 +252,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/deleteNotifsent/{id}/{status}', [NotificationController::class, 'destroysent'])->name('deleteNotifsent');
     Route::get('/deleteNotifdeclined/{id}/{status}/{type}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
     Route::get('/batchdelete', [NotificationController::class, 'batchdelete'])->name('batchdelete');
-    Route::get('/deleteNotifdeclined/{id}/{status}/{type}', [NotificationController::class, 'Newdestroydeclined'])->name('deleteNotifdeclined');
     Route::get('/deleteNotifReqdeclined/{id}/{status}', [NotificationController::class, 'destroyreqdeclined'])->name('deleteNotifReqdeclined');
 
     Route::get('/trash/{id}', [TrashController::class, 'deleteNotifForever'])->name('deleteNotifForever');

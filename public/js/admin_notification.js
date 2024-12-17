@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentStatus = this.getAttribute('data-status');
             const message = this.getAttribute('data-message');
             const documentName = this.getAttribute('data-document-name');
-            const status = (currentStatus == 'archiveNotif' || currentStatus == 'deleted') 
+            const status = (currentStatus == 'archiveNotif' || currentStatus == 'deleted' || currentStatus == 'restored' ) 
                ? 'viewed' 
                : (currentStatus == 'delivered' ? 'delivered' : currentStatus);
             const snippet = this.getAttribute('data-snippet');
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const currentStatus = this.getAttribute('data-status');
                 const message = this.getAttribute('data-message');
                 const documentName = this.getAttribute('data-document-name');
-                const status = (currentStatus == 'archiveNotif' || currentStatus == 'deleted') 
+                const status = (currentStatus == 'archiveNotif' || currentStatus == 'deleted' || currentStatus == 'restored') 
                    ? 'viewed' 
                    : (currentStatus == 'delivered' ? 'delivered' : currentStatus);
                 const snippet = this.getAttribute('data-snippet');

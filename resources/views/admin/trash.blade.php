@@ -37,15 +37,14 @@
                 <th>Date</th>
                 <th>Action</th>
                 <tbody>
-                    @if ($forwardedDocuments->isEmpty() && $sent->isEmpty())
+                    @if ($forwardedDocuments->isEmpty() && $sent->isEmpty() && $forward->isEmpty())
                         <tr>
                             <td colspan="6" class="no-notifications" style="text-align:center; color:red;">You have no deleted document at this time.</td>
                         </tr>
                     @else
                         @if ($forward)
-
                             @foreach ($forward as $r)
-                            <tr class="email-item" 
+                            <tr class="email-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}" 
                                     data-id="{{ $r->forwarded_document_id }}"
                                     data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}"
                                     data-document="{{ $r->document->document_name ?? 'No Title' }}"
@@ -54,7 +53,7 @@
                                     data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
 
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$r['type']}}data-id={{ $r['id']}}>
+                                        <input type="checkbox" class="check" data-type="Forwarded" data-id={{ $r['id']}}>
                                     </td>
                                     <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }}
                                         {{ $r->forwardedByEmployee->last_name ?? '' }}
@@ -82,7 +81,7 @@
 
                         @if($forwardedDocuments)
                             @foreach($forwardedDocuments as $forwarded)
-                                <tr class="forwarded-item"
+                                <tr class="forwarded-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
                                     data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
                                     data-status="{{ $forwarded->status }}"
                                     data-message="{{ $forwarded->message ?? 'No message' }}" 
@@ -91,13 +90,14 @@
                                     <td class="checkbox">
                                         <input type="checkbox" class="check" data-type={{$forwarded['type']}} data-id={{ $forwarded['id']}}>
                                     </td>
-                                    <td class="sender">Forwarded Document to:</td>
+                                    
                                     <td class="document-type">
                                         <span class="receiver">
                                             {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
                                             {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
                                         </span>
                                     </td>
+                                    <td class="sender">Forwarded Document</td>
                                     <td class="document-name">
                                         {{ $forwarded->document->document_name ?? 'Unknown Document' }} - {{ $forwarded->message ?? 'No message' }}
                                     </td>
