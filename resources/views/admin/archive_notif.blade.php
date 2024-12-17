@@ -4,17 +4,6 @@
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
-    <style>
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
-    </style>
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -56,7 +45,7 @@
                         <!-- Forwarded Notifications -->
                         @if (!$forward->isEmpty())
                             @foreach ($forward as $r)
-                                <tr class="email-item"
+                                <tr class="email-item {{ $r['status']=='delivered'?'delivered':'viewed' }}"
                                     data-id="{{ $r->forwarded_document_id }}"
                                     data-sender="{{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}"
                                     data-document="{{ $r->document->document_name ?? 'No Title' }}"
@@ -65,7 +54,7 @@
                                     data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
 
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$r['type']}}data-id={{ $r['id']}}>
+                                        <input type="checkbox" class="check" data-type={{ $r['type'] }} data-id={{ $r['id'] }}>
                                     </td>
                                     <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                         {{ $r->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $r->forwardedByEmployee->last_name ?? '' }}

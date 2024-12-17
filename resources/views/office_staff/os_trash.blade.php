@@ -66,7 +66,7 @@
                                     data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
                                     
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$r['type']}}data-id={{ $r['id']}}>
+                                        <input type="checkbox" class="check" data-type="Forwarded" data-id={{ $r->forwarded_document_id }}>
                                     </td>
 
                                     <td class="sender {{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">
@@ -80,6 +80,7 @@
                                     <td class="date">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
                                     <td class="email-actions">
                                         <a notif-id="{{ $r->forwarded_document_id }}" status="viewed"
+                                        
                                            class="notifForward" style="text-decoration: none; color: black;">
                                             <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                         </a>
@@ -92,14 +93,14 @@
                             @endforeach
                         @endif
 
-                        @if ($forwardedDocuments)
+                        <!-- @if ($forwardedDocuments)
                             @foreach ($forwardedDocuments as $forwarded)
                                 <tr class="email-item"
                                     data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
                                     data-status="{{ $forwarded->status }}">
                                 
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$forwarded['type']}}data-id={{ $forwarded['id']}}>
+                                        <input type="checkbox" class="check" data-type="Forwarded" data-id={{ $forwarded->forwarded_document_id }}>
                                     </td>
                                     <td class="sender">Forwarded Document</td>
                                     <td class="document-type">
@@ -118,7 +119,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @endif
+                        @endif -->
 
                         @if ($uploaded)
                             @foreach ($uploaded as $u)
@@ -133,7 +134,7 @@
                                     data-file-url="{{ asset('storage/' . $u->file_path) }}">
                                     
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$u['type']}}data-id={{ $u['id']}}>
+                                        <input type="checkbox" class="check" data-type="Sent" data-id={{ $u->send_id }}>
                                     </td>
                                     <td class="sender {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">
                                         {{ $u->declined_by ?? 'Admin' }}
@@ -150,6 +151,7 @@
                                     </td>
                                     <td class="email-actions">
                                         <a notif-id="{{ $u->document_id }}" status="viewed"
+                                            data-type="Declined"
                                            class="notifDeclined" style="text-decoration: none; color: black;">
                                             <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                         </a>
@@ -202,7 +204,7 @@
                         deleteBtn.style.display = 'none';
                     }
 
-                    // console.log(listId); // Debug: View the current array
+                    //console.log(listId); // Debug: View the current array
                 });
             });
             deleteBtn.addEventListener('click', () => {

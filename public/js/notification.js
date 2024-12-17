@@ -29,11 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
     emailItems.forEach(item => {
         item.addEventListener('click', function(e) {
             if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
-                const forwardedDocumentId = this.getAttribute('data-id');
+                const id = this.getAttribute('notif-id');
                 const documentName = this.getAttribute('data-document-name');
                 const receiver = this.getAttribute('data-receiver');
                 const message = this.getAttribute('data-message');                
                 const fileUrl = this.getAttribute('data-file-url');
+                const status = this.getAttribute('status');
+                const type = this.getAttribute('type');
+                
+                
 
                 Swal.fire({
                     html: `
@@ -62,24 +66,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonText: 'Mark as viewed',
                     showCancelButton: true,
                     cancelButtonText: 'Close',
+                    reverseButtons: true,
                     customClass: {
                         confirmButton: 'custom-confirm-button',
                         cancelButton: 'custom-cancel-button',
                         popup: 'custom-swal-width',
                         actions: 'custom-actions-position'
                     }
+                    
                 }).then((result) => {
                   
-                    if (result.isConfirmed && forwardedDocumentId) {
+                    if (result.isConfirmed) {
                         console.log("Attempting to send request to update status...");
+
+                        console.log('ID:', id);  
+                        console.log('Status:', status);  
+                        console.log('Type:', type);
                         
-                        fetch( {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                        })
+                        fetch(`/forwarded-documents/${id}/${status}/${type}`)
                         .then(response => {
                             console.log("Received response:", response);
                             if (!response.ok) {
@@ -88,15 +92,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             return response.json();
                         })
                         .then(data => {
-                            console.log("Response data:", data);
+                            console.log("Status updated successfully", data);
                             if (data.success) {
-                                Swal.fire('Success', 'Document status updated to "viewed".', 'success')
+                                Swal.fire('Success', 'Document status has been marked as "viewed.".', 'success')
                                     .then(() => {
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .document-name`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .receiver`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .date`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"]`).classList.remove('delivered');
+                                        document.querySelector(`[notif-id="${id}"] .sender`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .document-name`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .receiver`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .date`).style.fontWeight = 'normal';
                                         location.reload();
                                     });
                             } else {
@@ -130,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    : (currentStatus == 'delivered' ? 'delivered' : currentStatus);
                 const snippet = this.getAttribute('data-snippet');
                 const fileUrl = this.getAttribute('data-file-url');
+               
 
                 
                 Swal.fire({
@@ -174,13 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (result.isConfirmed && forwardedDocumentId) {
                         console.log("Attempting to send request to update status...");
                         
-                        fetch(`/forwarded-documents/${forwardedDocumentId}/update-status`, {
-                            method: 'PATCH',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                        })
+                        fetch(`/forwarded-documents/${id}/${status}/${type}`)
                         .then(response => {
                             console.log("Received response:", response);
                             if (!response.ok) {

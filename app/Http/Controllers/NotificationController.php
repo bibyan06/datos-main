@@ -14,80 +14,87 @@ use Illuminate\Support\Facades\DB;
 class NotificationController extends Controller{
 
     public function index($viewName)
-    {
-        $userEmployeeId = auth()->user()->employee_id;
+{
+    $userEmployeeId = auth()->user()->employee_id;
 
-        $employee = Employee::where('employee_id', $userEmployeeId)->first();
+    $employee = Employee::where('employee_id', $userEmployeeId)->first();
 
-        $documents = collect(); // Initialize an empty collection
+    $documents = collect();
 
-        if ($employee) {
-            $employeeId = $employee->id;
-            $uploadedBy = $employee->first_name . ' ' . $employee->last_name;
-             
-            // Fetch Forwarded Documents
-            $forwardedDocuments = ForwardedDocument::with(['forwardedTo', 'document', 'forwardedBy'])
-                ->where('forwarded_to', $employeeId)
-                ->whereNotIn('status', ['archiveNotif','deleted'])
-                ->get()
-                ->map(function ($doc) {
-                    return [
-                        'id' => $doc->forwarded_document_id,
-                        'type' => 'Forwarded',
-                        'receiver_name' => optional($doc->forwardedBy)->first_name . ' ' . optional($doc->forwardedBy)->last_name,
-                        'document_name' => optional($doc->document)->document_name,
-                        'message' => $doc->message,
-                        'status' => $doc->status,
-                        'date' => $doc->forwarded_date,
-                        'file_path' => $doc->document->file_path ?? null,
-                    ];
-                });
+    if ($employee) {
+        $employeeId = $employee->id;
+        $uploadedBy = $employee->first_name . ' ' . $employee->last_name;
 
-            // Fetch Sent Documents
-            $sentDocuments = SendDocument::with(['sender', 'document'])
-                ->where('issued_to', $employeeId)
-                ->whereNotIn('status', ['archiveNotif','deleted'])
-                ->get()
-                ->map(function ($doc) {
-                    return [
-                        'id' => $doc->send_id,
-                        'type' => 'Sent',
-                        'receiver_name' => optional($doc->sender)->first_name . ' ' . optional($doc->sender)->last_name,
-                        'document_name' => $doc->document_subject,
-                        'message' => null, // Sent documents might not have a message
-                        'status' => $doc->status,
-                        'date' => $doc->issued_date,
-                        'file_path' => $doc->file_path ?? null,
-                    ];
-                });
-            
-            $declinedDocuments = Document::where('uploaded_by',$uploadedBy)
-                ->where('document_status', 'Declined')
-                ->whereNotIn('status', ['archiveNotif','deleted'])
-                ->get()
-                ->map(function ($doc) {
-                    return [
-                        'id' => $doc->document_id,
-                        'type' => 'Declined',
-                        'receiver_name' => $doc->declined_by,
-                        'document_name' => $doc->document_name,
-                        'message' => $doc->remark, // Sent documents might not have a message
-                        'status' => $doc->document_status,
-                        'date' => $doc->declined_date,
-                        'file_path' => $doc->file_path ?? null,
-                    ];
-                });
+        // Fetch Forwarded Documents
+        $forwardedDocuments = ForwardedDocument::with(['forwardedTo', 'document', 'forwardedBy'])
+            ->where('forwarded_to', $employeeId)
+            ->whereNotIn('status', ['archiveNotif', 'deleted'])
+            ->get()
+            ->map(function ($doc) {
+                return [
+                    'id' => $doc->forwarded_document_id,
+                    'type' => 'Forwarded',
+                    'receiver_name' => optional($doc->forwardedBy)->first_name . ' ' . optional($doc->forwardedBy)->last_name,
+                    'document_name' => optional($doc->document)->document_name,
+                    'message' => $doc->message,
+                    'status' => $doc->status,
+                    'date' => $doc->forwarded_date,
+                    'file_path' => $doc->document->file_path ?? null,
+                ];
+            });
 
-            
-        // Combine the two collections
+        // Fetch Sent Documents
+        $sentDocuments = SendDocument::with(['sender', 'document'])
+            ->where('issued_to', $employeeId)
+            ->whereNotIn('status', ['archiveNotif', 'deleted'])
+            ->get()
+            ->map(function ($doc) {
+                return [
+                    'id' => $doc->send_id,
+                    'type' => 'Sent',
+                    'receiver_name' => optional($doc->sender)->first_name . ' ' . optional($doc->sender)->last_name,
+                    'document_name' => $doc->document_subject,
+                    'message' => null,
+                    'status' => $doc->status,
+                    'date' => $doc->issued_date,
+                    'file_path' => $doc->file_path ?? null,
+                ];
+            });
+
+        // Fetch Declined Documents
+        $declinedDocuments = Document::where('uploaded_by', $uploadedBy)
+            ->where('document_status', 'Declined')
+            ->whereNotIn('status', ['archiveNotif', 'deleted'])
+            ->get()
+            ->map(function ($doc) {
+                return [
+                    'id' => $doc->document_id,
+                    'type' => 'Declined',
+                    'receiver_name' => $doc->declined_by,
+                    'document_name' => $doc->document_name,
+                    'message' => $doc->remark,
+                    'status' => $doc->document_status,
+                    'date' => $doc->declined_date,
+                    'file_path' => $doc->file_path ?? null,
+                ];
+            });
+
+        // Ensure all collections remain collections
+        $forwardedDocuments = collect($forwardedDocuments);
+        $sentDocuments = collect($sentDocuments);
+        $declinedDocuments = collect($declinedDocuments);
+
+        // Combine all documents
+        if ($declinedDocuments->isNotEmpty() || $forwardedDocuments->isNotEmpty() || $sentDocuments->isNotEmpty()) {
             $documents = $forwardedDocuments->merge($sentDocuments)->merge($declinedDocuments);
-        } else {
-            \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
         }
-
-        // Return combined documents to the view
-        return view($viewName, ['documents' => $documents]);
+    } else {
+        \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
     }
+
+    // Return combined documents to the view
+    return view($viewName, ['documents' => $documents]);
+}
 
     
     public function getNotificationCount()
@@ -214,15 +221,16 @@ class NotificationController extends Controller{
     }
     public function Newdestroydeclined($id, $status, $type)
     {
-
-        $uploadedDocuments = Document::where('document_id', $id)->first();
-        if ($uploadedDocuments) {
-            $uploadedDocuments->status = $status;
-            $uploadedDocuments->update();
-            return response()->json([
-                'success' => true,
-                'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
-            ]);
+        if($type=='Declined'){
+            $uploadedDocuments = Document::where('document_id', $id)->first();
+            if ($uploadedDocuments) {
+                $uploadedDocuments->status = $status;
+                $uploadedDocuments->update();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Document ' . ($status=='viewed'?'Restored':$status) . ' successfully.',
+                ]);
+            }
         }
     }
 

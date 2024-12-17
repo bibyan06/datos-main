@@ -151,7 +151,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
                 ->name('office_staff.os_notification')
                 ->middleware('auth')
                 ->defaults('viewName', 'office_staff.os_notification');
-        });
+            });
         Route::get('/os_archive', [OfficeStaffController::class, 'archiveDocs'])->name('office_staff.os_archive');
         Route::get('/os_trash', [OfficeStaffController::class, 'trash'])->name('office_staff.os_trash');
         Route::post('/check-document-number', [DocumentController::class, 'checkDocumentNumber']) ->name('office_staff.check_document_number');   
@@ -231,12 +231,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');
     // Route::get('/logout', [AuthLoginController::class, 'logout'])->name('logout');
     Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
-    Route::get('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
-    // Route::get('/forwarded-documents/{id}/{type}/{status}', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+    Route::get('/forwarded-documents/{id}/{status}/{type}', [DocumentController::class, 'updateStatus'])->name('updateStatus');
 
-    Route::patch('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
-    Route::patch('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
-    Route::patch('/requested-declined-documents/{requestId}/update-status', [DocumentController::class, 'updateStatusRequested'])->name('declinedDocuments.updateStatusRequested');
+    Route::get('/sent-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatusSent'])->name('forwardedDocuments.updateStatussent');
+    Route::get('/declined-documents/{documentId}/update-status', [DocumentController::class, 'updateStatusUploaded'])->name('declinedDocuments.updateStatusUploaded');
+    Route::get('/requested-declined-documents/{requestId}/update-status', [DocumentController::class, 'updateStatusRequested'])->name('declinedDocuments.updateStatusRequested');
     Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
     Route::get('/declined-notification/count', [NotificationController::class, 'getDeclinedRequestedCount'])->name('declined-notification.count');
 
@@ -251,7 +250,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/deleteNotif/{id}/{status}', [NotificationController::class, 'destroy'])->name('deleteNotif');
     Route::get('/deleteNotif/{id}/{status}/{type}', [NotificationController::class, 'newDestroy'])->name('newdelete');
     Route::get('/deleteNotifsent/{id}/{status}', [NotificationController::class, 'destroysent'])->name('deleteNotifsent');
-    Route::get('/deleteNotifdeclined/{id}/{status}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
+    Route::get('/deleteNotifdeclined/{id}/{status}/{type}', [NotificationController::class, 'destroydeclined'])->name('deleteNotifdeclined');
     Route::get('/batchdelete', [NotificationController::class, 'batchdelete'])->name('batchdelete');
     Route::get('/deleteNotifdeclined/{id}/{status}/{type}', [NotificationController::class, 'Newdestroydeclined'])->name('deleteNotifdeclined');
     Route::get('/deleteNotifReqdeclined/{id}/{status}', [NotificationController::class, 'destroyreqdeclined'])->name('deleteNotifReqdeclined');

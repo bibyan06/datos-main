@@ -16,15 +16,7 @@
         font-weight: normal;
     }
 
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
+   
     </style>
 @endsection
 
@@ -43,7 +35,7 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
-            @if ($documents->isEmpty() && $documents->isEmpty())
+            @if ($documents->isEmpty())
                 <p class="no-notifications">You have no notification at this time.</p>
             @else
             <p>
@@ -70,12 +62,15 @@
                     @foreach ($documents as $forwarded)
                         <tr class="email-item {{ $forwarded['status']=='delivered'?'delivered':'viewed' }}" data-file-url="{{ asset('storage/'.$forwarded['file_path']) }}"
                             data-status="{{ $forwarded['status'] }}"
+                            notif-id="{{ $forwarded['id'] }}"
+                            status="viewed"
+                            type="{{$forwarded['type']}}"
                             data-message="{{ $forwarded['message'] ?? 'No message' }}"
                             data-document-name="{{ $forwarded['document_name'] ?? 'Unknown Document' }}"
                             data-receiver="{{ $forwarded['receiver_name'] ?? 'Unknown User' }}">
 
                             <td class="checkbox">
-                                <input type="checkbox" class="check" data-type={{$forwarded['type']}}data-id={{ $forwarded['id']}}>
+                                <input type="checkbox" class="check" data-type="{{ $forwarded['type'] }}" data-id="{{ $forwarded['id'] }}">
                             </td>
                             <td class="document-type">
                                 <span class="receiver">
@@ -92,12 +87,12 @@
                             <td class="date">{{ \Carbon\Carbon::parse($forwarded['date'])->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <a notif-id= {{ $forwarded ['id']}} status= 'archiveNotif' type="{{$forwarded ['type']}}"
-                                    class = "{{"notif".$forwarded['type']}}" style="text-decoration: none; color:black;"><i
-                                    class="bi bi-archive"></i>
+                                    class = "{{"notif".$forwarded['type']}}" style="text-decoration: none; color:black;">
+                                    <i class="bi bi-archive"></i>
                                 </a>
                                 <a notif-id={{ $forwarded['id']}} status= 'deleted' type="{{$forwarded['type']}}"
-                                    class = "{{ "notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
-                                        class="bi bi-trash"></i>
+                                    class = "{{ "notif".$forwarded['type'] }}" style="text-decoration: none; color:black;">
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -118,6 +113,8 @@
         let listId = [];
 
         document.addEventListener('DOMContentLoaded', () => {
+            
+
             const selectedDocuments = [{}];
             const deleteBtn = document.querySelector('.deletes')
             // Listen for changes on all checkboxes within the declined-docs rows

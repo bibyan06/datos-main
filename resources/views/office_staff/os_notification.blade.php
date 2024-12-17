@@ -8,23 +8,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <style>
-    .delivered {
-    font-weight: bold;
-    }
+        .delivered {
+            font-weight: bold;
+        }
 
-    .viewed {
-        font-weight: normal;
-    }
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
-
+        .viewed {
+            font-weight: normal;
+        }
     </style>
 @endsection
 
@@ -75,7 +65,7 @@
                             data-receiver="{{ $forwarded['receiver_name'] ?? 'Unknown User' }}">
 
                             <td class="checkbox">
-                            <input type="checkbox" class="check" data-type={{$forwarded['type']}}data-id={{ $forwarded['id']}}>
+                            <input type="checkbox" class="check" data-type={{ $forwarded['type'] }} data-id={{ $forwarded['id'] }}>
                             </td>
                             <td class="document-type">
                                 <span class="receiver">
@@ -92,10 +82,10 @@
                             <td class="date">{{ \Carbon\Carbon::parse($forwarded['date'])->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <a notif-id= {{ $forwarded ['id']}} status= 'archiveNotif' type="{{$forwarded ['type']}}"
-                                    class = "{{"notif".$forwarded['type']}}" style="text-decoration: none; color:black;"><i
+                                    class = "{{"notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
                                     class="bi bi-archive"></i>
                                 </a>
-                                <a notif-id={{ $forwarded['id']}} status= 'deleted' type="{{$forwarded['type']}}"
+                                <a notif-id={{ $forwarded['id'] }} status= 'deleted' type="{{$forwarded['type']}}"
                                     class = "{{ "notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
                                         class="bi bi-trash"></i>
                                 </a>
@@ -142,7 +132,6 @@
                     } else {
                         deleteBtn.style.display = 'none';
                     }
-
                     // console.log(listId); // Debug: View the current array
                 });
             });
@@ -152,8 +141,10 @@
                     text: "Do you want to proceed with this action?",
                     icon: 'warning',
                     showCancelButton: true,
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Yes',          
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#8592A3',
+                    confirmButtonText: 'Yes', 
+                    cancelButtonText: 'Cancel',          
                     reverseButtons: true, 
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -171,12 +162,10 @@
                             setTimeout(() => {
                                 Swal.fire(
                                     `Deleted`,
-                                    "Documents are deleted successfully", 'success').then(() => {
-                                    // Optionally refresh or redirect
-                                    window.location.reload(); // Refresh the page
+                                    "Documents are deleted successfully", 'success').then(() => {                                  
+                                    window.location.reload();
                                 })
                             }, 1500);
-
                         }
                     }
                 });

@@ -4,17 +4,6 @@
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('css/notification.css') }}">
-    <style>
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
-    </style>
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -78,7 +67,7 @@
 
                                     <td class="date{{ $r->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($r->forwarded_date)->format('M d H:i') }}</td>
                                     <td class="email-actions">
-                                        <a notif-id={{ $r->forwarded_document_id }} status= {{ $u->status === 'deleted' ? 'delivered' : 'viewed' }}
+                                        <a notif-id={{ $r->forwarded_document_id }} status= {{ $r->status === 'deleted' ? 'delivered' : 'viewed' }}
                                             class = "notifForward" style="text-decoration: none; color:black;"><i
                                             class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                         </a>
@@ -100,7 +89,7 @@
                                     data-document-name="{{ $forwarded->document->document_name ?? 'Unknown Document' }}">
 
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$forwarded['type']}}data-id={{ $forwarded['id']}}>
+                                        <input type="checkbox" class="check" data-type={{$forwarded['type']}} data-id={{ $forwarded['id']}}>
                                     </td>
                                     <td class="sender">Forwarded Document to:</td>
                                     <td class="document-type">
@@ -114,7 +103,7 @@
                                     </td>
                                     <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                                     <td class="email-actions">
-                                        <a notif-id={{ $forwarded->forwarded_document_id }} status= {{ $forwarded->status === 'deleted' ? 'delivered' : 'viewed' }}
+                                        <a notif-id={{ $forwarded->forwarded_document_id }} status= {{ $forwarded->status === 'deleted'  ? 'delivered' : 'viewed' }}
                                             class = "notifForward" style="text-decoration: none; color:black;"><i
                                             class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                         </a>
@@ -132,7 +121,7 @@
                             @foreach ($sent as $s)
                                 <tr class="email-item">
                                     <td class="checkbox">
-                                        <input type="checkbox" class="check" data-type={{$s['type']}}data-id={{ $s['id']}}>
+                                        <input type="checkbox" class="check" data-type={{$s['type']}} data-id={{ $s['id']}}>
                                     </td>
                                     <td class="sender">{{ $s->sender->first_name . ' ' . $s->sender->last_name }}</td>
                                     <td class="document-type">Sent Document</td>
@@ -143,7 +132,7 @@
                                     <td class="date">{{ \Carbon\Carbon::parse($s->issued_date)->format('M d H:i') }}
                                     </td>
                                     <td class="email-actions">
-                                        <a notif-id={{ $s->send_id }} status= {{ $s->status === 'deleted' ? 'delivered' : 'viewed' }}
+                                        <a notif-id={{ $s->send_id }} status= {{ $s->status === 'deleted'   ? 'delivered' : 'viewed' }}
                                             class = "notifSent" style="text-decoration: none; color:black;"><i
                                                 class="bi bi-arrow-counterclockwise" title="Restore"></i></a>        
                                         <a delete-id={{ $s->send_id }}  class = "deletesent" status= 'delete'
@@ -167,7 +156,7 @@
                                         data-file-url="{{ asset('storage/' . $u->file_path) }}">
 
                                         <td class="checkbox">
-                                            <input type="checkbox" class="check" data-type={{$u['type']}}data-id={{ $u['id']}}>
+                                            <input type="checkbox" class="check" data-type={{$u['type']}} data-id={{ $u['id']}}>
                                         </td>
                                         <td class="sender {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ $u->declined_by ?? 'Admin' }}</td>
 
@@ -180,7 +169,7 @@
 
                                         <td class="date  {{ $u->status === 'delivered' ? 'delivered' : 'viewed' }}">{{ \Carbon\Carbon::parse($u->declined_date)->format('M d H:i') }}</td>
                                         <td class="email-actions">
-                                            <a notif-id={{ $u->document_id }} status= {{ $u->status === 'deleted' ? 'delivered' : 'viewed' }}
+                                            <a notif-id={{ $u->document_id }} status= {{ $u->status === 'deleted'  ? 'delivered' : 'viewed' }}
                                                 class = "notifDeclined" style="text-decoration: none; color:black;"><i
                                                 class="bi bi-arrow-counterclockwise" title="Restore"></i>
                                             </a>

@@ -304,25 +304,21 @@ class DocumentController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, $forwardedDocumentId,)
+    public function updateStatus($id, $status, $type)
     {
-        Log::info("Attempting to update status for document ID: " . $forwardedDocumentId);
+        Log::info("Attempting to update status for document ID: " . $id . " and type: " . $type);
 
-        // Find the forwarded document by 'forwarded_document_id'
-        $forwardedDocument = ForwardedDocument::where('forwarded_document_id', $forwardedDocumentId)->first();
-
-        if (!$forwardedDocument) {
-            Log::error("Document not found for ID: " . $forwardedDocumentId);
-            return response()->json(['success' => false, 'message' => 'Document not found'], 404);
+        // Ensure that the document exists
+        $document = ForwardedDocument::find($id);
+        if (!$document) {
+            return response()->json(['success' => false, 'message' => 'Document not found.']);
         }
 
-        // Update the status to 'viewed'
-        $forwardedDocument->status = 'viewed';
-        $forwardedDocument->save();
+        // Update the status
+        $document->status = $status;
+        $document->save();
 
-        Log::info("Document status updated to 'viewed' for ID: " . $forwardedDocumentId);
-
-        return response()->json(['success' => true, 'message' => 'Document status updated to "viewed".']);
+        return response()->json(['success' => true, 'message' => 'Document status updated successfully.']);
     }
 
     public function updateStatusSent(Request $request, $forwardedDocumentId)

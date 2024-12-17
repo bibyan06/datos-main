@@ -41,6 +41,20 @@ class TrashController extends Controller
                     'message' => 'Failed to delete a Document.',
                 ]);
             }
+        }else if($type=="Sent"){
+            $sent = SendDocument::where('send_id',$id)->first();
+            $sent->status = $status;
+            if($sent->save()){
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Document deleted successfully.',
+                ]);
+            }else{
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Failed to delete a Document.',
+                ]);
+            }
         }else{
             $document = Document::where('document_id',$id)->first();
             $document->status = $status;

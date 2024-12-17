@@ -7,17 +7,6 @@
     <link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-    <style>
-    .deletes {
-        display: none;
-        padding: 10px 20px;
-        color: rgb(173, 18, 18);
-        font-size: 1em;
-        width: 200px;
-        cursor: pointer;
-        font-weight: bold
-    }
-    </style>
 @endsection
 
 @section('main-id', 'dashboard-content')
@@ -137,8 +126,10 @@
                     text: "Do you want to proceed with this action?",
                     icon: 'warning',
                     showCancelButton: true,
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Yes',          
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#8592A3',
+                    confirmButtonText: 'Yes', 
+                    cancelButtonText: 'Cancel',         
                     reverseButtons: true, 
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -155,10 +146,9 @@
                             });
                             setTimeout(() => {
                                 Swal.fire(
-                                    `Deleted Successfully!`,
-                                    "Sucess", 'success').then(() => {
-                                    // Optionally refresh or redirect
-                                    window.location.reload(); // Refresh the page
+                                    `Deleted`,
+                                    "Documents are deleted successfully", 'success').then(() => {
+                                    window.location.reload(); 
                                 })
                             }, 1500);
 

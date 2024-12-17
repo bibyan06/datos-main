@@ -59,7 +59,7 @@ notifButtons.forEach(btn => {
         
         Swal.fire({
             title: 'Are you sure?',
-            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif")? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif")? "archive" : (status === "viewed"||status === "delivered" ? "restore" : status)} this item?`,            
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -74,7 +74,7 @@ notifButtons.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status)}!`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status==="archiveNotif" ? "archived":status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -115,7 +115,7 @@ notifButtons1.forEach(btn => {
                .then(res=>res.json())
                .then(data=>{
                 if(data.success){
-                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status)}`, data.message, 'success').then(() => {
+                    Swal.fire(`${capital(status).toLowerCase()=="viewed"?"Restored":capital(status==="archiveNotif" ? "archived":status)}`, data.message, 'success').then(() => {
                         // Optionally refresh or redirect
                         window.location.reload(); // Refresh the page
                     });
@@ -139,7 +139,7 @@ sentnotifButtons1.forEach(btn => {
         const type = btn.getAttribute('type');
         Swal.fire({
             title: 'Are you sure?',
-            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif") ? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif") ? "archive" : (status === "viewed"||status === "delivered" ? "restore" : status)} this item?`,            
             icon: status=="Archive"||status=="viewed"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -216,11 +216,11 @@ declinednotifButtons.forEach(btn => {
     btn.addEventListener('click', function () {
         const id = btn.getAttribute('notif-id');
         const status = btn.getAttribute('status');
-        const type = btn.getAttribute('type');
-            
+        const type = btn.getAttribute('data-type');
+           
         Swal.fire({
             title: 'Are you sure?',
-            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif")? "archive" : (status === "viewed" ? "restore" : status)} this item?`,            
+            text: `Do you want to ${status === "deleted" ? "delete" :(status==="archiveNotif" )? "archive" : (status === "viewed"||status === "delivered" ? "restore" : status)} this item?`,            
             icon: status=="Archive"||status=="delivered"?'warning':'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -236,8 +236,8 @@ declinednotifButtons.forEach(btn => {
                .then(data=>{
                 if(data.success){
                     Swal.fire(`${capital(status).toLocaleLowerCase()=="viewed"?"Restored":(status==="archiveNotif")? "Archive":capital(status)}`, data.message, 'success').then(() => {
-                        // Optionally refresh or redirect
-                        window.location.reload(); // Refresh the page
+                       
+                        window.location.reload(); 
                     });
                 }else{
                     Swal.fire('Error!', data.message, 'error');

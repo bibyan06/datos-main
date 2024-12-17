@@ -15,15 +15,6 @@
         .viewed {
             font-weight: normal;
         }
-        .deletes {
-            display: none;
-            padding: 10px 20px;
-            color: rgb(173, 18, 18);
-            font-size: 1em;
-            width: 200px;
-            cursor: pointer;
-            font-weight: bold
-        }   
     </style>
 @endsection
 
@@ -73,7 +64,7 @@
                             data-receiver="{{ $forwarded['receiver_name'] ?? 'Unknown User' }}">
 
                             <td class="checkbox">
-                                <input type="checkbox" class="check" data-type={{$forwarded['type']}}data-id={{ $forwarded['id']}}>
+                                <input type="checkbox" class="check" data-type={{ $forwarded['type'] }} data-id={{ $forwarded['id'] }}>
                             </td>
                             <td class="document-type">
                                 <span class="receiver">
@@ -142,7 +133,7 @@
                         deleteBtn.style.display = 'none';
                     }
 
-                    // console.log(listId); // Debug: View the current array
+                    console.log(listId); // Debug: View the current array
                 });
             });
             deleteBtn.addEventListener('click', () => {
@@ -151,8 +142,10 @@
                     text: "Do you want to proceed with this action?",
                     icon: 'warning',
                     showCancelButton: true,
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Yes',          
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#8592A3',
+                    confirmButtonText: 'Yes', 
+                    cancelButtonText: 'Cancel',        
                     reverseButtons: true, 
                 }).then((result) => {
                     if (result.isConfirmed) {

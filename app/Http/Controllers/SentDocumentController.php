@@ -22,53 +22,40 @@ class SentDocumentController extends Controller
 
         $employee = Employee::where('employee_id', $userEmployeeId)->first();
 
-        $documents = collect(); // Initialize an empty collection
+        $documents = collect(); 
 
         if ($employee) {
             $employeeId = $employee->id;
 
-            // Fetch Forwarded Documents
-            $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
-                ->where('forwarded_by', $employeeId)
-                ->whereNotIn('status', ['archive','deleted'])
-                ->get()
-                ->map(function ($doc) {
-                    return [
-                        'id' => $doc->forwarded_document_id,
-                        'type' => 'Forwarded',
-                        'receiver_name' => optional($doc->forwardedToEmployee)->first_name . ' ' . optional($doc->forwardedToEmployee)->last_name,
-                        'document_name' => optional($doc->document)->document_name,
-                        'message' => $doc->message,
-                        'status' => $doc->status,
-                        'date' => $doc->forwarded_date,
-                        'file_path' => $doc->document->file_path ?? null,
-                    ];
-                });
+        // Fetch Forwarded Documents
+        $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
+            ->where('forwarded_by', $employeeId)
+            ->whereNotIn('status', ['archive', 'deleted'])
+            ->get();
 
-            // Fetch Sent Documents
-            $sentDocuments = SendDocument::with(['sender', 'document'])
-                ->where('issued_by', $employeeId)
-                ->whereNotIn('status', ['archive','deleted'])
-                ->get()
-                ->map(function ($doc) {
-                    return [
-                        'id' => $doc->send_id,
-                        'type' => 'Sent',
-                        'receiver_name' => optional($doc->recipient)->first_name . ' ' . optional($doc->recipient)->last_name,
-                        'document_name' => $doc->document_subject,
-                        'message' => null, // Sent documents might not have a message
-                        'status' => $doc->status,
-                        'date' => $doc->issued_date,
-                        'file_path' => $doc->file_path ?? null,
-                    ];
-                });
+        // Fetch Sent Documents
+        $sentDocuments = SendDocument::with(['sender', 'document'])
+            ->where('issued_by', $employeeId)
+            ->whereNotIn('status', ['archive', 'deleted'])
+            ->get();
+
         // Combine the two collections
-            $documents = $forwardedDocuments->merge($sentDocuments);
-               
+        $documents = $forwardedDocuments->merge($sentDocuments)->map(function ($doc) {
+            return [
+                'id' => $doc->forwarded_document_id ?? $doc->send_id,
+                'type' => isset($doc->forwarded_document_id) ? 'Forwarded' : 'Sent',
+                'receiver_name' => optional($doc->forwardedToEmployee ?? $doc->recipient)->first_name . ' ' .
+                    optional($doc->forwardedToEmployee ?? $doc->recipient)->last_name,
+                'document_name' => $doc->document->document_name ?? $doc->document_subject,
+                'message' => $doc->message ?? null,
+                'status' => $doc->status,
+                'date' => $doc->forwarded_date ?? $doc->issued_date,
+                'file_path' => $doc->document->file_path ?? $doc->file_path ?? null,
+            ];
+        });
         } else {
             \Log::error('Employee record not found for user with employee_id: ' . $userEmployeeId);
         }
-
         // Return combined documents to the view
         return view($viewName, ['documents' => $documents]);
     }
