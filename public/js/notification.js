@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const id = this.getAttribute('notif-id');
                 const documentName = this.getAttribute('data-document-name');
                 const receiver = this.getAttribute('data-receiver');
+                const sender = this.getAttribute('data-sender');
                 const message = this.getAttribute('data-message');                
                 const fileUrl = this.getAttribute('data-file-url');
                 const status = this.getAttribute('status');
@@ -78,10 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
                   
                     if (result.isConfirmed) {
                         console.log("Attempting to send request to update status...");
-
-                        console.log('ID:', id);  
-                        console.log('Status:', status);  
-                        console.log('Type:', type);
                         
                         fetch(`/forwarded-documents/${id}/${status}/${type}`)
                         .then(response => {
@@ -225,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Extract relevant data from the row
             const documentId = item.getAttribute('data-id');
             const documentName = item.getAttribute('data-document');
-            const sender = item.querySelector('.sender').textContent.trim();
+            const sender = this.getAttribute('data-sender');
             const dataRemark = item.getAttribute('data-remark');
             const dataStatus = item.getAttribute('data-status');
             const fileUrl = item.getAttribute('data-file-url');

@@ -48,9 +48,9 @@
                             @foreach ($forward as $r)
                                 <tr class="email-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
                                     data-id="{{ $r->forwarded_document_id }}"
-                                    data-sender="{{ $r->forwardedBy->first_name ?? 'Unknown' }} {{ $r->forwardedBy->last_name ?? '' }}"
-                                    data-document="{{ $r->document->document_name ?? 'No Title' }}"
-                                    data-snippet="{{ $r->message ?? 'No message' }}"
+                                    data-receiver="{{ $r->forwardedBy->first_name ?? 'Unknown' }} {{ $r->forwardedBy->last_name ?? '' }}"
+                                    data-document-name="{{ $r->document->document_name ?? 'No Title' }}"
+                                    data-message="{{ $r->message ?? 'No message' }}"
                                     data-type="forward"
                                     data-file-url="{{ asset('storage/' . $r->document->file_path) }}">
                                     

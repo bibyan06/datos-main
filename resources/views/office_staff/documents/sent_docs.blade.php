@@ -47,7 +47,7 @@
                             data-document-name="{{ $forwarded['document_name'] ?? 'Unknown Document' }}">
 
                             <td class="checkbox"><input type="checkbox"></td>
-                            <td class="sender">{{ $forwarded['type'] }} Document to:</td>
+                            <td class="sender">{{ $forwarded['type'] }} Document </td>
                             <td class="document-type">
                                 <span class="receiver">
                                     {{ $forwarded['receiver_name'] ?? 'Unknown' }}
@@ -60,6 +60,10 @@
 
                             <td class="date">{{ \Carbon\Carbon::parse($forwarded['date'])->format('M d H:i') }}</td>
                             <td class="email-actions">
+                                <!-- <a notif-id= {{ $forwarded ['id']}} status= 'archiveNotif' type="{{$forwarded ['type']}}"
+                                    class = "{{"notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
+                                    class="bi bi-archive"></i>
+                                </a> -->
                                 <a notif-id={{ $forwarded['id']}} status= 'deleted' type="{{$forwarded['type']}}"
                                     class = "{{ "notif".$forwarded['type'] }}" style="text-decoration: none; color:black;"><i
                                         class="bi bi-trash"></i></a>

@@ -81,7 +81,7 @@
 
                         @if($forwardedDocuments)
                             @foreach($forwardedDocuments as $forwarded)
-                                <tr class="forwarded-item {{ $r->status !== 'viewed' ? 'delivered' : '' }}"
+                                <tr class="forwarded-item {{ $forwarded->status !== 'viewed' ? 'delivered' : '' }}"
                                     data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
                                     data-status="{{ $forwarded->status }}"
                                     data-message="{{ $forwarded->message ?? 'No message' }}" 
@@ -119,7 +119,17 @@
 
                         @if ($sent)
                             @foreach ($sent as $s)
-                                <tr class="email-item">
+
+                                <tr class="email-item  {{ $s->status === 'delivered' ? 'delivered' : 'viewed' }}"
+                                    data-status="{{ $s['status'] }}"
+                                    notif-id="{{ $s['id'] }}"
+                                    status="viewed"
+                                    type="{{$s['type']}}"
+                                    data-message="{{ $s['message'] ?? 'No message' }}"
+                                    data-document-name="{{ $s['document_subject'] ?? 'Unknown Document' }}"
+                                    data-receiver="{{ $s->sender->first_name ?? 'Unknown' }} {{ $s->sender->last_name ?? '' }}"
+                                    data-file-url="{{ asset('storage/' . $s->file_path) }}">
+                                    
                                     <td class="checkbox">
                                         <input type="checkbox" class="check" data-type={{$s['type']}} data-id={{ $s['id']}}>
                                     </td>

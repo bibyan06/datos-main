@@ -262,6 +262,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/restore/{id}', [AdminController::class, 'restoreDocs'])->name('restoreDocs');
     Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);
     Route::get('/employees/exclude-current', [OfficeStaffController::class, 'getEmployee']);
-
 });
-
+Route::get('/terms-and-conditions', function () {
+    return view('terms-and-conditions');
+})->name('terms-and-conditions.show');

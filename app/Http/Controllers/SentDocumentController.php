@@ -30,13 +30,13 @@ class SentDocumentController extends Controller
         // Fetch Forwarded Documents
         $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
             ->where('forwarded_by', $employeeId)
-            ->whereNotIn('status', ['archive', 'deleted'])
+            ->whereNotIn('status', ['archiveNotif', 'deleted'])
             ->get();
 
         // Fetch Sent Documents
         $sentDocuments = SendDocument::with(['sender', 'document'])
             ->where('issued_by', $employeeId)
-            ->whereNotIn('status', ['archive', 'deleted'])
+            ->whereNotIn('status', ['archiveNotif', 'deleted'])
             ->get();
 
         // Combine the two collections

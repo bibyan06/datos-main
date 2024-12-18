@@ -28,14 +28,18 @@ document.addEventListener('DOMContentLoaded', function() {
     emailItems.forEach(item => {
         item.addEventListener('click', function(e) {
             if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
-                const forwardedDocumentId = this.getAttribute('data-id');
+                const id = this.getAttribute('notif-id');
+                const documentName = this.getAttribute('data-document-name');
+                const receiver = this.getAttribute('data-receiver');
                 const sender = this.getAttribute('data-sender');
-                const documentName = this.getAttribute('data-document');
-                const snippet = this.getAttribute('data-snippet');
+                const message = this.getAttribute('data-message');                
                 const fileUrl = this.getAttribute('data-file-url');
+                const status = this.getAttribute('status');
+                const type = this.getAttribute('type');
+                
+                
 
                 Swal.fire({
-                    // title: `<strong>${documentName}</strong>`,
                     html: `
                         <div style="display: flex; width: 100%; height: 100%; gap: 20px;">
                             
@@ -44,15 +48,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div style="width: 50%; height: 220px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
                                 <div style="margin-bottom: 20px;">
                                     <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Document Name:</p>
-                                    <p style="margin: 0; font-size: 20px; color: #555;">${documentName}</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">
+                                    ${documentName}</p>
                                 </div>
                                 <div style="margin-bottom: 20px;">
                                     <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">From:</p>
-                                    <p style="margin: 0; font-size: 20px; color: #555;">${sender}</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${receiver}</p>
                                 </div>
                                 <div style="margin-bottom: 20px;">
-                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Description:</p>
-                                    <p style="margin: 0; font-size: 20px; color: #555;">${snippet}</p>
+                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #888;">Message:</p>
+                                    <p style="margin: 0; font-size: 20px; color: #555;">${message}</p>
                                 </div>
                             </div>
                         </div>     
@@ -61,23 +66,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonText: 'Mark as viewed',
                     showCancelButton: true,
                     cancelButtonText: 'Close',
+                    reverseButtons: true,
                     customClass: {
-                        popup: 'custom-swal-width',
                         confirmButton: 'custom-confirm-button',
                         cancelButton: 'custom-cancel-button',
+                        popup: 'custom-swal-width',
                         actions: 'custom-actions-position'
                     }
+                    
                 }).then((result) => {
-                    if (result.isConfirmed && forwardedDocumentId) {
+                  
+                    if (result.isConfirmed) {
                         console.log("Attempting to send request to update status...");
+
+                        console.log('ID:', id);  
+                        console.log('Status:', status);  
+                        console.log('Type:', type);
                         
-                        fetch(`/forwarded-documents/${forwardedDocumentId}/update-status`, {
-                            method: 'PATCH',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                        })
+                        fetch(`/forwarded-documents/${id}/${status}/${type}`)
                         .then(response => {
                             console.log("Received response:", response);
                             if (!response.ok) {
@@ -86,13 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             return response.json();
                         })
                         .then(data => {
-                            console.log("Response data:", data);
+                            console.log("Status updated successfully", data);
                             if (data.success) {
-                                Swal.fire('Success', 'Document status updated to "viewed".', 'success')
+                                Swal.fire('Success', 'Document status has been marked as "viewed.".', 'success')
                                     .then(() => {
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
-                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"]`).classList.remove('delivered');
+                                        document.querySelector(`[notif-id="${id}"] .sender`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .document-name`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .receiver`).style.fontWeight = 'normal';
+                                        document.querySelector(`[notif-id="${id}"] .date`).style.fontWeight = 'normal';
+                                        location.reload();
                                     });
                             } else {
                                 Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
@@ -106,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-    });
+    }); 
 });
 
 document.addEventListener("DOMContentLoaded", () => {
